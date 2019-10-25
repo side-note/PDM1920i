@@ -6,41 +6,42 @@ import com.google.gson.annotations.SerializedName
 
 data class GameDto(
     val name: String?,
+    val images: ImageDto?,
+    val publishers: Array<String>?,
     @field:SerializedName("year_published") val yearPublished: Int,
-    @field:SerializedName("min_player") val minPlayer: Int,
-    @field:SerializedName("max_player") val maxPlayer: Int,
+    @field:SerializedName("min_players") val minPlayer: Int,
+    @field:SerializedName("max_players") val maxPlayer: Int,
     @field:SerializedName("min_age") val minAge: Int,
     val description: String?,
-    val images: ImageDto?,
     @field:SerializedName("primary_publisher") val primaryPublisher: String?,
-    val publishers: Array<String>?,
+
     @field:SerializedName("average_user_rating") val avgUserRating: Double,
     @field:SerializedName("rules_url") val rulesUrl: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readInt(),
-        parcel.readString(),
         parcel.readParcelable<ImageDto>(ImageDto::class.java.classLoader),
-        parcel.readString(),
         parcel.createStringArray(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readInt(),
+        parcel.readString(),
+        parcel.readString(),
         parcel.readDouble(),
         parcel.readString()
-    ) {
-    }
+    )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
+        parcel.writeParcelable(images,flags)
+        parcel.writeStringArray(publishers)
         parcel.writeInt(yearPublished)
         parcel.writeInt(minPlayer)
         parcel.writeInt(maxPlayer)
         parcel.writeInt(minAge)
         parcel.writeString(description)
         parcel.writeString(primaryPublisher)
-        parcel.writeStringArray(publishers)
         parcel.writeDouble(avgUserRating)
         parcel.writeString(rulesUrl)
     }
