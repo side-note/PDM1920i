@@ -51,7 +51,7 @@ class GameViewHolder(private val view: LinearLayout) : RecyclerView.ViewHolder(v
         this.game = game
         txtGameName.text = game.name
         Glide.with(view)
-            .load(game.images!!.small)
+            .load(game.images!!.thumb)
             .into(gameIcon)
     }
 }

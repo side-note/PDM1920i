@@ -1,22 +1,30 @@
 
 package g5.li22d.poo.isel.pt.bgg
 
+
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.SearchView
+import android.widget.TabHost
 import androidx.lifecycle.ViewModelProviders
 import g5.li22d.poo.isel.pt.bgg.view.GameListActivity
 
 
 const val NAME : String = "Name"
+const val MOST_POPULAR_GAMES : String = "Most Popular Games"
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQueryTextListener {
 
     override fun onClick(v: View?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val myIntent = Intent(this, GameListActivity::class.java)
+        myIntent.putExtra(MOST_POPULAR_GAMES,"popularity")
+        startActivity(myIntent)
+
     }
 
     override fun onQueryTextChange(newText: String): Boolean {
@@ -53,17 +61,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQue
         //recyclerView.adapter = adapter
         //recyclerView.layoutManager = LinearLayoutManager(this)
 
-        findViewById<SearchView>(R.id.search_bar).setOnClickListener(this)
+        //findViewById<SearchView>(R.id.search_bar).setOnClickListener(this)
         findViewById<SearchView>(R.id.search_bar).setOnQueryTextListener(this)
-
-//        fun sendMessage(view: View) {
-//            val searchView = findViewById<SearchView>(R.id.search_bar)
-//            val message = searchView.query.toString()
-//            val intent = Intent(this, DisplayMessageActivity::class.java).apply {
-//                putExtra("GAME_MBID", message)
-//            }
-//            startActivity(intent)
-//        }
-
+        findViewById<Button>(R.id.mpp).setOnClickListener(this)
     }
 }

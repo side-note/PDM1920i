@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BGG</string>
+    <string name="description">description</string>
+    <string name="rating_text">Rating:</string>
+    <string name="game_info">Game Info</string>
+    <string name="most_popular_games">MOST POPULAR GAMES</string>
 </resources>

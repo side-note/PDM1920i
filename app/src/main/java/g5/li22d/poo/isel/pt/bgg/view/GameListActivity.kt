@@ -1,6 +1,8 @@
 package g5.li22d.poo.isel.pt.bgg.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.TabHost
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,12 +35,17 @@ class GameListActivity: AppCompatActivity() {
             }, { err -> throw err })
         }
 
+        if(intent.getStringExtra(MOST_POPULAR_GAMES)!= null) {
+            bgg.mostPopularGame(intent.getStringExtra(MOST_POPULAR_GAMES), { games ->
+                model.games = games.games
+                adapter.notifyDataSetChanged()
+            }, { err -> throw err })
+        }
 
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerGames)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-
 
 
     }

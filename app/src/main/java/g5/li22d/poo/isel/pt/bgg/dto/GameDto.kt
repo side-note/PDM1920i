@@ -12,7 +12,7 @@ data class GameDto(
     @field:SerializedName("min_players") val minPlayer: Int,
     @field:SerializedName("max_players") val maxPlayer: Int,
     @field:SerializedName("min_age") val minAge: Int,
-    val description: String?,
+    @field:SerializedName("description_preview") val description: String?,
     @field:SerializedName("primary_publisher") val primaryPublisher: String?,
 
     @field:SerializedName("average_user_rating") val avgUserRating: Double,

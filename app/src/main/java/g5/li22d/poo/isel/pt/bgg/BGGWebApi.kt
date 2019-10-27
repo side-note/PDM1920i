@@ -14,6 +14,7 @@ import g5.li22d.poo.isel.pt.bgg.dto.GetGamesDto
 import g5.li22d.poo.isel.pt.bgg.dto.SearchDto
 
 const val BGG_GET_GAMES = "https://www.boardgameatlas.com/api/search?name=%S&pretty=true&client_id=SB1VGnDv7M"
+const val BGG_MPP = "https://www.boardgameatlas.com/api/search/?order_by=popularity&ascending=false&client_id=SB1VGnDv7M"
 
 
 class BGGWebApi(ctx: Context) {
@@ -22,13 +23,12 @@ class BGGWebApi(ctx: Context) {
     val queue = Volley.newRequestQueue(ctx)
     val gson = Gson()
 
-    fun getGames(
-        mbid: String,
-        page: Int,
-        onSuccess: (GetGamesDto) -> Unit,
+    fun mostPopularGame (
+        mostPopularGame: String?,
+        onSuccess: (SearchDto) -> Unit,
         onError: (VolleyError) -> Unit)
     {
-        val url = String.format(BGG_GET_GAMES, mbid, page)
+        val url = String.format(BGG_MPP, mostPopularGame)
         // !!!!! ToDo: Students must refactor this code to avoid duplication of the
         //   HTTP request code !!!
         // Request a string response from the provided URL.
@@ -36,13 +36,15 @@ class BGGWebApi(ctx: Context) {
             Request.Method.GET,
             url,
             Response.Listener<String> { response ->
-                Thread.sleep(3000)
-                val dto = gson.fromJson<GetGamesDto>(response, GetGamesDto::class.java)
+                val dto = gson.fromJson<SearchDto>(response, SearchDto::class.java)
                 onSuccess(dto)
             },
-            Response.ErrorListener { err -> onError(err)})
+            Response.ErrorListener {
+                    err -> onError(err)
+            })
         // Add the request to the RequestQueue.
         queue.add(stringRequest)
+
     }
 
     fun searchGame (
@@ -63,7 +65,6 @@ class BGGWebApi(ctx: Context) {
             },
             Response.ErrorListener {
                     err -> onError(err)
-                Log.e("VOLLEY", err.message)
             })
         // Add the request to the RequestQueue.
         queue.add(stringRequest)
