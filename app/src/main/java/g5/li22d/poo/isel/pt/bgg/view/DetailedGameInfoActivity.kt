@@ -1,6 +1,7 @@
 
 package g5.li22d.poo.isel.pt.bgg.view
 
+import android.content.Intent
 import android.graphics.text.LineBreaker.JUSTIFICATION_MODE_INTER_WORD
 import android.os.Bundle
 import android.text.Layout
@@ -10,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import g5.li22d.poo.isel.pt.bgg.GAME_NAME
+import g5.li22d.poo.isel.pt.bgg.PUBLISHER
 import g5.li22d.poo.isel.pt.bgg.R
 import g5.li22d.poo.isel.pt.bgg.dto.GameDto
 import kotlinx.android.synthetic.main.detailed_info.*
@@ -50,11 +52,11 @@ class DetailedGameInfoActivity : AppCompatActivity(){
 
 
 
-//        name.setOnClickListener{
-//            val myIntent = Intent(this, GameListActivity::class.java)
-//            myIntent.putExtra(NAME,name.text)
-//            startActivity(myIntent)
-//        }
+        primary_publisher.setOnClickListener{
+            val myIntent = Intent(this, GameListActivity::class.java)
+            myIntent.putExtra(PUBLISHER,primary_publisher.text!!)
+            startActivity(myIntent)
+        }
 
 
     }
