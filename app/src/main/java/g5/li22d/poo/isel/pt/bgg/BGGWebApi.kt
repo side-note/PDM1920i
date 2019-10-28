@@ -2,33 +2,31 @@ package g5.li22d.poo.isel.pt.bgg
 
 
 import android.content.Context
-import android.util.Log
-import android.widget.SearchView
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
-import g5.li22d.poo.isel.pt.bgg.dto.GetGamesDto
 import g5.li22d.poo.isel.pt.bgg.dto.SearchDto
 
 const val BGG_GET_GAMES = "https://www.boardgameatlas.com/api/search?name=%S&pretty=true&client_id=SB1VGnDv7M"
 const val BGG_MPP = "https://www.boardgameatlas.com/api/search/?order_by=popularity&ascending=false&client_id=SB1VGnDv7M"
 const val BGG_PUBLISHER = "https://www.boardgameatlas.com/api/search/?publisher=%s&client_id=SB1VGnDv7M"
-const val BGG_Artist ="https://www.boardgameatlas.com/api/search/?artist=%s&client_id=SB1VGnDv7M"
+const val BGG_ARTIST ="https://www.boardgameatlas.com/api/search/?artist=%s&client_id=SB1VGnDv7M"
 class BGGWebApi(ctx: Context) {
 
     // Instantiate the RequestQueue.
     val queue = Volley.newRequestQueue(ctx)
     val gson = Gson()
+
     fun searchArtist(
         artist: String?,
         onSuccess: (SearchDto) -> Unit,
         onError: (VolleyError) -> Unit)
     {
 
-        val url = String.format(BGG_Artist,artist)
+        val url = String.format(BGG_ARTIST,artist)
         val stringRequest = StringRequest(Request.Method.GET,
             url,
             Response.Listener<String> {response ->

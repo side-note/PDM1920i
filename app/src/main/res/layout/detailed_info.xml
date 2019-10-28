@@ -127,10 +127,16 @@
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/publishers"
+            android:id="@+id/artists"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="TextView" />
+
+        <LinearLayout
+            android:id="@+id/artists_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"></LinearLayout>
 
     </LinearLayout>
 </ScrollView>

@@ -2,11 +2,15 @@
 package g5.li22d.poo.isel.pt.bgg.view
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Layout
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.children
 import com.bumptech.glide.Glide
+import g5.li22d.poo.isel.pt.bgg.ARTIST
 import g5.li22d.poo.isel.pt.bgg.GAME_NAME
 import g5.li22d.poo.isel.pt.bgg.PUBLISHER
 import g5.li22d.poo.isel.pt.bgg.R
@@ -40,14 +44,7 @@ class DetailedGameInfoActivity : AppCompatActivity(){
         primary_publisher.text = gameDto.primaryPublisher
         rules_url.text = gameDto.rulesUrl
 
-        var publishersString = ""
-        for(s in gameDto.artists!!){
-            publishersString += (s + "\n")
-        }
-
-        publishers.text = publishersString
-
-
+        getArtists(gameDto.artists!!)
 
         primary_publisher.setOnClickListener{
             val myIntent = Intent(this, GameListActivity::class.java)
@@ -55,7 +52,26 @@ class DetailedGameInfoActivity : AppCompatActivity(){
             startActivity(myIntent)
         }
 
+        rules_url.setOnClickListener {
+            val url = Uri.parse(gameDto.rulesUrl)
+            startActivity(Intent(Intent.ACTION_VIEW, url))
+        }
 
+
+    }
+
+    fun getArtists(artists : Array<String>){
+        artists.forEach {
+            val artist = TextView(this)
+            artist.text = it
+            artist.setOnClickListener {
+                val myIntent = Intent(this, GameListActivity::class.java)
+                myIntent.putExtra(ARTIST,artist.text!!)
+                startActivity(myIntent)}
+
+            val list = findViewById<LinearLayout>(R.id.artists_list)
+            list.addView(artist)
+        }
     }
 
 }

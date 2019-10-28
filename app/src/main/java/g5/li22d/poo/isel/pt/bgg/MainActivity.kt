@@ -16,7 +16,7 @@ import g5.li22d.poo.isel.pt.bgg.view.GameListActivity
 const val NAME : String = "Name"
 const val MOST_POPULAR_GAMES : String = "Most Popular Games"
 const val PUBLISHER : String = "Publisher"
-const val ARTIST :String ="Artist"
+const val ARTIST :String = "Artist"
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQueryTextListener {
 
