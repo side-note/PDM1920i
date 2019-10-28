@@ -23,6 +23,26 @@
             android:layout_height="wrap_content">
 
         </SearchView>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="245dp" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Space
+                android:layout_width="231dp"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:id="@+id/credits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Credits" />
+        </TableRow>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

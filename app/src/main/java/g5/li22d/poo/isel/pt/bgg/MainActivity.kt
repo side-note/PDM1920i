@@ -8,9 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.SearchView
-import android.widget.TabHost
 import androidx.lifecycle.ViewModelProviders
 import g5.li22d.poo.isel.pt.bgg.view.GameListActivity
 
@@ -26,7 +24,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQue
         val myIntent = Intent(this, GameListActivity::class.java)
         myIntent.putExtra(MOST_POPULAR_GAMES,"popularity")
         startActivity(myIntent)
-
     }
 
     override fun onQueryTextChange(newText: String): Boolean {
@@ -39,7 +36,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQue
         myIntent.putExtra(NAME,query)
         startActivity(myIntent)
         return true
-
     }
 
 
@@ -66,5 +62,13 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQue
         //findViewById<SearchView>(R.id.search_bar).setOnClickListener(this)
         findViewById<SearchView>(R.id.search_bar).setOnQueryTextListener(this)
         findViewById<Button>(R.id.mpp).setOnClickListener(this)
+        val cr = Credits(this)
+        findViewById<Button>(R.id.credits).setOnClickListener(cr)
+    }
+
+    class Credits(val mainActivity: MainActivity) :  View.OnClickListener{
+        override fun onClick(v: View?) {
+            mainActivity.setContentView(R.layout.developed_layout)
+        }
     }
 }
