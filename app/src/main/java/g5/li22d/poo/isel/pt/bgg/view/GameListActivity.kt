@@ -48,7 +48,12 @@ class GameListActivity: AppCompatActivity() {
                 adapter.notifyDataSetChanged()
             }, {err -> throw err})
         }
-
+        if(intent.getStringExtra(ARTIST) != null){
+            bgg.searchArtist(intent.getStringExtra(ARTIST), { games ->
+                model.games = games.games
+                adapter.notifyDataSetChanged()
+            }, {err -> throw err})
+        }
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerGames)
         recyclerView.adapter = adapter

@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 data class GameDto(
     val name: String?,
     val images: ImageDto?,
-    val publishers: Array<String>?,
+    val artists: Array<String>?,
     @field:SerializedName("year_published") val yearPublished: Int,
     @field:SerializedName("min_players") val minPlayer: Int,
     @field:SerializedName("max_players") val maxPlayer: Int,
@@ -35,7 +35,7 @@ data class GameDto(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(name)
         parcel.writeParcelable(images,flags)
-        parcel.writeStringArray(publishers)
+        parcel.writeStringArray(artists)
         parcel.writeInt(yearPublished)
         parcel.writeInt(minPlayer)
         parcel.writeInt(maxPlayer)
@@ -64,10 +64,10 @@ data class GameDto(
         if (description != other.description) return false
         if (images != other.images) return false
         if (primaryPublisher != other.primaryPublisher) return false
-        if (publishers != null) {
-            if (other.publishers == null) return false
-            if (!publishers.contentEquals(other.publishers)) return false
-        } else if (other.publishers != null) return false
+        if (artists != null) {
+            if (other.artists == null) return false
+            if (!artists.contentEquals(other.artists)) return false
+        } else if (other.artists != null) return false
         if (avgUserRating != other.avgUserRating) return false
         if (rulesUrl != other.rulesUrl) return false
 
@@ -83,7 +83,7 @@ data class GameDto(
         result = 31 * result + (description?.hashCode() ?: 0)
         result = 31 * result + (images?.hashCode() ?: 0)
         result = 31 * result + (primaryPublisher?.hashCode() ?: 0)
-        result = 31 * result + (publishers?.contentHashCode() ?: 0)
+        result = 31 * result + (artists?.contentHashCode() ?: 0)
         result = 31 * result + avgUserRating.hashCode()
         result = 31 * result + (rulesUrl?.hashCode() ?: 0)
         return result
