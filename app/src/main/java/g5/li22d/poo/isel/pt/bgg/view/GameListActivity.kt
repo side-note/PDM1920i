@@ -1,8 +1,6 @@
 package g5.li22d.poo.isel.pt.bgg.view
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.TabHost
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +17,9 @@ class GameListActivity: AppCompatActivity() {
         GamesAdapter(model)
     }
     val model : GameViewModel by lazy {
-        ViewModelProviders.of(this)[GameViewModel::class.java]
+        val app = application as GeniuzApp
+        val factory = BGGViewModelFactoryProvider(app)
+        ViewModelProviders.of(this, factory)[GameViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?){
@@ -29,30 +29,21 @@ class GameListActivity: AppCompatActivity() {
 
 
         if(intent.getStringExtra(NAME)!= null) {
-            bgg.searchGame(intent.getStringExtra(NAME), { games ->
-                model.games = games.games
-                adapter.notifyDataSetChanged()
-            }, { err -> throw err })
+            model.observe(this){adapter.notifyDataSetChanged()}
+            model.search( intent.getStringExtra(NAME)!!, BGG_GET_GAMES)
+        }
+        else if(intent.getStringExtra(MOST_POPULAR_GAMES)!= null) {
+            model.observe(this){adapter.notifyDataSetChanged()}
+            model.search( intent.getStringExtra(MOST_POPULAR_GAMES)!!, BGG_MPP)
         }
 
-        if(intent.getStringExtra(MOST_POPULAR_GAMES)!= null) {
-            bgg.mostPopularGame(intent.getStringExtra(MOST_POPULAR_GAMES), { games ->
-                model.games = games.games
-                adapter.notifyDataSetChanged()
-            }, { err -> throw err })
+        else if(intent.getStringExtra(PUBLISHER) != null){
+            model.observe(this){adapter.notifyDataSetChanged()}
+            model.search( intent.getStringExtra(PUBLISHER)!!, BGG_PUBLISHER)
         }
-
-        if(intent.getStringExtra(PUBLISHER) != null){
-            bgg.searchPublisher(intent.getStringExtra(PUBLISHER), { games ->
-                model.games = games.games
-                adapter.notifyDataSetChanged()
-            }, {err -> throw err})
-        }
-        if(intent.getStringExtra(ARTIST) != null){
-            bgg.searchArtist(intent.getStringExtra(ARTIST), { games ->
-                model.games = games.games
-                adapter.notifyDataSetChanged()
-            }, {err -> throw err})
+        else if(intent.getStringExtra(ARTIST) != null){
+            model.observe(this){adapter.notifyDataSetChanged()}
+            model.search( intent.getStringExtra(ARTIST)!!, BGG_ARTIST)
         }
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerGames)

@@ -25,7 +25,7 @@ class DetailedGameInfoActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detailed_info)
 
-        val gameDto : GameDto = intent.getParcelableExtra(GAME_NAME)
+        val gameDto : GameDto = intent.getParcelableExtra(GAME_NAME)!!
         val name: TextView =  findViewById(R.id.name_id)
         val description: TextView = findViewById(R.id.game_description)
         val rating: TextView = findViewById(R.id.detailed_rating)

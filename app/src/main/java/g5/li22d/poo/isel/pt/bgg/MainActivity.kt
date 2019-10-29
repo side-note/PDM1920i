@@ -17,6 +17,7 @@ const val NAME : String = "Name"
 const val MOST_POPULAR_GAMES : String = "Most Popular Games"
 const val PUBLISHER : String = "Publisher"
 const val ARTIST :String = "Artist"
+const val TAG : String = "BGG"
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQueryTextListener {
 
