@@ -16,6 +16,7 @@ class GameViewModel(private val bggWebApi: BGGWebApi) : ViewModel(){
     fun search(name: String, url: String) {
         if(this.name == name) return
         this.name = name
+
         Log.v(TAG, "**** FETCHING Games called by $name from BoardGameAtlas.com...")
         bggWebApi.search(
             name,

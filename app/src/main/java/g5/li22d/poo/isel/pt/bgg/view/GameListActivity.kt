@@ -1,6 +1,7 @@
 package g5.li22d.poo.isel.pt.bgg.view
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,31 +26,35 @@ class GameListActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.games_layout)
+        val title : TextView = findViewById(R.id.title_view)
+        val intentName : String? = intent.getStringExtra(NAME)
+        val intentMPP : String? = intent.getStringExtra(MOST_POPULAR_GAMES)
+        val intentPublisher : String? = intent.getStringExtra(PUBLISHER)
+        val intentArtist : String? = intent.getStringExtra(ARTIST)
 
-
-
-        if(intent.getStringExtra(NAME)!= null) {
-            model.observe(this){adapter.notifyDataSetChanged()}
-            model.search( intent.getStringExtra(NAME)!!, BGG_GET_GAMES)
+        if(intentName != null){
+                title.text = intentName
+                model.observe(this){adapter.notifyDataSetChanged()}
+                model.search( intentName, BGG_GET_GAMES)
         }
-        else if(intent.getStringExtra(MOST_POPULAR_GAMES)!= null) {
-            model.observe(this){adapter.notifyDataSetChanged()}
-            model.search( intent.getStringExtra(MOST_POPULAR_GAMES)!!, BGG_MPP)
+        else if(intentMPP != null ){
+                title.text = MOST_POPULAR_GAMES
+                model.observe(this){adapter.notifyDataSetChanged()}
+                model.search( intentMPP, BGG_MPP)
         }
-
-        else if(intent.getStringExtra(PUBLISHER) != null){
-            model.observe(this){adapter.notifyDataSetChanged()}
-            model.search( intent.getStringExtra(PUBLISHER)!!, BGG_PUBLISHER)
+        else if(intentPublisher != null) {
+                title.text = intentPublisher
+                model.observe(this){adapter.notifyDataSetChanged()}
+                model.search( intentPublisher, BGG_PUBLISHER)
         }
-        else if(intent.getStringExtra(ARTIST) != null){
-            model.observe(this){adapter.notifyDataSetChanged()}
-            model.search( intent.getStringExtra(ARTIST)!!, BGG_ARTIST)
+        else if(intentArtist != null) {
+                title.text = intentArtist
+                model.observe(this){adapter.notifyDataSetChanged()}
+                model.search( intentArtist, BGG_ARTIST)
         }
 
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerGames)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-
-
     }
 }
