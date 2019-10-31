@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import g5.li22d.poo.isel.pt.bgg.dto.GameDto
@@ -26,7 +27,7 @@ class GamesAdapter(val model: GameViewModel) :
         // 2. Inflate parent com o artist_view
         // 3. Instanciar ViewHolder -> passando-lhe o TextView
         val gamesView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_game_layout, parent, false) as LinearLayout
+            .inflate(R.layout.list_game_layout, parent, false) as ConstraintLayout
         return GameViewHolder(gamesView)
     }
 
@@ -37,7 +38,7 @@ class GamesAdapter(val model: GameViewModel) :
     }
 }
 
-class GameViewHolder(private val view: LinearLayout) : RecyclerView.ViewHolder(view) {
+class GameViewHolder(private val view: ConstraintLayout) : RecyclerView.ViewHolder(view) {
     private lateinit var game: GameDto
     private val txtGameName: TextView = view.findViewById<TextView>(R.id.gameName)
     private val gameIcon: ImageView = view.findViewById<ImageView>(R.id.game_icon)
@@ -58,7 +59,7 @@ class GameViewHolder(private val view: LinearLayout) : RecyclerView.ViewHolder(v
         publisher.text = game.primaryPublisher
         txtGameName.text = game.name
         Glide.with(view)
-            .load(game.images!!.thumb)
+            .load(game.images!!.small)
             .into(gameIcon)
     }
 }
