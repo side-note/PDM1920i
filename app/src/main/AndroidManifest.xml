@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="g5.li22d.poo.isel.pt.bgg">
+    package="pt.isel.pdm.li52d.g4.bgg">
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".BggApp"
+        android:name="pt.isel.pdm.li52d.g4.bgg.BggApp"
         android:allowBackup="true"
         android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.GameListActivity"></activity>
-        <activity android:name=".view.DetailedGameInfoActivity"></activity>
-        <activity android:name=".view.CreditsActivity"></activity>
-        <activity android:name=".MainActivity">
+        <activity android:name="pt.isel.pdm.li52d.g4.bgg.view.GameListActivity"></activity>
+        <activity android:name="pt.isel.pdm.li52d.g4.bgg.view.DetailedGameInfoActivity"></activity>
+        <activity android:name="pt.isel.pdm.li52d.g4.bgg.view.CreditsActivity"></activity>
+        <activity android:name="pt.isel.pdm.li52d.g4.bgg.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

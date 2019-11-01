@@ -8,7 +8,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "g5.li22d.poo.isel.pt.bgg"
+        applicationId "pt.isel.pdm.li52d.g4.bgg"
         minSdkVersion 26
         targetSdkVersion 26
         versionCode 1

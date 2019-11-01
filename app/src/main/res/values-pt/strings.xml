@@ -4,7 +4,7 @@
     <string name="rating_text">"Classificação: "</string>
     <string name="game_info">Info. Jogo</string>
     <string name="most_popular_games">JOGOS MAIS POPULARES</string>
-    <string name="credits">Créditos: Esta Aplicação foi desenvolvida por Carolina Couto, Joana Campos e Nuno Cardeal e foi orientada por Fernando Carvalho. Esta aplicação foi baseada na API fornecida por Board Games Atlas</string>
+    <string name="credits"><b>Créditos:</b> Esta Aplicação foi desenvolvida por Carolina Couto, Joana Campos e Nuno Cardeal e foi orientada por Fernando Carvalho. Esta aplicação foi baseada na API fornecida por Board Games Atlas</string>
     <string name="published">"Publicado em: "</string>
     <string name="min_player">"Min Jogadores: "</string>
     <string name="max_player">"Max Jogadores: "</string>

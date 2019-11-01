@@ -194,7 +194,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView"
-                android:textColor="@android:color/holo_blue_light"/>
+                android:autoLink="all"
+                android:textColorLink="@android:color/holo_blue_light"/>
         </TableRow>
 
         <TextView
