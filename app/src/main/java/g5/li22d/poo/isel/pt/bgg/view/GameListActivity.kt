@@ -38,7 +38,7 @@ class GameListActivity: AppCompatActivity() {
                 model.search( intentName, BGG_GET_GAMES)
         }
         else if(intentMPP != null ){
-                title.text = MOST_POPULAR_GAMES
+                title.text = resources.getString(R.string.most_popular_games)
                 model.observe(this){adapter.notifyDataSetChanged()}
                 model.search( intentMPP, BGG_MPP)
         }

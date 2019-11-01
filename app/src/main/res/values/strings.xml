@@ -1,14 +1,16 @@
 <resources>
-    <string name="app_name">BGG</string>
+    <string name="app_name" translatable="false">BGG</string>
     <string name="description">Description</string>
     <string name="rating_text">Rating:\u0020</string>
     <string name="game_info">Game Info</string>
     <string name="most_popular_games">MOST POPULAR GAMES</string>
-    <string name="credits">Credits: This Application was made by Carolina Couto, Joana Campos and Nuno Cardeal and it was inspected by Fernando Carvalho. This application was based on the API given by Board Game Atlas</string>
-    <string name="publiched">Published at\u0020</string>
+    <string name="credits">Credits: This Application was developed by Carolina Couto, Joana Campos and Nuno Cardeal and it was oriented by Fernando Carvalho. This application was based on the API given by Board Game Atlas</string>
+    <string name="published">Published inu0020</string>
     <string name="min_player">Min Players:\u0020</string>
     <string name="max_player">Max Players:\u0020</string>
     <string name="min_age">Min Age:\u0020</string>
     <string name="rules">Rules:\u0020</string>
     <string name="artists">Artists</string>
+    <string name="credits_button">Credits</string>
+    <string name="img_error_url">Could not open official site!</string>
 </resources>

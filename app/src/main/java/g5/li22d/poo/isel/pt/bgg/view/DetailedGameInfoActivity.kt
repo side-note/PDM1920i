@@ -5,8 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Layout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
@@ -39,6 +41,7 @@ class DetailedGameInfoActivity : AppCompatActivity(){
         val name: TextView =  findViewById(R.id.name_id)
         val description: TextView = findViewById(R.id.game_description)
         val rating: TextView = findViewById(R.id.detailed_rating)
+        val img : ImageView = findViewById(R.id.game_image)
 
         Glide.with(this)
             .load(gameDto.images!!.small)
@@ -65,6 +68,14 @@ class DetailedGameInfoActivity : AppCompatActivity(){
         rules_url.setOnClickListener {
             val url = Uri.parse(gameDto.rulesUrl)
             startActivity(Intent(Intent.ACTION_VIEW, url))
+        }
+
+        img.setOnClickListener{
+            if(gameDto.url != null){
+                val url = Uri.parse(gameDto.url)
+                startActivity(Intent(Intent.ACTION_VIEW, url))
+            }else
+                Toast.makeText(this,R.string.img_error_url, Toast.LENGTH_LONG).show()
         }
 
 

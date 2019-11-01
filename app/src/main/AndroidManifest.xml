@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".view.GameListActivity"></activity>
         <activity android:name=".view.DetailedGameInfoActivity"></activity>
+        <activity android:name=".view.CreditsActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

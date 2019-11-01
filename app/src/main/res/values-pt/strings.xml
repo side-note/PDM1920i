@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">BGG</string>
+    <string name="description">Descrição</string>
+    <string name="rating_text">Classificação:\\u0020</string>
+    <string name="game_info">Info. Jogo</string>
+    <string name="most_popular_games">JOGOS MAIS POPULARES</string>
+    <string name="credits">Créditos: Esta Aplicação foi desenvolvida por Carolina Couto, Joana Campos e Nuno Cardeal e foi orientada por Fernando Carvalho. Esta aplicação foi baseada na API fornecida por Board Games Atlas</string>
+    <string name="published">Publicado em\\u0020</string>
+    <string name="min_player">Min Jogadores:\\u0020</string>
+    <string name="max_player">Max Jogadores:\\u0020</string>
+    <string name="min_age">Idade Min:\\u0020</string>
+    <string name="rules">Regras:\\u0020</string>
+    <string name="artists">Criadores</string>
+    <string name="credits_button">Créditos</string>
+    <string name="img_error_url">Não foi possível abrir site oficial!</string>
+</resources>
