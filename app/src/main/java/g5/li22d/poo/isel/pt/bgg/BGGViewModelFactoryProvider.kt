@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 
 
-class BGGViewModelFactoryProvider (val app : GeniuzApp) : ViewModelProvider.Factory {
+class BGGViewModelFactoryProvider (val app : BggApp) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
             GameViewModel::class.java -> GameViewModel(app.bgg) as T

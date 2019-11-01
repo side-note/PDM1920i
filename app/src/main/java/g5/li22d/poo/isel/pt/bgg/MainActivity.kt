@@ -10,14 +10,15 @@ import android.view.View
 import android.widget.Button
 import android.widget.SearchView
 import androidx.lifecycle.ViewModelProviders
+import g5.li22d.poo.isel.pt.bgg.view.CreditsActivity
 import g5.li22d.poo.isel.pt.bgg.view.GameListActivity
-
 
 const val NAME : String = "Name"
 const val MOST_POPULAR_GAMES : String = "Most Popular Games"
 const val PUBLISHER : String = "Publisher"
 const val ARTIST :String = "Artist"
 const val TAG : String = "BGG"
+const val CREDITS : String = "Credits"
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQueryTextListener {
 
@@ -39,7 +40,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQue
         return true
     }
 
-
     val bgg : BGGWebApi by lazy {
         BGGWebApi(this)
     }
@@ -54,22 +54,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQue
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.search_activity)
+        setContentView(R.layout.main_activity)
 
-        //val recyclerView = findViewById<RecyclerView>(R.id.recyclerArtists)
-        //recyclerView.adapter = adapter
-        //recyclerView.layoutManager = LinearLayoutManager(this)
-
-        //findViewById<SearchView>(R.id.search_bar).setOnClickListener(this)
         findViewById<SearchView>(R.id.search_bar).setOnQueryTextListener(this)
         findViewById<Button>(R.id.mpp).setOnClickListener(this)
-        val cr = Credits(this)
-        findViewById<Button>(R.id.credits).setOnClickListener(cr)
-    }
 
-    class Credits(val mainActivity: MainActivity) :  View.OnClickListener{
-        override fun onClick(v: View?) {
-            mainActivity.setContentView(R.layout.developed_layout)
+        findViewById<Button>(R.id.credits).setOnClickListener{
+            val myIntent = Intent(this, CreditsActivity::class.java)
+            myIntent.putExtra(CREDITS,"Credits")
+            startActivity(myIntent)
         }
     }
 }

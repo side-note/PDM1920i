@@ -14,8 +14,8 @@ data class GameDto(
     @field:SerializedName("min_age") val minAge: Int,
     @field:SerializedName("description_preview") val description: String?,
     @field:SerializedName("primary_publisher") val primaryPublisher: String?,
-
     @field:SerializedName("average_user_rating") val avgUserRating: Double,
+    @field:SerializedName("official_url") val url: String?,
     @field:SerializedName("rules_url") val rulesUrl: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
@@ -29,6 +29,7 @@ data class GameDto(
         parcel.readString(),
         parcel.readString(),
         parcel.readDouble(),
+        parcel.readString(),
         parcel.readString()
     )
 
@@ -43,6 +44,7 @@ data class GameDto(
         parcel.writeString(description)
         parcel.writeString(primaryPublisher)
         parcel.writeDouble(avgUserRating)
+        parcel.writeString(url)
         parcel.writeString(rulesUrl)
     }
 
@@ -69,6 +71,7 @@ data class GameDto(
             if (!artists.contentEquals(other.artists)) return false
         } else if (other.artists != null) return false
         if (avgUserRating != other.avgUserRating) return false
+        if (url != other.url) return false
         if (rulesUrl != other.rulesUrl) return false
 
         return true
@@ -85,6 +88,7 @@ data class GameDto(
         result = 31 * result + (primaryPublisher?.hashCode() ?: 0)
         result = 31 * result + (artists?.contentHashCode() ?: 0)
         result = 31 * result + avgUserRating.hashCode()
+        result = 31 * result + (url?.hashCode() ?: 0)
         result = 31 * result + (rulesUrl?.hashCode() ?: 0)
         return result
     }

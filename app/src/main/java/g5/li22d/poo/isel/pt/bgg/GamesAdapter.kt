@@ -59,7 +59,7 @@ class GameViewHolder(private val view: ConstraintLayout) : RecyclerView.ViewHold
         publisher.text = game.primaryPublisher
         txtGameName.text = game.name
         Glide.with(view)
-            .load(game.images!!.thumb)
+            .load(game.images!!.small)
             .into(gameIcon)
     }
 }

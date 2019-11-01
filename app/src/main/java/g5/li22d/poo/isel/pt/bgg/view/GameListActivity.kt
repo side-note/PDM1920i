@@ -18,7 +18,7 @@ class GameListActivity: AppCompatActivity() {
         GamesAdapter(model)
     }
     val model : GameViewModel by lazy {
-        val app = application as GeniuzApp
+        val app = application as BggApp
         val factory = BGGViewModelFactoryProvider(app)
         ViewModelProviders.of(this, factory)[GameViewModel::class.java]
     }
@@ -38,7 +38,7 @@ class GameListActivity: AppCompatActivity() {
                 model.search( intentName, BGG_GET_GAMES)
         }
         else if(intentMPP != null ){
-                title.text = MOST_POPULAR_GAMES
+                title.text = resources.getString(R.string.most_popular_games)
                 model.observe(this){adapter.notifyDataSetChanged()}
                 model.search( intentMPP, BGG_MPP)
         }
