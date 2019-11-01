@@ -4,20 +4,16 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import g5.li22d.poo.isel.pt.bgg.R
 import g5.li22d.poo.isel.pt.bgg.dto.GameDto
-import g5.li22d.poo.isel.pt.bgg.dto.ImageDto
 import g5.li22d.poo.isel.pt.bgg.view.DetailedGameInfoActivity
-import org.w3c.dom.Text
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-
-const val GAME_MBID = "GAME_MBID"
 const val GAME_NAME = "GAME_NAME"
 
 class GamesAdapter(val model: GameViewModel) :
@@ -40,8 +36,8 @@ class GamesAdapter(val model: GameViewModel) :
 
 class GameViewHolder(private val view: ConstraintLayout) : RecyclerView.ViewHolder(view) {
     private lateinit var game: GameDto
-    private val txtGameName: TextView = view.findViewById<TextView>(R.id.gameName)
-    private val gameIcon: ImageView = view.findViewById<ImageView>(R.id.game_icon)
+    private val txtGameName: TextView = view.findViewById(R.id.gameName)
+    private val gameIcon: ImageView = view.findViewById(R.id.game_icon)
     private val ratingNumber: TextView = view.findViewById(R.id.rating_list)
     private val publisher: TextView = view.findViewById(R.id.publisher_list)
 

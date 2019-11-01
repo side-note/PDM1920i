@@ -4,9 +4,7 @@ import com.google.gson.Gson
 import g5.li22d.poo.isel.pt.bgg.dto.SearchDto
 import org.junit.Test
 
-import org.junit.Assert.*
 import java.io.BufferedReader
-import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.URL
 

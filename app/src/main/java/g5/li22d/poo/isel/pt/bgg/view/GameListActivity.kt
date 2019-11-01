@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import g5.li22d.poo.isel.pt.bgg.BGGWebApi
 import g5.li22d.poo.isel.pt.bgg.*
 
 class GameListActivity: AppCompatActivity() {

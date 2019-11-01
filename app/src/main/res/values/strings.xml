@@ -5,7 +5,7 @@
     <string name="game_info">Game Info</string>
     <string name="most_popular_games">MOST POPULAR GAMES</string>
     <string name="credits">Credits: This Application was developed by Carolina Couto, Joana Campos and Nuno Cardeal and it was oriented by Fernando Carvalho. This application was based on the API given by Board Game Atlas</string>
-    <string name="published">Published inu0020</string>
+    <string name="published">"Published in: "</string>
     <string name="min_player">Min Players:\u0020</string>
     <string name="max_player">Max Players:\u0020</string>
     <string name="min_age">Min Age:\u0020</string>

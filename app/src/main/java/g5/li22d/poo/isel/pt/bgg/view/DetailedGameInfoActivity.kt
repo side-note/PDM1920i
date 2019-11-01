@@ -1,4 +1,3 @@
-
 package g5.li22d.poo.isel.pt.bgg.view
 
 import android.content.Intent
@@ -9,9 +8,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.children
 import com.bumptech.glide.Glide
 import g5.li22d.poo.isel.pt.bgg.ARTIST
 import g5.li22d.poo.isel.pt.bgg.GAME_NAME
@@ -27,15 +24,6 @@ class DetailedGameInfoActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detailed_info)
-
-//        val toolbar : Toolbar? = findViewById(R.id.toolbar)
-//        setSupportActionBar(toolbar)
-//
-//        if (getSupportActionBar() != null){
-//            getSupportActionBar()!!.setDisplayHomeAsUpEnabled(true);
-//            getSupportActionBar()!!.setDisplayShowHomeEnabled(true);
-//            getSupportActionBar()!!.;
-//        }
 
         val gameDto : GameDto = intent.getParcelableExtra(GAME_NAME)!!
         val name: TextView =  findViewById(R.id.name_id)

@@ -1,4 +1,3 @@
-
 package g5.li22d.poo.isel.pt.bgg
 
 
@@ -42,14 +41,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQue
 
     val bgg : BGGWebApi by lazy {
         BGGWebApi(this)
-    }
-
-    val adapter : GamesAdapter by lazy {
-        GamesAdapter(model)
-    }
-
-    val model : GameViewModel by lazy {
-        ViewModelProviders.of(this)[GameViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
