@@ -14,6 +14,7 @@ class GameViewModel(private val bggWebApi: BGGWebApi) : ViewModel(){
     var name = ""
 
     fun search(name: String, url: String) {
+
         if(this.name == name) return
         this.name = name
 

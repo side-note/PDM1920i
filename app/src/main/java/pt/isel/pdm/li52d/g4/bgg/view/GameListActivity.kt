@@ -20,7 +20,7 @@ class GameListActivity: AppCompatActivity() {
     }
     val model : GameViewModel by lazy {
         val app = application as BggApp
-        val factory = BGGViewModelFactoryProvider(app)
+        val factory = BGGViewModelFactoryProvider(app,intent)
         ViewModelProviders.of(this, factory)[GameViewModel::class.java]
     }
 
