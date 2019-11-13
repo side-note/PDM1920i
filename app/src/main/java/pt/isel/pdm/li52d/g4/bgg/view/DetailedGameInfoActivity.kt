@@ -30,6 +30,13 @@ class DetailedGameInfoActivity : AppCompatActivity(){
         val description: TextView = findViewById(R.id.game_description)
         val rating: TextView = findViewById(R.id.detailed_rating)
         val img : ImageView = findViewById(R.id.game_image)
+        /*
+        * GameListActivity:
+        *   Passar os intents e observer para a factory, para o caso de o ViewModel ja estar craido nao o recriar
+        *
+        * DetailedGameInfoActivity:
+        *   Criar um ViewModel e fazer o intent para o caso de o ViewModel ja estar criado nao o refazer (similar à nota acima)
+        * */
 
         Glide.with(this)
             .load(gameDto.images!!.small)

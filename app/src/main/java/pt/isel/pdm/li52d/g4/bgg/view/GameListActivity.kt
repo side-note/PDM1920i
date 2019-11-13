@@ -33,6 +33,7 @@ class GameListActivity: AppCompatActivity() {
         val intentPublisher : String? = intent.getStringExtra(PUBLISHER)
         val intentArtist : String? = intent.getStringExtra(ARTIST)
 
+
         if(intentName != null){
                 title.text = intentName
                 model.observe(this){adapter.notifyDataSetChanged()}
