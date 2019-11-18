@@ -20,17 +20,18 @@ import java.math.RoundingMode
 
 class DetailedGameInfoActivity : AppCompatActivity(){
 
-    val model : GameViewModel by lazy {
+    val model : DetailedGameInfoViewModel by lazy {
+
         val app = application as BggApp
         val factory = BGGViewModelFactoryProvider(app,intent)
-        ViewModelProviders.of(this, factory)[GameViewModel::class.java]
+        ViewModelProviders.of(this, factory)[DetailedGameInfoViewModel::class.java]
+
     }
-    var gameDto : GameDto? = null;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detailed_info)
 
-        gameDto = intent.getParcelableExtra(GAME_NAME)!!
+
         val name: TextView =  findViewById(R.id.name_id)
         val description: TextView = findViewById(R.id.game_description)
         val rating: TextView = findViewById(R.id.detailed_rating)
@@ -44,20 +45,21 @@ class DetailedGameInfoActivity : AppCompatActivity(){
         * */
 
         Glide.with(this)
-            .load(gameDto!!.images!!.small)
+            .load(model.smallImage)
             .into(game_image)
-        description.text = gameDto!!.description
-        description.justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
-        name.text = gameDto!!.name
-        rating.text =  " " + BigDecimal(gameDto!!.avgUserRating.toString()).setScale(1, RoundingMode.HALF_UP).toDouble().toString() + "/5"
-        year_published.text = gameDto!!.yearPublished.toString()
-        min_player.text = gameDto!!.minPlayer.toString()
-        max_player.text = gameDto!!.maxPlayer.toString()
-        min_age.text = gameDto!!.minAge.toString()
-        primary_publisher.text = gameDto!!.primaryPublisher
-        rules_url.text = gameDto!!.rulesUrl
+        description.text = model.desc
 
-        getArtists(gameDto!!.artists!!)
+        description.justificationMode = Layout.JUSTIFICATION_MODE_INTER_WORD
+        name.text = model.gameName
+        rating.text =  " " + BigDecimal(model.rating.toString()).setScale(1, RoundingMode.HALF_UP).toDouble().toString() + "/5"
+        year_published.text = model.year.toString()
+        min_player.text = model.minplayer.toString()
+        max_player.text = model.maxplayer.toString()
+        min_age.text = model.minage.toString()
+        primary_publisher.text = model.publisher
+        rules_url.text = model.rulesurl
+
+        getArtists(model.artists!!)
 
         primary_publisher.setOnClickListener{
             val myIntent = Intent(this, GameListActivity::class.java)
@@ -66,13 +68,13 @@ class DetailedGameInfoActivity : AppCompatActivity(){
         }
 
         rules_url.setOnClickListener {
-            val url = Uri.parse(gameDto!!.rulesUrl)
+            val url = Uri.parse(model.rulesurl)
             startActivity(Intent(Intent.ACTION_VIEW, url))
         }
 
         img.setOnClickListener{
-            if(gameDto!!.url != null){
-                val url = Uri.parse(gameDto!!.url)
+            if(model.url != null){
+                val url = Uri.parse(model.url)
                 startActivity(Intent(Intent.ACTION_VIEW, url))
             }else
                 Toast.makeText(this,R.string.img_error_url, Toast.LENGTH_LONG).show()
