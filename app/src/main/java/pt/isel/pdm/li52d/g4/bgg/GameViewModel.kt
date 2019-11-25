@@ -18,11 +18,11 @@ class GameViewModel(private val bggWebApi: BGGWebApi) : ViewModel(){
         if(this.name == name) return
         this.name = name
 
-        Log.v(TAG, "**** FETCHING Games called by $name from BoardGameAtlas.com...")
+        Log.v(TAG, "**** FETCHING Game called by $name from BoardGameAtlas.com...")
         bggWebApi.search(
             name,
             {games ->
-                Log.v(TAG, "**** FETCHING Games called by $name COMPLETED !!!!")
+                Log.v(TAG, "**** FETCHING Game called by $name COMPLETED !!!!")
                 this.liveData.value = games.games
             },
             { this.name = ""; throw it },

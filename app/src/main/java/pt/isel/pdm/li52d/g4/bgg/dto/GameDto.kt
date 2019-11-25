@@ -5,6 +5,7 @@ import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 
 data class GameDto(
+    val id: String?,
     val name: String?,
     val images: ImageDto?,
     val artists: Array<String>?,
@@ -20,6 +21,7 @@ data class GameDto(
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
+        parcel.readString(),
         parcel.readParcelable<ImageDto>(ImageDto::class.java.classLoader),
         parcel.createStringArray(),
         parcel.readInt(),
@@ -34,6 +36,7 @@ data class GameDto(
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
         parcel.writeString(name)
         parcel.writeParcelable(images,flags)
         parcel.writeStringArray(artists)

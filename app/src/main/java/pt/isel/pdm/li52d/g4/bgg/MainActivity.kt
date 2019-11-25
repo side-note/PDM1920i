@@ -10,13 +10,15 @@ import android.widget.Button
 import android.widget.SearchView
 import pt.isel.pdm.li52d.g4.bgg.view.CreditsActivity
 import pt.isel.pdm.li52d.g4.bgg.view.GameListActivity
+import pt.isel.pdm.li52d.g4.bgg.view.ListsActivity
 
 const val NAME : String = "Name"
-const val MOST_POPULAR_GAMES : String = "Most Popular Games"
+const val MOST_POPULAR_GAMES : String = "Most Popular Game"
 const val PUBLISHER : String = "Publisher"
 const val ARTIST :String = "Artist"
 const val TAG : String = "BGG"
 const val CREDITS : String = "Credits"
+
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQueryTextListener {
 
@@ -53,6 +55,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQue
             val myIntent = Intent(this, CreditsActivity::class.java)
             myIntent.putExtra(CREDITS,"Credits")
             startActivity(myIntent)
+        }
+
+        findViewById<Button>(R.id.lists).setOnClickListener{
+            val intent = Intent(this, ListsActivity::class.java)
+            startActivity(intent)
         }
     }
 }

@@ -7,16 +7,16 @@ import androidx.room.*
 interface CustomListGameJoinDao{
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg customlistGamesJoin : CustomListsGamesJoin)
+    fun insert(customListsGameJoin : CustomListsGameJoin)
 
     @Query("""
-               SELECT * FROM games
-               INNER JOIN customlist_games_join
-               ON games.id=customlist_games_join.gameId
-               WHERE customlist_games_join.customlistId=:customlistName
+               SELECT * FROM game
+               INNER JOIN customlist_game_join
+               ON game.id=customlist_game_join.gameId
+               WHERE customlist_game_join.customlistName=:customlistName
                """)
-    fun getGamesForCustomList(customlistName : String): Array<Games>
+    fun getGamesForCustomList(customlistName : String): LiveData<Game>
 
     @Delete
-    fun delete(game: Games)
+    fun delete(game: Game)
 }

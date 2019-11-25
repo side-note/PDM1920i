@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class CustomLists (
-    @PrimaryKey var id: Int,
-    val name: String?
+    @PrimaryKey val name: String?
 
 )

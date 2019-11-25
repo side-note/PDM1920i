@@ -6,8 +6,8 @@ import pt.isel.pdm.li52d.g4.bgg.model.BGGDb
 import pt.isel.pdm.li52d.g4.bgg.model.CustomListGameJoinRepository
 
 class BggApp : Application(){
+    lateinit var bgg: BGGWebApi
     companion object {
-        lateinit var bgg: BGGWebApi
         val customListRepo: CustomListGameJoinRepository by lazy { CustomListGameJoinRepository() }
         lateinit var db: BGGDb
     }

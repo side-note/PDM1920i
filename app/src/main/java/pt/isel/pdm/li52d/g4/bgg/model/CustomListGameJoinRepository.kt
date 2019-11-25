@@ -6,8 +6,10 @@ import pt.isel.pdm.li52d.g4.bgg.dto.GameDto
 class CustomListGameJoinRepository{
     private fun insertGametoCustomList(
         dto: GameDto,
-        name:String
+        listName:String
     ){
-       BggApp.db.customListGameJoinDao().insert(dto)
+        val game = CustomListsGameJoin(listName,dto.id!!,dto.name!!, dto.yearPublished, dto.minPlayer,dto.maxPlayer,dto.minAge,dto.description,dto.primaryPublisher)
+        BggApp.db.customListGameJoinDao().insert(game)
     }
+
 }
