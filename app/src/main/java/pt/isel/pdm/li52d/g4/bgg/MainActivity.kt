@@ -18,6 +18,8 @@ const val PUBLISHER : String = "Publisher"
 const val ARTIST :String = "Artist"
 const val TAG : String = "BGG"
 const val CREDITS : String = "Credits"
+const val LISTS : String = "Lists"
+const val LIST : String = "List"
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQueryTextListener {
@@ -59,6 +61,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQue
 
         findViewById<Button>(R.id.lists).setOnClickListener{
             val intent = Intent(this, ListsActivity::class.java)
+            intent.putExtra(LISTS, "Lists")
             startActivity(intent)
         }
     }

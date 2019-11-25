@@ -15,7 +15,7 @@ interface CustomListGameJoinDao{
                ON game.id=customlist_game_join.gameId
                WHERE customlist_game_join.customlistName=:customlistName
                """)
-    fun getGamesForCustomList(customlistName : String): LiveData<Game>
+    fun getGamesForCustomList(customlistName : String): LiveData<List<CustomListsGameJoin>>
 
     @Delete
     fun delete(game: Game)

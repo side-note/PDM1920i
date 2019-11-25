@@ -1,10 +1,15 @@
 package pt.isel.pdm.li52d.g4.bgg.model
 
+import androidx.lifecycle.LiveData
 import pt.isel.pdm.li52d.g4.bgg.BggApp
 import pt.isel.pdm.li52d.g4.bgg.dto.GameDto
 
 class CustomListGameJoinRepository{
-    private fun insertGametoCustomList(
+    fun getList(name : String) : LiveData<List<CustomListsGameJoin>>{
+        val res = BggApp.db.customListGameJoinDao().getGamesForCustomList(name)
+        return res
+    }
+    fun insertGametoCustomList(
         dto: GameDto,
         listName:String
     ){

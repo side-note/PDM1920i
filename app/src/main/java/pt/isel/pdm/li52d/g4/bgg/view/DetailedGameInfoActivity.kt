@@ -1,14 +1,15 @@
 package pt.isel.pdm.li52d.g4.bgg.view
 
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Layout
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import pt.isel.pdm.li52d.g4.bgg.dto.GameDto
@@ -21,15 +22,17 @@ import java.math.RoundingMode
 class DetailedGameInfoActivity : AppCompatActivity(){
 
     val model : DetailedGameInfoViewModel by lazy {
-
         val app = application as BggApp
         val factory = BGGViewModelFactoryProvider(app,intent)
         ViewModelProviders.of(this, factory)[DetailedGameInfoViewModel::class.java]
-
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detailed_info)
+        findViewById<Button>(R.id.add).setOnClickListener{
+            val intent = Intent(this, ListsActivity::class.java)
+            startActivity(intent)
+        }
 
 
         val name: TextView =  findViewById(R.id.name_id)
@@ -96,6 +99,5 @@ class DetailedGameInfoActivity : AppCompatActivity(){
             list.addView(artist)
         }
     }
-
 }
 

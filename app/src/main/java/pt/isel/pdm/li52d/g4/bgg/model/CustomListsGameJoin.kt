@@ -12,7 +12,7 @@ import androidx.room.ForeignKey
                         ForeignKey(entity = Game::class,
                                    parentColumns = arrayOf("id"),
                                    childColumns = arrayOf("gameId"))
-                            )
+                        )
 
         )
 
