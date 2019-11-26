@@ -9,6 +9,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import pt.isel.pdm.li52d.g4.bgg.dto.GameDto
+import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
+import pt.isel.pdm.li52d.g4.bgg.model.Game
 import pt.isel.pdm.li52d.g4.bgg.view.DetailedGameInfoActivity
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -34,7 +36,7 @@ class GamesAdapter(val model: GameViewModel) :
 }
 
 class GameViewHolder(private val view: ConstraintLayout) : RecyclerView.ViewHolder(view) {
-    private lateinit var game: GameDto
+    private lateinit var game: Game
     private val txtGameName: TextView = view.findViewById(R.id.gameName)
     private val gameIcon: ImageView = view.findViewById(R.id.game_icon)
     private val ratingNumber: TextView = view.findViewById(R.id.rating_list)
@@ -48,13 +50,13 @@ class GameViewHolder(private val view: ConstraintLayout) : RecyclerView.ViewHold
         }
     }
 
-    fun bindTo(game: GameDto) {
-        this.game = game
-        ratingNumber.text = BigDecimal(game.avgUserRating.toString()).setScale(1, RoundingMode.HALF_UP).toDouble().toString()
-        publisher.text = game.primaryPublisher
+    fun bindTo(artistsAndGames: ArtistsAndGames) {
+        this.game = artistsAndGames.game
+        ratingNumber.text = BigDecimal(game.rating.toString()).setScale(1, RoundingMode.HALF_UP).toDouble().toString()
+        publisher.text = game.publisher
         txtGameName.text = game.name
         Glide.with(view)
-            .load(game.images!!.small)
+            .load(game.smallImage)
             .into(gameIcon)
     }
 }

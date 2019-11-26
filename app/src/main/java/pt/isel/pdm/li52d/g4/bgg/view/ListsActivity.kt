@@ -6,7 +6,6 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import pt.isel.pdm.li52d.g4.bgg.*
-import java.io.LineNumberInputStream
 
 class ListsActivity : AppCompatActivity() {
     val model : DetailedGameInfoViewModel by lazy {
@@ -21,13 +20,13 @@ class ListsActivity : AppCompatActivity() {
         button.setText("List1")
 
         findViewById<Button>(R.id.list).setOnClickListener{
-            if(intent.getStringExtra(LISTS) != null) {
+            if(intent.getStringExtra(LISTS)!!.equals("Lists")) {
                 val intent = Intent(this, GameListActivity::class.java)
                 intent.putExtra(LIST, button.text)
                 startActivity(intent)
             } else{
-                BggApp.customListRepo.insertGametoCustomList(model.dto,button.text.toString())
-                finish()
+                BggApp.CUSTOM_LIST_REPO.search(button.text.toString(), intent.getStringExtra(LISTS)!!, GAME_NAME, true)
+                super.onBackPressed()
             }
         }
     }

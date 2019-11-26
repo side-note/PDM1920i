@@ -32,7 +32,7 @@ class BGGWebApi(ctx: Context) {
                 return gson.fromJson(resp[0], SearchDto::class.java)
             }
             override fun onPostExecute(result: SearchDto) {
-               onSuccess(result)
+                onSuccess(result)
             }
         }
         val task =  MyTask()

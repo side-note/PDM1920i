@@ -12,19 +12,18 @@ class BGGViewModelFactoryProvider (val app : BggApp, val intent: Intent) : ViewM
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
             GameViewModel::class.java -> {
-                val model = GameViewModel(app.bgg)
-
+                val model = GameViewModel()
                 val intentName : String? = intent.getStringExtra(NAME)
                 val intentMPP : String? = intent.getStringExtra(MOST_POPULAR_GAMES)
                 val intentPublisher : String? = intent.getStringExtra(PUBLISHER)
                 val intentArtist : String? = intent.getStringExtra(ARTIST)
                 val intentList : String? = intent.getStringExtra(LIST)
                 when {
-                    intentName != null -> model.search( intentName, BGG_GET_GAMES)
-                    intentMPP != null -> model.search( intentMPP, BGG_MPP)
-                    intentPublisher != null -> model.search( intentPublisher, BGG_PUBLISHER)
-                    intentArtist != null -> model.search( intentArtist, BGG_ARTIST)
-                    intentList != null -> model.get(intentList)
+                    intentName != null -> model.search("", intentName, BGG_GET_GAMES, false)
+                    intentMPP != null -> model.search("", intentMPP, BGG_MPP, false)
+                    intentPublisher != null -> model.search("", intentPublisher, BGG_PUBLISHER, false)
+                    intentArtist != null -> model.search("", intentArtist, BGG_ARTIST, false)
+                    //intentList != null -> model.get(intentList)
                 }
 
                 model as T

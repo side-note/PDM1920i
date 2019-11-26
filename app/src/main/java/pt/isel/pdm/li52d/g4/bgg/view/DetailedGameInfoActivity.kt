@@ -1,20 +1,16 @@
 package pt.isel.pdm.li52d.g4.bgg.view
 
-import android.app.AlertDialog
-import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Layout
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
-import pt.isel.pdm.li52d.g4.bgg.dto.GameDto
 import kotlinx.android.synthetic.main.detailed_info.*
 import pt.isel.pdm.li52d.g4.bgg.*
+import pt.isel.pdm.li52d.g4.bgg.model.Artist
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -31,6 +27,7 @@ class DetailedGameInfoActivity : AppCompatActivity(){
         setContentView(R.layout.detailed_info)
         findViewById<Button>(R.id.add).setOnClickListener{
             val intent = Intent(this, ListsActivity::class.java)
+            intent.putExtra(LISTS, model.gameName)
             startActivity(intent)
         }
 
@@ -86,10 +83,10 @@ class DetailedGameInfoActivity : AppCompatActivity(){
 
     }
 
-    fun getArtists(artists : Array<String>){
+    fun getArtists(artists : List<Artist>){
         artists.forEach {
             val artist = TextView(this)
-            artist.text = it
+            artist.text = it.artistName
             artist.setOnClickListener {
                 val myIntent = Intent(this, GameListActivity::class.java)
                 myIntent.putExtra(ARTIST,artist.text!!)

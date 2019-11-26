@@ -14,6 +14,8 @@
         <activity android:name="pt.isel.pdm.li52d.g4.bgg.view.GameListActivity"></activity>
         <activity android:name="pt.isel.pdm.li52d.g4.bgg.view.DetailedGameInfoActivity"></activity>
         <activity android:name="pt.isel.pdm.li52d.g4.bgg.view.CreditsActivity"></activity>
+        <activity android:name="pt.isel.pdm.li52d.g4.bgg.view.ListsActivity"></activity>
+        <activity android:name="pt.isel.pdm.li52d.g4.bgg.view.ListActivity"></activity>
         <activity android:name="pt.isel.pdm.li52d.g4.bgg.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
