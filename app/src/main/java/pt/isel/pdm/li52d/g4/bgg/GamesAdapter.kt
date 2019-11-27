@@ -36,7 +36,7 @@ class GamesAdapter(val model: GameViewModel) :
 }
 
 class GameViewHolder(private val view: ConstraintLayout) : RecyclerView.ViewHolder(view) {
-    private lateinit var game: Game
+    private lateinit var artistsAndGames: ArtistsAndGames
     private val txtGameName: TextView = view.findViewById(R.id.gameName)
     private val gameIcon: ImageView = view.findViewById(R.id.game_icon)
     private val ratingNumber: TextView = view.findViewById(R.id.rating_list)
@@ -45,18 +45,18 @@ class GameViewHolder(private val view: ConstraintLayout) : RecyclerView.ViewHold
     init {
         view.setOnClickListener {
             val intent = Intent(view.context, DetailedGameInfoActivity::class.java)
-            intent.putExtra(GAME_NAME, game)
+            intent.putExtra(GAME_NAME, artistsAndGames)
             view.context.startActivity(intent)
         }
     }
 
     fun bindTo(artistsAndGames: ArtistsAndGames) {
-        this.game = artistsAndGames.game
-        ratingNumber.text = BigDecimal(game.rating.toString()).setScale(1, RoundingMode.HALF_UP).toDouble().toString()
-        publisher.text = game.publisher
-        txtGameName.text = game.name
+        this.artistsAndGames = artistsAndGames
+        ratingNumber.text = BigDecimal(artistsAndGames.game.rating.toString()).setScale(1, RoundingMode.HALF_UP).toDouble().toString()
+        publisher.text = artistsAndGames.game.publisher
+        txtGameName.text = artistsAndGames.game.name
         Glide.with(view)
-            .load(game.smallImage)
+            .load(artistsAndGames.game.smallImage)
             .into(gameIcon)
     }
 }

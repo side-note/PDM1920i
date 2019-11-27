@@ -1,9 +1,11 @@
 package pt.isel.pdm.li52d.g4.bgg.model
 
 import android.util.Log
+import com.android.volley.VolleyError
 import pt.isel.pdm.li52d.g4.bgg.BggApp
 import pt.isel.pdm.li52d.g4.bgg.TAG
 import pt.isel.pdm.li52d.g4.bgg.dto.GameDto
+import pt.isel.pdm.li52d.g4.bgg.dto.SearchDto
 
 class BGGRepository {
     /*fun getList(name : String) : LiveData<List<CustomListsAndGames>>{
@@ -33,29 +35,25 @@ class BGGRepository {
     }
 
     fun search(
-        listName: String,
         name: String,
-        url: String,
-        addToDb: Boolean
-    ): ArrayList<ArtistsAndGames> {
+        onSuccess: (SearchDto) -> Unit,
+        onError: (VolleyError) -> Unit,
+        url: String
+    ) {
         Log.v(TAG, "**** FETCHING Game called by $name from BoardGameAtlas.com...")
-        val ret = emptyList<ArtistsAndGames>() as ArrayList<ArtistsAndGames>
         BggApp.bgg.search(
             name,
-            { games ->
-                games.games.forEach { ret.add(fromDto(listName, it, addToDb)) }
-            },
-            { throw it },
+            onSuccess,
+            onError,
             url
         )
-        return ret
     }
 
-    private fun fromDto(listName: String, dto: GameDto, addToDb: Boolean): ArtistsAndGames {
+    fun fromDto(dto: GameDto): ArtistsAndGames {
         val gameName = dto.name!!
         val game = Game(
             dto.id!!,
-            listName,
+            "",
             gameName,
             dto.description!!,
             dto.avgUserRating,
@@ -68,11 +66,9 @@ class BGGRepository {
             dto.url,
             dto.images?.small
         )
-        if(addToDb) insertGame(game)
-        val artists: ArrayList<Artist> = emptyList<Artist>() as ArrayList<Artist>
+        val artists: ArrayList<Artist> = arrayListOf()
         dto.artists?.forEach {
             artists.add(Artist(gameName, it))
-            if(addToDb) insertArtist(gameName, it)
         }
         return ArtistsAndGames(game, artists)
     }

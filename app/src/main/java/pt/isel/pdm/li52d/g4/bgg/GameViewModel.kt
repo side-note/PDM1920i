@@ -7,36 +7,38 @@ import pt.isel.pdm.li52d.g4.bgg.model.CustomListsAndGames
 
 class GameViewModel() : ViewModel(){
 
-    private var liveData : MutableLiveData<ArrayList<ArtistsAndGames>> = MutableLiveData(emptyList<ArtistsAndGames>() as ArrayList<ArtistsAndGames>)
+    private var liveData : MutableLiveData<Array<ArtistsAndGames>> = MutableLiveData(emptyArray<ArtistsAndGames>())
     private var src: LiveData<List<CustomListsAndGames>>? = null
-    val games : ArrayList<ArtistsAndGames> get() = liveData.value!!
+    val games : Array<ArtistsAndGames> get() = liveData.value!!
     var name = ""
 
     /*fun get(name: String){
         src = BggApp.CUSTOM_LIST_REPO.getList(name)
     }*/
 
-    fun search(listName: String, name: String, url: String, addToDb: Boolean) {
+    fun search(name: String, url: String) {
 
         if(this.name == name) return
         this.name = name
 
         Log.v(TAG, "**** FETCHING Game called by $name from BoardGameAtlas.com...")
-        liveData.value = BggApp.CUSTOM_LIST_REPO.search(
-            listName,
+        BggApp.CUSTOM_LIST_REPO.search(
             name,
-//            {games ->
-//                Log.v(TAG, "**** FETCHING Game called by $name COMPLETED !!!!")
-//                this.liveData.value = games.games
-//            },
-//            { this.name = ""; throw it },
-            url,
-            addToDb
+            {searchDtoResult ->
+                Log.v(TAG, "**** FETCHING Game called by $name COMPLETED !!!!")
+                val aux: ArrayList<ArtistsAndGames> = arrayListOf()
+                searchDtoResult.games.forEach {
+                    aux.add(BggApp.CUSTOM_LIST_REPO.fromDto(it))
+                }
+                this.liveData.value = aux.toTypedArray()
+            },
+            { this.name = ""; throw it },
+            url
         )
     }
 
-    fun observe(owner: LifecycleOwner, observer: (ArrayList<ArtistsAndGames>) -> Unit) {
-        liveData.observe(owner, Observer { observer(it!!) })
+    fun observe(owner: LifecycleOwner, observer: (Array<ArtistsAndGames>) -> Unit) {
+        liveData.observe(owner, Observer { observer(it) })
     }
 
 }

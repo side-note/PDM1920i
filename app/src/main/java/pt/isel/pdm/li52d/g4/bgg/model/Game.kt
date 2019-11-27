@@ -7,7 +7,7 @@ import androidx.room.Entity
 @Entity(tableName = "games", primaryKeys = ["id", "nameList"])
 data class Game(
     val id: String,
-    val nameList: String,
+    var nameList: String,
     val name: String,
     val desc: String?,
     val rating: Double,

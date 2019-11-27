@@ -27,7 +27,7 @@ class DetailedGameInfoActivity : AppCompatActivity(){
         setContentView(R.layout.detailed_info)
         findViewById<Button>(R.id.add).setOnClickListener{
             val intent = Intent(this, ListsActivity::class.java)
-            intent.putExtra(LISTS, model.gameName)
+            intent.putExtra(GAME_NAME, model.gameAndArtist)
             startActivity(intent)
         }
 
