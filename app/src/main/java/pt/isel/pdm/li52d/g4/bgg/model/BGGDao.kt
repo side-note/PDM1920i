@@ -18,9 +18,13 @@ interface BGGDao{
     @Query("SELECT * FROM games WHERE nameList LIKE :customlistName")
     fun getGamesForCustomList(customlistName : String): List<ArtistsAndGames>
 
+    @Query("SELECT * FROM lists")
+    fun getCustomList(): List<CustomList>
 //    @Query("SELECT * FROM CustomListsAndGames where list = :list")
 //    fun getGamesForCustomListAndGames(list : CustomList): LiveData<List<CustomListsAndGames>>
 
     @Delete
     fun delete(game: Game)
+
+
 }

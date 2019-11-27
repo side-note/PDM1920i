@@ -7,17 +7,17 @@ import androidx.lifecycle.ViewModelProvider
 import pt.isel.pdm.li52d.g4.bgg.dto.GameDto
 
 
-class BGGViewModelFactoryProvider (val app : BggApp, val intent: Intent) : ViewModelProvider.Factory {
+class BGGViewModelFactoryProvider(val app: BggApp, val intent: Intent) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
             GameViewModel::class.java -> {
                 val model = GameViewModel()
-                val intentName : String? = intent.getStringExtra(NAME)
-                val intentMPP : String? = intent.getStringExtra(MOST_POPULAR_GAMES)
-                val intentPublisher : String? = intent.getStringExtra(PUBLISHER)
-                val intentArtist : String? = intent.getStringExtra(ARTIST)
-                val intentList : String? = intent.getStringExtra(LIST)
+                val intentName: String? = intent.getStringExtra(NAME)
+                val intentMPP: String? = intent.getStringExtra(MOST_POPULAR_GAMES)
+                val intentPublisher: String? = intent.getStringExtra(PUBLISHER)
+                val intentArtist: String? = intent.getStringExtra(ARTIST)
+                val intentList: String? = intent.getStringExtra(LIST)
                 when {
                     intentName != null -> model.search(intentName, BGG_GET_GAMES)
                     intentMPP != null -> model.search(intentMPP, BGG_MPP)
@@ -28,7 +28,16 @@ class BGGViewModelFactoryProvider (val app : BggApp, val intent: Intent) : ViewM
 
                 model as T
             }
-            DetailedGameInfoViewModel::class.java -> DetailedGameInfoViewModel(intent.getParcelableExtra(GAME_NAME)!!) as T
+            DetailedGameInfoViewModel::class.java -> DetailedGameInfoViewModel(
+                intent.getParcelableExtra(
+                    GAME_NAME
+                )!!
+            ) as T
+            ListViewModel::class.java -> {
+                val model = ListViewModel()
+                model.getAllLists()
+                model as T
+            }
             else -> throw IllegalArgumentException("There is no ViewModel for class $modelClass")
         }
     }

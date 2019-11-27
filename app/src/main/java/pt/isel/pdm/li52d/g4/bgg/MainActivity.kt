@@ -51,6 +51,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQue
         setContentView(R.layout.main_activity)
 
         findViewById<SearchView>(R.id.search_bar).setOnQueryTextListener(this)
+
         findViewById<Button>(R.id.mpp).setOnClickListener(this)
 
         findViewById<Button>(R.id.credits).setOnClickListener{

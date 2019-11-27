@@ -13,21 +13,21 @@ import pt.isel.pdm.li52d.g4.bgg.dto.SearchDto
 import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
 
 class ListsActivity : AppCompatActivity() {
-    val model : DetailedGameInfoViewModel by lazy {
-        val app = application as BggApp
-        val factory = BGGViewModelFactoryProvider(app,intent)
-        ViewModelProviders.of(this, factory)[DetailedGameInfoViewModel::class.java]
-    }
 
     val adapter : ListsAdapter by lazy {
         ListsAdapter(model)
+    }
+    val model : ListViewModel by lazy {
+        val app = application as BggApp
+        val factory = BGGViewModelFactoryProvider(app,intent)
+        ViewModelProviders.of(this, factory)[ListViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.custom_lists_layout)
-        val button = findViewById<Button>(R.id.list)
-        val listName = "List1"
+//        val button = findViewById<Button>(R.id.list)
+//        val listName = "List1"
 
         model.observe(this){adapter.notifyDataSetChanged()}
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerGames)

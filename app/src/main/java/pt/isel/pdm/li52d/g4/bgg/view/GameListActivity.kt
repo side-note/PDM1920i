@@ -27,7 +27,8 @@ class GameListActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.games_layout)
-       // val title : TextView = findViewById(R.id.title_view)
+        val title : TextView = findViewById(R.id.title_view)
+        title.text = model.name
 
 
         model.observe(this){adapter.notifyDataSetChanged()}
