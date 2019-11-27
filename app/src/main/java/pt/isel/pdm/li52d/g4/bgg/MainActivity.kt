@@ -20,6 +20,8 @@ const val TAG : String = "BGG"
 const val CREDITS : String = "Credits"
 const val LISTS : String = "Lists"
 const val LIST : String = "List"
+const val LIMIT : Int = 31
+var SKIP: Int = 0
 
 
 class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQueryTextListener {

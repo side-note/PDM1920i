@@ -13,4 +13,6 @@
     <string name="artists">Artists</string>
     <string name="credits_button">Credits</string>
     <string name="img_error_url">Could not open official site!</string>
+    <string name="arrow_next" translatable="false"><![CDATA[->]]></string>
+    <string name="arrow_previous" translatable="false"><![CDATA[<-]]></string>
 </resources>

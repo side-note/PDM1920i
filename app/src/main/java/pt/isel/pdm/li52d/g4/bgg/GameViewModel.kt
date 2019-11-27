@@ -27,7 +27,7 @@ class GameViewModel() : ViewModel(){
 //        task.execute(name)
     }
 
-    fun search(name: String, url: String) {
+    fun search(name: String, url: String, limit: Int, skip: Int) {
 
         if(this.name == name) return
         this.name = name
@@ -35,6 +35,8 @@ class GameViewModel() : ViewModel(){
         Log.v(TAG, "**** FETCHING Game called by $name from BoardGameAtlas.com...")
         BggApp.CUSTOM_LIST_REPO.search(
             name,
+            limit,
+            skip,
             {searchDtoResult ->
                 Log.v(TAG, "**** FETCHING Game called by $name COMPLETED !!!!")
                 val aux: ArrayList<ArtistsAndGames> = arrayListOf()

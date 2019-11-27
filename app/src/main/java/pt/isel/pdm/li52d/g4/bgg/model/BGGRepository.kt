@@ -55,6 +55,8 @@ class BGGRepository {
 
     fun search(
         name: String,
+        limit: Int,
+        skip: Int,
         onSuccess: (SearchDto) -> Unit,
         onError: (VolleyError) -> Unit,
         url: String
@@ -62,6 +64,8 @@ class BGGRepository {
         Log.v(TAG, "**** FETCHING Game called by $name from BoardGameAtlas.com...")
         BggApp.bgg.search(
             name,
+            limit,
+            skip,
             onSuccess,
             onError,
             url
