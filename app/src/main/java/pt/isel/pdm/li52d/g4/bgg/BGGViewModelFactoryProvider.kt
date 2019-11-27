@@ -23,7 +23,7 @@ class BGGViewModelFactoryProvider (val app : BggApp, val intent: Intent) : ViewM
                     intentMPP != null -> model.search(intentMPP, BGG_MPP)
                     intentPublisher != null -> model.search(intentPublisher, BGG_PUBLISHER)
                     intentArtist != null -> model.search(intentArtist, BGG_ARTIST)
-                    //intentList != null -> model.get(intentList)
+                    intentList != null -> model.get(intentList)
                 }
 
                 model as T

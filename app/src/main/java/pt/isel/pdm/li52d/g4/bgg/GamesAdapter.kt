@@ -8,9 +8,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import pt.isel.pdm.li52d.g4.bgg.dto.GameDto
 import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
-import pt.isel.pdm.li52d.g4.bgg.model.Game
 import pt.isel.pdm.li52d.g4.bgg.view.DetailedGameInfoActivity
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -18,24 +16,24 @@ import java.math.RoundingMode
 const val GAME_NAME = "GAME_NAME"
 
 class GamesAdapter(val model: GameViewModel) :
-    RecyclerView.Adapter<GameViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
+    RecyclerView.Adapter<ListViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         // 1. Obter o TextView i.e. artist_view
         // 2. Inflate parent com o artist_view
         // 3. Instanciar ViewHolder -> passando-lhe o TextView
         val gamesView = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_game_layout, parent, false) as ConstraintLayout
-        return GameViewHolder(gamesView)
+        return ListViewHolder(gamesView)
     }
 
     override fun getItemCount(): Int = model.games.size
 
-    override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         holder.bindTo(model.games[position])
     }
 }
 
-class GameViewHolder(private val view: ConstraintLayout) : RecyclerView.ViewHolder(view) {
+class ListViewHolder(private val view: ConstraintLayout) : RecyclerView.ViewHolder(view) {
     private lateinit var artistsAndGames: ArtistsAndGames
     private val txtGameName: TextView = view.findViewById(R.id.gameName)
     private val gameIcon: ImageView = view.findViewById(R.id.game_icon)

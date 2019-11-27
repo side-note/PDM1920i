@@ -1,6 +1,7 @@
 package pt.isel.pdm.li52d.g4.bgg.model
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.android.volley.VolleyError
 import pt.isel.pdm.li52d.g4.bgg.BggApp
 import pt.isel.pdm.li52d.g4.bgg.TAG
@@ -8,10 +9,10 @@ import pt.isel.pdm.li52d.g4.bgg.dto.GameDto
 import pt.isel.pdm.li52d.g4.bgg.dto.SearchDto
 
 class BGGRepository {
-    /*fun getList(name : String) : LiveData<List<CustomListsAndGames>>{
+    fun getList(name : String) : List<ArtistsAndGames> {
         val res = BggApp.db.customListAndGamesDao().getGamesForCustomList(name)
         return res
-    }*/
+    }
     fun insertList(
         nameList: String
     ) {

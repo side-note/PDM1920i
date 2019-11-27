@@ -9,7 +9,7 @@ class CustomListsAndGames(
     @Embedded
     val list: CustomList,
     @Relation(parentColumn = "name", entityColumn = "nameList")
-    val gamesList: List<ArtistsAndGames>
+    val gamesList: List<ArtistsAndGames>?
 )
 
 data class ArtistsAndGames(

@@ -11,9 +11,9 @@ import pt.isel.pdm.li52d.g4.bgg.*
 
 class GameListActivity: AppCompatActivity() {
 
-    val bgg : BGGWebApi by lazy {
-        BGGWebApi(this)
-    }
+//    val bgg : BGGWebApi by lazy {
+//        BGGWebApi(this)
+//    }
 
     val adapter : GamesAdapter by lazy {
         GamesAdapter(model)
