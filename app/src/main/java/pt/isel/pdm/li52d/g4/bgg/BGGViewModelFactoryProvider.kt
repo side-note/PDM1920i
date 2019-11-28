@@ -7,12 +7,12 @@ import androidx.lifecycle.ViewModelProvider
 import pt.isel.pdm.li52d.g4.bgg.dto.GameDto
 
 
-class BGGViewModelFactoryProvider(val app: BggApp, val intent: Intent) : ViewModelProvider.Factory {
+class BGGViewModelFactoryProvider(val intent: Intent) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         return when (modelClass) {
             GameViewModel::class.java -> {
-                val model = GameViewModel()
+                val model = GameViewModel(  )
                 val intentName: String? = intent.getStringExtra(NAME)
                 val intentMPP: String? = intent.getStringExtra(MOST_POPULAR_GAMES)
                 val intentPublisher: String? = intent.getStringExtra(PUBLISHER)
@@ -28,11 +28,7 @@ class BGGViewModelFactoryProvider(val app: BggApp, val intent: Intent) : ViewMod
 
                 model as T
             }
-            DetailedGameInfoViewModel::class.java -> DetailedGameInfoViewModel(
-                intent.getParcelableExtra(
-                    GAME_NAME
-                )!!
-            ) as T
+            DetailedGameInfoViewModel::class.java -> DetailedGameInfoViewModel(intent.getParcelableExtra(GAME_NAME)!!) as T
             ListViewModel::class.java -> {
                 val model = ListViewModel()
                 model.getAllLists()

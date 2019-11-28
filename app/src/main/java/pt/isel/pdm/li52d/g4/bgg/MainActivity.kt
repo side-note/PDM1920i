@@ -1,15 +1,19 @@
 package pt.isel.pdm.li52d.g4.bgg
 
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.SearchView
 import pt.isel.pdm.li52d.g4.bgg.view.CreditsActivity
 import pt.isel.pdm.li52d.g4.bgg.view.GameListActivity
+import pt.isel.pdm.li52d.g4.bgg.view.ListActivity
 import pt.isel.pdm.li52d.g4.bgg.view.ListsActivity
 
 const val NAME : String = "Name"
@@ -20,11 +24,24 @@ const val TAG : String = "BGG"
 const val CREDITS : String = "Credits"
 const val LISTS : String = "Lists"
 const val LIST : String = "List"
+const val ILIST : String = "IListSelect"
 const val LIMIT : Int = 31
 var SKIP: Int = 0
 
 
-class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQueryTextListener {
+class MainActivity() : AppCompatActivity(), View.OnClickListener, SearchView.OnQueryTextListener, IListSelect {
+
+    override fun selectList(b: Button) {
+        val intent = Intent(this, GameListActivity::class.java)
+        intent.putExtra(LIST, b.text)
+        startActivity(intent)
+    }
+
+    override fun writeToParcel(dest: Parcel?, flags: Int){
+//        dest?.writeValue(ctx)
+    }
+
+    override fun describeContents(): Int = 0
 
     override fun onClick(v: View?) {
         val myIntent = Intent(this, GameListActivity::class.java)
@@ -44,9 +61,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQue
         return true
     }
 
-    val bgg : BGGWebApi by lazy {
-        BGGWebApi(this)
-    }
+//    val bgg : BGGWebApi by lazy {
+//        BGGWebApi(this)
+//    }
+
+    constructor(parcel: Parcel) : this()//(parcel.readValue(ClassLoader.getSystemClassLoader()) as Context)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,8 +83,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener, SearchView.OnQue
 
         findViewById<Button>(R.id.lists).setOnClickListener{
             val intent = Intent(this, ListsActivity::class.java)
-            intent.putExtra(LISTS, "Lists")
+//            intent.putExtra(LISTS, "Lists")
+            intent.putExtra(ILIST, this)
             startActivity(intent)
+        }
+    }
+
+    companion object CREATOR : Parcelable.Creator<MainActivity> {
+        override fun createFromParcel(parcel: Parcel): MainActivity {
+            return MainActivity(parcel)
+        }
+
+        override fun newArray(size: Int): Array<MainActivity?> {
+            return arrayOfNulls(size)
         }
     }
 }

@@ -3,6 +3,8 @@ package pt.isel.pdm.li52d.g4.bgg.view
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.text.Layout
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -11,23 +13,37 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.detailed_info.*
 import pt.isel.pdm.li52d.g4.bgg.*
 import pt.isel.pdm.li52d.g4.bgg.model.Artist
+import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
 import java.math.BigDecimal
 import java.math.RoundingMode
 
 
-class DetailedGameInfoActivity : AppCompatActivity(){
+class DetailedGameInfoActivity() : AppCompatActivity(), IListSelect{
+
+    override fun selectList(b: Button) {
+        val artistsAndGames = model.gameAndArtist
+        artistsAndGames.game.nameList = b.text.toString()
+        BggApp.CUSTOM_LIST_REPO.insertGame(artistsAndGames.game)
+        artistsAndGames.artistList.forEach {
+            BggApp.CUSTOM_LIST_REPO.insertArtist(artistsAndGames.game.name, it.artistName)
+        }
+        super.onBackPressed()
+    }
 
     val model : DetailedGameInfoViewModel by lazy {
-        val app = application as BggApp
-        val factory = BGGViewModelFactoryProvider(app,intent)
+        val factory = BGGViewModelFactoryProvider(intent)
         ViewModelProviders.of(this, factory)[DetailedGameInfoViewModel::class.java]
     }
+
+    constructor(parcel: Parcel) : this() {
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detailed_info)
         findViewById<Button>(R.id.add).setOnClickListener{
             val intent = Intent(this, ListsActivity::class.java)
-            intent.putExtra(GAME_NAME, model.gameAndArtist)
+            intent.putExtra(ILIST, this)
             startActivity(intent)
         }
 
@@ -59,7 +75,7 @@ class DetailedGameInfoActivity : AppCompatActivity(){
         primary_publisher.text = model.publisher
         rules_url.text = model.rulesurl
 
-        getArtists(model.artists!!)
+        getArtists(model.artists)
 
         primary_publisher.setOnClickListener{
             val myIntent = Intent(this, GameListActivity::class.java)
@@ -94,6 +110,22 @@ class DetailedGameInfoActivity : AppCompatActivity(){
             }
             val list = findViewById<LinearLayout>(R.id.artists_list)
             list.addView(artist)
+        }
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+    }
+
+    override fun describeContents(): Int = 0
+
+
+    companion object CREATOR : Parcelable.Creator<DetailedGameInfoActivity> {
+        override fun createFromParcel(parcel: Parcel): DetailedGameInfoActivity {
+            return DetailedGameInfoActivity(parcel)
+        }
+
+        override fun newArray(size: Int): Array<DetailedGameInfoActivity?> {
+            return arrayOfNulls(size)
         }
     }
 }

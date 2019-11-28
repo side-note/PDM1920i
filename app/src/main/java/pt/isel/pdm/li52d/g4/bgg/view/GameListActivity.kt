@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,8 +20,7 @@ class GameListActivity: AppCompatActivity() {
         GamesAdapter(model)
     }
     val model : GameViewModel by lazy {
-        val app = application as BggApp
-        val factory = BGGViewModelFactoryProvider(app, intent)
+        val factory = BGGViewModelFactoryProvider(intent)
         ViewModelProviders.of(this, factory)[GameViewModel::class.java]
     }
 
@@ -40,17 +38,18 @@ class GameListActivity: AppCompatActivity() {
 
         val buttonPrevious = findViewById<Button>(R.id.button_previous)
         buttonPrevious.text = "<-"
-            buttonPrevious.isVisible =false
+        //buttonPrevious.visibility = Button.INVISIBLE
         buttonPrevious.setOnClickListener {
             SKIP-=30
         }
 
+
          val buttonNext = findViewById<Button>(R.id.button_next)
         buttonNext.text = "->"
         if(model.games.size < LIMIT)
-            buttonNext.isVisible = false
+            buttonNext.visibility = Button.INVISIBLE
         buttonNext.setOnClickListener {
-            buttonPrevious.isVisible=true
+            buttonPrevious.visibility = Button.VISIBLE
             SKIP+=30
 
         }

@@ -1,6 +1,7 @@
 package pt.isel.pdm.li52d.g4.bgg
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
 
@@ -45,7 +46,11 @@ class GameViewModel() : ViewModel(){
                 }
                 this.liveData.value = aux.toTypedArray()
             },
-            { this.name = ""; throw it },
+            {
+                this.name = "";
+                throw it
+                //Toast.makeText(, it.message, Toast.LENGTH_LONG).show()
+            },
             url
         )
     }
