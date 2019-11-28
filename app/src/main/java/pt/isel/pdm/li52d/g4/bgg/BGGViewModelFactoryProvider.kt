@@ -18,6 +18,7 @@ class BGGViewModelFactoryProvider(val intent: Intent) : ViewModelProvider.Factor
                 val intentPublisher: String? = intent.getStringExtra(PUBLISHER)
                 val intentArtist: String? = intent.getStringExtra(ARTIST)
                 val intentList: String? = intent.getStringExtra(LIST)
+
                 when {
                     intentName != null -> model.search(intentName, BGG_GET_GAMES, LIMIT, SKIP)
                     intentMPP != null -> model.search(intentMPP, BGG_MPP, LIMIT, SKIP)

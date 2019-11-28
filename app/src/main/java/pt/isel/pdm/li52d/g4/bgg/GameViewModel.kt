@@ -10,6 +10,7 @@ class GameViewModel : ViewModel(){
     private var liveData : MutableLiveData<Array<ArtistsAndGames>> = MutableLiveData(emptyArray())
     val games : Array<ArtistsAndGames> get() = liveData.value!!
     var name = ""
+    var url = ""
 
     fun get(name: String){
         liveData.value = BggApp.CUSTOM_LIST_REPO.getGamesList(name).toTypedArray()
@@ -29,10 +30,10 @@ class GameViewModel : ViewModel(){
     }
 
     fun search(name: String, url: String, limit: Int, skip: Int) {
-        PAGEMODEL++
-        if(this.name == name) return
+        val pageModel = (skip/30) + 1
+        if(PAGEMODEL == pageModel) return
         this.name = name
-
+        this.url = url
         Log.v(TAG, "**** FETCHING Game called by $name from BoardGameAtlas.com...")
         BggApp.CUSTOM_LIST_REPO.search(
             name,
@@ -45,14 +46,16 @@ class GameViewModel : ViewModel(){
                     aux.add(BggApp.CUSTOM_LIST_REPO.fromDto(it))
                 }
                 this.liveData.value = aux.toTypedArray()
+                PAGEMODEL = pageModel
             },
             {
-                this.name = "";
+                this.name = ""
                 throw it
                 //Toast.makeText(, it.message, Toast.LENGTH_LONG).show()
             },
             url
         )
+
     }
 
     fun observe(owner: LifecycleOwner, observer: (Array<ArtistsAndGames>) -> Unit) {

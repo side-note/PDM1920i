@@ -1,5 +1,6 @@
 package pt.isel.pdm.li52d.g4.bgg.view
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
