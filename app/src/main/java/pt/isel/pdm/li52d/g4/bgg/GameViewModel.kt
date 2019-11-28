@@ -13,6 +13,8 @@ class GameViewModel : ViewModel(){
     var url = ""
 
     fun get(name: String){
+        if(this.name == "List $name") return
+        this.name = "List $name"
         liveData.value = BggApp.CUSTOM_LIST_REPO.getGamesList(name).toTypedArray()
 //        class MyTask: AsyncTask<String, Unit, Array<ArtistsAndGames>>() {
 //

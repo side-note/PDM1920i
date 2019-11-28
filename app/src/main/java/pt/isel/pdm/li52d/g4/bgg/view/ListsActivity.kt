@@ -30,6 +30,13 @@ class ListsActivity : AppCompatActivity(){
         setContentView(R.layout.games_list_layout)
 //        val button = findViewById<Button>(R.id.list)
 //        val listName = "List1"
+        val artistsAndGames = intent.getParcelableExtra<ArtistsAndGames>(FROM_DETAILED_ACTIVITY)
+        val select: IListSelect = intent.getParcelableExtra(ILIST)!!
+        select.act = this
+        select.ctx = this
+        select.artistsAndGames = artistsAndGames
+        intent.putExtra(ILIST, select)
+
         val listName = findViewById<EditText>(R.id.editText)
 
         model.observe(this){adapter.notifyDataSetChanged()}

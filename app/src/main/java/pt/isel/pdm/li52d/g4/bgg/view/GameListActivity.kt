@@ -27,16 +27,26 @@ class GameListActivity: AppCompatActivity() {
         val title : TextView = findViewById(R.id.title_view)
         val buttonNext = findViewById<Button>(R.id.button_next)
         val buttonPrevious = findViewById<Button>(R.id.button_previous)
-        title.text = model.name
+//        val words = model.name.split(" ")
+//        for (str in words){
+//        str. = str[0].toUpperCase()
+//        }
+        title.text = model.name.removePrefix("List ")
 
         model.observe(this){
             adapter.notifyDataSetChanged()
-            if(model.games.size < LIMIT)
-                buttonNext.visibility = Button.INVISIBLE
-            else buttonNext.visibility = Button.VISIBLE
-            if (PAGEACTIVITY == 1)
-                buttonPrevious.visibility = Button.INVISIBLE
-            else buttonPrevious.visibility = Button.VISIBLE
+            if(!model.name.contains("List ")) {
+                if (model.games.size < LIMIT)
+                    buttonNext.visibility = Button.INVISIBLE
+                else buttonNext.visibility = Button.VISIBLE
+                if (PAGEACTIVITY == 1)
+                    buttonPrevious.visibility = Button.INVISIBLE
+                else buttonPrevious.visibility = Button.VISIBLE
+            }
+            else{
+                buttonNext.visibility = Button.GONE
+                buttonPrevious.visibility = Button.GONE
+            }
         }
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerGames)
         recyclerView.adapter = adapter
@@ -44,22 +54,17 @@ class GameListActivity: AppCompatActivity() {
 
         buttonPrevious.setOnClickListener {
             if(PAGEACTIVITY > 1 && PAGEACTIVITY == PAGEMODEL) {
-                --PAGEACTIVITY
-                SKIP -= 30
+                SKIP = (--PAGEACTIVITY-1) * 30
                 model.search(model.name, model.url, LIMIT, SKIP)
-//                model.observe(this){adapter.notifyDataSetChanged()}
+                recyclerView.smoothScrollToPosition(0)
             }
         }
 
         buttonNext.setOnClickListener {
             if(model.games.size > 30 && PAGEMODEL == PAGEACTIVITY) {
-                SKIP = (++PAGEACTIVITY -1) * 30
+                SKIP = (++PAGEACTIVITY-1) * 30
                 model.search(model.name, model.url, LIMIT, SKIP)
-//                ++PAGEACTIVITY
-//                model.observe(this){adapter.notifyDataSetChanged()}
-//                recyclerView.adapter = adapter
-//                finish()
-//                startActivity(intent)
+                recyclerView.smoothScrollToPosition(0)
             }
         }
     }
