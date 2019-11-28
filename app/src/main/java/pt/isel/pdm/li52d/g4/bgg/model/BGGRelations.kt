@@ -42,3 +42,14 @@ data class ArtistsAndGames(
         }
     }
 }
+
+class FavoritesFeatures(
+    @Embedded
+    val listFav: Favorites,
+    @Relation(parentColumn = "nameFavList", entityColumn = "nameFavListM")
+    val listMechanics: List<Mechanics>,
+    @Relation(parentColumn = "nameFavList", entityColumn = "nameFavListC")
+    val listCategories: List<Categories>,
+    @Relation(parentColumn = "nameFavList", entityColumn = "nameFavListGame")
+    val listGamesinFavorites: List<ArtistsAndGames>
+)

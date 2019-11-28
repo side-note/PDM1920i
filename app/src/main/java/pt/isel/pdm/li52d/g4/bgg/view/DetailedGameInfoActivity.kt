@@ -1,6 +1,5 @@
 package pt.isel.pdm.li52d.g4.bgg.view
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,7 +13,6 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.detailed_info.*
 import pt.isel.pdm.li52d.g4.bgg.*
 import pt.isel.pdm.li52d.g4.bgg.model.Artist
-import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -24,7 +22,7 @@ class DetailedGameInfoActivity() : AppCompatActivity(), IListSelect{
     override fun selectList(b: Button) {
         val artistsAndGames = model.gameAndArtist
         artistsAndGames.game.nameList = b.text.toString()
-        BggApp.CUSTOM_LIST_REPO.insertGame(artistsAndGames.game)
+        BggApp.CUSTOM_LIST_REPO.insertGameinList(artistsAndGames.game)
         artistsAndGames.artistList.forEach {
             BggApp.CUSTOM_LIST_REPO.insertArtist(artistsAndGames.game.name, it.artistName)
         }

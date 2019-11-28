@@ -6,4 +6,5 @@ import androidx.room.RoomDatabase
 @Database(entities = [Game::class, CustomList::class, Artist::class], version = 2)
 abstract class BGGDb: RoomDatabase() {
     abstract fun customListAndGamesDao(): BGGDao
+    abstract fun FavoritesDao(): FavoritesDao
 }

@@ -15,7 +15,7 @@ class BGGRepository {
         }
     }
 
-    private class insertGameTask : AsyncTask<Game, Unit, Unit>() {
+    private class insertGameinListTask : AsyncTask<Game, Unit, Unit>() {
         override fun doInBackground(vararg game: Game) {
             BggApp.db.customListAndGamesDao().insertGame(game[0])
         }
@@ -26,6 +26,32 @@ class BGGRepository {
             BggApp.db.customListAndGamesDao().insertArtist(Artist(params[0], params[1]))
         }
     }
+
+    private class insertFavoritesTask : AsyncTask<String, Unit, Unit>() {
+        override fun doInBackground(vararg params: String) {
+            BggApp.db.FavoritesDao().insertFavorites(Favorites(params[0], params[1], params[2]))
+        }
+    }
+
+    private class insertGamesinFavoritesTask : AsyncTask<Array<out Game>, Unit, Unit>() {
+        override fun doInBackground(vararg game: Array<out Game>) {
+            game.forEach { BggApp.db.FavoritesDao().insertGame(it) }
+        }
+    }
+
+    private class insertMechanicsinFavoritesTask : AsyncTask<Array<out Mechanics>, Unit, Unit>() {
+        override fun doInBackground(vararg mechanics: Array<out Mechanics>) {
+            mechanics.forEach { BggApp.db.FavoritesDao().insertMechanics(it) }
+        }
+    }
+
+    private class insertCategoriesinFavoritesTask : AsyncTask<Array<out Categories>, Unit, Unit>() {
+        override fun doInBackground(vararg categories: Array<out Categories>) {
+            categories.forEach { BggApp.db.FavoritesDao().insertCategories(it) }
+        }
+    }
+
+
     private class getGamesListTask : AsyncTask<String, Unit, List<ArtistsAndGames>>() {
         override fun doInBackground(vararg name: String): List<ArtistsAndGames> {
             return BggApp.db.customListAndGamesDao().getGamesForCustomList(name[0])
@@ -50,8 +76,12 @@ class BGGRepository {
     }
 
     fun insertList(nameList: String) = insertListTask().execute(nameList)
-    fun insertGame(game: Game) = insertGameTask().execute(game)
+    fun insertGameinList(game: Game) = insertGameinListTask().execute(game)
     fun insertArtist(artistName: String, gameName: String) = insertArtistTask().execute(artistName, gameName)
+    fun insertFavorite(nameFavList: String, publisher: String, designer: String) = insertFavoritesTask().execute(nameFavList,publisher,designer)
+    fun insertGamesinFavorites(vararg games: Game) = insertGamesinFavoritesTask().execute(games)
+    fun insertMechanics(vararg mechanics: Mechanics) = insertMechanicsinFavoritesTask().execute(mechanics)
+    fun insertCategories(vararg categories: Categories) = insertCategoriesinFavoritesTask().execute(categories)
 
     fun search(
         name: String,
@@ -76,6 +106,7 @@ class BGGRepository {
         val gameName = dto.name!!
         val game = Game(
             dto.id!!,
+            "",
             "",
             gameName,
             dto.description!!,

@@ -41,7 +41,7 @@ class ListViewHolder(private val view: ConstraintLayout, val intent: Intent) : R
 //            } else{
 //                val artistsAndGames = intent.getParcelableExtra(GAME_NAME)
 //                artistsAndGames!!.game.nameList = listButton.text.toString()
-//                BggApp.CUSTOM_LIST_REPO.insertGame(artistsAndGames.game)
+//                BggApp.CUSTOM_LIST_REPO.insertGameinList(artistsAndGames.game)
 //                artistsAndGames.artistList.forEach {
 //                    BggApp.CUSTOM_LIST_REPO.insertArtist(artistsAndGames.game.name, it.artistName)
 //                }

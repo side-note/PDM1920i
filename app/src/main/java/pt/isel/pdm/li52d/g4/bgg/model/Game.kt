@@ -8,6 +8,7 @@ import androidx.room.Entity
 data class Game(
     val id: String,
     var nameList: String,
+    val nameFavListGame: String,
     val name: String,
     val desc: String?,
     val rating: Double,
@@ -21,6 +22,7 @@ data class Game(
     val smallImage: String?
 ) : Parcelable {
     constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
@@ -39,6 +41,7 @@ data class Game(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
         parcel.writeString(nameList)
+        parcel.writeString(nameFavListGame)
         parcel.writeString(name)
         parcel.writeString(desc)
         parcel.writeDouble(rating)

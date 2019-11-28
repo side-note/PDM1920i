@@ -41,46 +41,5 @@ class ListsActivity : AppCompatActivity(){
             BggApp.CUSTOM_LIST_REPO.insertList(listName.text.toString())
             recyclerView.invalidate()
         }
-
-        /*class MyTask: AsyncTask<String, Unit, Unit>() {
-            override fun doInBackground(vararg nameList: String) {
-                BggApp.CUSTOM_LIST_REPO.insertList(nameList[0])
-            }
-        }
-        MyTask().execute(listName)
-        button.setText(listName)
-
-        findViewById<Button>(R.id.list).setOnClickListener{
-            if(intent.getStringExtra(LISTS) != null) {
-                val intent = Intent(this, GameListActivity::class.java)
-                intent.putExtra(LIST, button.text)
-                startActivity(intent)
-            } else{
-
-                class MyTask: AsyncTask<Intent, Unit, Unit>() {
-
-                    override fun doInBackground(vararg intent: Intent) {
-                        val artistsAndGames = intent[0].getParcelableExtra<ArtistsAndGames>(GAME_NAME)
-                        artistsAndGames!!.game.nameList = intent[0].getStringExtra(LIST)!!
-                        BggApp.CUSTOM_LIST_REPO.insertGame(artistsAndGames.game)
-                        artistsAndGames.artistList.forEach {
-                            BggApp.CUSTOM_LIST_REPO.insertArtist(artistsAndGames.game.name, it.artistName)
-                        }
-                    }
-
-                }
-                val task =  MyTask()
-                intent.putExtra(LIST, button.text.toString())
-                task.execute(intent)
-//                val artistsAndGames = intent.getParcelableExtra<ArtistsAndGames>(GAME_NAME)
-//                artistsAndGames!!.game.nameList = button.text.toString()
-//                BggApp.CUSTOM_LIST_REPO.insertGame(artistsAndGames.game)
-//                artistsAndGames.artistList.forEach {
-//                    BggApp.CUSTOM_LIST_REPO.insertArtist(artistsAndGames.game.name, it.artistName)
-//                }
-//                BggApp.CUSTOM_LIST_REPO.search(button.text.toString(), intent.getStringExtra(LISTS)!!, GAME_NAME, true)
-                super.onBackPressed()
-            }
-        }*/
     }
 }
