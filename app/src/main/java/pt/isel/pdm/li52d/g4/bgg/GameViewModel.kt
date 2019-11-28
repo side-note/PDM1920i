@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.*
 import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
 
-class GameViewModel() : ViewModel(){
+class GameViewModel : ViewModel(){
 
     private var liveData : MutableLiveData<Array<ArtistsAndGames>> = MutableLiveData(emptyArray())
     val games : Array<ArtistsAndGames> get() = liveData.value!!
@@ -29,7 +29,7 @@ class GameViewModel() : ViewModel(){
     }
 
     fun search(name: String, url: String, limit: Int, skip: Int) {
-
+        PAGEMODEL++
         if(this.name == name) return
         this.name = name
 

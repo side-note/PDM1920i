@@ -26,10 +26,13 @@ class GamesAdapter(val model: GameViewModel) :
         return GameViewHolder(gamesView)
     }
 
-    override fun getItemCount(): Int = model.games.size
+    override fun getItemCount(): Int {
+        return if(model.games.size > 30) model.games.size - 1 else model.games.size
+    }
 
     override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
-        holder.bindTo(model.games[position])
+        if(position < LIMIT-1)
+            holder.bindTo(model.games[position])
     }
 }
 

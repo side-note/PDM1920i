@@ -27,6 +27,9 @@ const val LIST : String = "List"
 const val ILIST : String = "IListSelect"
 const val LIMIT : Int = 31
 var SKIP: Int = 0
+var PAGEACTIVITY: Int = 1
+var PAGEMODEL: Int = 0
+
 
 
 class MainActivity() : AppCompatActivity(), View.OnClickListener, SearchView.OnQueryTextListener, IListSelect {
@@ -44,6 +47,7 @@ class MainActivity() : AppCompatActivity(), View.OnClickListener, SearchView.OnQ
     override fun describeContents(): Int = 0
 
     override fun onClick(v: View?) {
+        SKIP = 0
         val myIntent = Intent(this, GameListActivity::class.java)
         myIntent.putExtra(MOST_POPULAR_GAMES,"popularity")
         startActivity(myIntent)
@@ -55,6 +59,7 @@ class MainActivity() : AppCompatActivity(), View.OnClickListener, SearchView.OnQ
     }
 
     override fun onQueryTextSubmit(query: String): Boolean {
+        SKIP = 0
         val myIntent = Intent(this, GameListActivity::class.java)
         myIntent.putExtra(NAME,query)
         startActivity(myIntent)
