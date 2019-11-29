@@ -1,5 +1,6 @@
 package pt.isel.pdm.li52d.g4.bgg
 
+import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,13 +10,18 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
+import pt.isel.pdm.li52d.g4.bgg.model.Game
+import pt.isel.pdm.li52d.g4.bgg.view.AskOption
 import pt.isel.pdm.li52d.g4.bgg.view.DetailedGameInfoActivity
+import pt.isel.pdm.li52d.g4.bgg.view.GameListActivity
+import pt.isel.pdm.li52d.g4.bgg.view.IDelete
+import java.lang.Exception
 import java.math.BigDecimal
 import java.math.RoundingMode
 
 const val GAME_NAME = "GAME_NAME"
 
-class GamesAdapter(val model: GameViewModel) :
+class GamesAdapter(val model: GameViewModel, val intent: Intent) :
     RecyclerView.Adapter<GameViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
         // 1. Obter o TextView i.e. artist_view
@@ -23,7 +29,7 @@ class GamesAdapter(val model: GameViewModel) :
         // 3. Instanciar ViewHolder -> passando-lhe o TextView
         val gamesView = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_game_layout, parent, false) as ConstraintLayout
-        return GameViewHolder(gamesView)
+        return GameViewHolder(gamesView, model, intent)
     }
 
     override fun getItemCount(): Int {
@@ -36,18 +42,26 @@ class GamesAdapter(val model: GameViewModel) :
     }
 }
 
-class GameViewHolder(private val view: ConstraintLayout) : RecyclerView.ViewHolder(view) {
+class GameViewHolder(private val view: ConstraintLayout, model: GameViewModel, intent: Intent) : RecyclerView.ViewHolder(view) {
     private lateinit var artistsAndGames: ArtistsAndGames
     private val txtGameName: TextView = view.findViewById(R.id.gameName)
     private val gameIcon: ImageView = view.findViewById(R.id.game_icon)
     private val ratingNumber: TextView = view.findViewById(R.id.rating_list)
     private val publisher: TextView = view.findViewById(R.id.publisher_list)
+    private val deleteGame: ImageView = view.findViewById(R.id.delete_game)
 
     init {
+        if(intent.getBooleanExtra("trashCan", true))
+            deleteGame.visibility = ImageView.INVISIBLE
         view.setOnClickListener {
-            val intent = Intent(view.context, DetailedGameInfoActivity::class.java)
-            intent.putExtra(GAME_NAME, artistsAndGames)
-            view.context.startActivity(intent)
+            val myIntent = Intent(view.context, DetailedGameInfoActivity::class.java)
+            myIntent.putExtra(GAME_NAME, artistsAndGames)
+            view.context.startActivity(myIntent)
+        }
+        deleteGame.setOnClickListener {
+            try {
+                AskOption.AskDelete(model.ctx!!, DeleteGame(model,intent.getStringExtra(LIST)!!), artistsAndGames.game)!!.show()
+            } catch (e: Exception){ }
         }
     }
 
@@ -60,4 +74,12 @@ class GameViewHolder(private val view: ConstraintLayout) : RecyclerView.ViewHold
             .load(artistsAndGames.game.smallImage)
             .into(gameIcon)
     }
+}
+
+class DeleteGame(val model: GameViewModel, val s: String) : IDelete{
+    override fun delete(a: Any) {
+        BggApp.CUSTOM_LIST_REPO.deleteGamesinList(a as Game)
+        model.get(s)
+    }
+
 }

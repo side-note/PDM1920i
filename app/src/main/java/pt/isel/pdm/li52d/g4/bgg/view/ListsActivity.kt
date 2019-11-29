@@ -44,9 +44,12 @@ class ListsActivity : AppCompatActivity(){
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         findViewById<Button>(R.id.addList).setOnClickListener {
-            BggApp.CUSTOM_LIST_REPO.insertList(listName.text.toString())
-            //this will update the reciclerview
-            model.getAllLists()
+            val name = listName.text.toString()
+            if(name.length > 0) {
+                BggApp.CUSTOM_LIST_REPO.insertList(name)
+                //this will update the reciclerview
+                model.getAllLists()
+            }
         }
     }
 }

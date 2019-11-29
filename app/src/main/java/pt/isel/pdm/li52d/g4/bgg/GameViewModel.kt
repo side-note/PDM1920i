@@ -1,7 +1,7 @@
 package pt.isel.pdm.li52d.g4.bgg
 
+import android.content.Context
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.*
 import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
 
@@ -11,11 +11,12 @@ class GameViewModel : ViewModel(){
     val games : Array<ArtistsAndGames> get() = liveData.value!!
     var name = ""
     var url = ""
+    var ctx: Context? = null
 
     fun get(name: String){
-        if(this.name == "List $name") return
+//        if(this.name == "List $name") return
         this.name = "List $name"
-        liveData.value = BggApp.CUSTOM_LIST_REPO.getGamesList(name).toTypedArray()
+        liveData.value = BggApp.CUSTOM_LIST_REPO.getGamesAndArtistsList(name).toTypedArray()
     }
 
     fun search(name: String, url: String, limit: Int, skip: Int) {

@@ -29,6 +29,7 @@ interface BGGDao{
 
     @Delete
     fun deleteList(customList: CustomList)
-
+    @Delete
+    fun deleteArtists(artist: Artist)
 
 }

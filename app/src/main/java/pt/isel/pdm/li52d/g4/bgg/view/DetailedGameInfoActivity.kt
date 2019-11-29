@@ -37,12 +37,12 @@ class DetailedGameInfoActivity() : AppCompatActivity(){
             intent.putExtra(ILIST, IntentFromDetailed(true))
             startActivity(intent)
         }
-        findViewById<ImageView>(R.id.deleteGame).setOnClickListener{
-            val intent = Intent(this, ListsActivity::class.java)
-            intent.putExtra(FROM_DETAILED_ACTIVITY, model.gameAndArtist)
-            intent.putExtra(ILIST, IntentFromDetailed(false))
-            startActivity(intent)
-        }
+//        findViewById<ImageView>(R.id.deleteGame).setOnClickListener{
+//            val intent = Intent(this, ListsActivity::class.java)
+//            intent.putExtra(FROM_DETAILED_ACTIVITY, model.gameAndArtist)
+//            intent.putExtra(ILIST, IntentFromDetailed(false))
+//            startActivity(intent)
+//        }
 
 
         val name: TextView =  findViewById(R.id.name_id)
@@ -132,21 +132,21 @@ class IntentFromDetailed(val insert: Boolean) : IListSelect{
         if(insert) {
             BggApp.CUSTOM_LIST_REPO.insertGameinList(artistsAndGames!!.game)
             artistsAndGames!!.artistList.forEach {
-                BggApp.CUSTOM_LIST_REPO.insertArtist(artistsAndGames!!.game.name, it.artistName)
+                BggApp.CUSTOM_LIST_REPO.insertArtist(listName, artistsAndGames!!.game.name, it.artistName)
             }
             act!!.onBackPressed()
-        }else{
-            BggApp.CUSTOM_LIST_REPO.deleteGamesinList(artistsAndGames!!.game)
-            act!!.startActivity(Intent(act, MainActivity::class.java))
+//        }else{
+//            BggApp.CUSTOM_LIST_REPO.deleteGamesinList(artistsAndGames!!.game)
+//            act!!.startActivity(Intent(ctx, MainActivity::class.java))
         }
     }
 
-    @SuppressLint("NewApi")
+
     constructor(parcel: Parcel) : this(
-        parcel.readBoolean()
+        parcel.readValue(Boolean::class.java.classLoader) as Boolean
     )
-    @SuppressLint("NewApi")
-    override fun writeToParcel(dest: Parcel, flags: Int){ dest.writeBoolean(insert)}
+
+    override fun writeToParcel(dest: Parcel, flags: Int){ dest.writeValue(insert)}
     override fun describeContents(): Int = 0
     companion object CREATOR : Parcelable.Creator<IntentFromDetailed> {
         override fun createFromParcel(parcel: Parcel): IntentFromDetailed = IntentFromDetailed(parcel)

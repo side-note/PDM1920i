@@ -23,7 +23,7 @@ class BGGRepository {
 
     private class insertArtistTask : AsyncTask<String, Unit, Unit>() {
         override fun doInBackground(vararg params: String) {
-            BggApp.db.customListAndGamesDao().insertArtist(Artist(params[0], params[1]))
+            BggApp.db.customListAndGamesDao().insertArtist(Artist(params[0], params[1], params[2]))
         }
     }
 
@@ -80,13 +80,22 @@ class BGGRepository {
         }
     }
 
+    private class deleteArtistsTask : AsyncTask<Artist, Unit, Unit>(){
+        override fun doInBackground(vararg artists: Artist) {
+            artists.forEach {
+                BggApp.db.customListAndGamesDao().deleteArtists(it)
+            }
+        }
+    }
+
+
     fun getAllList(): List<CustomList>{
         val task = getAllListTask()
         task.execute()
         return task.get()
     }
 
-    fun getGamesList(name: String): List<ArtistsAndGames> {
+    fun getGamesAndArtistsList(name: String): List<ArtistsAndGames> {
         val task = getGamesListTask()
         task.execute(name)
         return task.get()
@@ -94,7 +103,7 @@ class BGGRepository {
 
     fun insertList(nameList: String) = insertListTask().execute(nameList)
     fun insertGameinList(game: Game) = insertGameinListTask().execute(game)
-    fun insertArtist(artistName: String, gameName: String) = insertArtistTask().execute(artistName, gameName)
+    fun insertArtist(listName: String, gameName: String, artistName: String) = insertArtistTask().execute(listName, gameName, artistName)
     fun insertFavorite(nameFavList: String, publisher: String, designer: String) = insertFavoritesTask().execute(nameFavList,publisher,designer)
     fun insertGamesinFavorites(vararg games: Game) = insertGamesinFavoritesTask().execute(games)
     fun insertMechanics(vararg mechanics: Mechanics) = insertMechanicsinFavoritesTask().execute(mechanics)
@@ -103,6 +112,8 @@ class BGGRepository {
     fun deleteGamesinList(vararg games: Game) = deleteGamesinListTask().execute(*games)
 
     fun deleteList(list: CustomList) = deleteListTask().execute(list)
+
+    fun deleteArtist(vararg artist: Artist) = deleteArtistsTask().execute(*artist)
 
     fun search(
         name: String,
@@ -143,7 +154,7 @@ class BGGRepository {
         )
         val artists: ArrayList<Artist> = arrayListOf()
         dto.artists?.forEach {
-            artists.add(Artist(gameName, it))
+            artists.add(Artist("",gameName, it))
         }
         return ArtistsAndGames(game, artists)
     }

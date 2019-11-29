@@ -30,13 +30,13 @@
 
     <TextView
         android:id="@+id/gameName"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:text="TextView"
         android:textColor="@android:color/black"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/delete_game"
+        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toEndOf="@+id/game_icon"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -48,8 +48,19 @@
         android:text="TextView"
         android:textColor="@android:color/darker_gray"
         android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/game_icon"
-        app:layout_constraintTop_toBottomOf="@+id/gameName" />
+        app:layout_constraintTop_toBottomOf="@+id/gameName"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/delete_game"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/outline_delete_black_18dp" />
 
     <RatingBar
         android:id="@+id/ratingBar"
@@ -64,18 +75,19 @@
         android:progressTint="@android:color/holo_orange_light"
         android:rating="1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameName" />
+        app:layout_constraintTop_toTopOf="@+id/rating_list" />
 
     <TextView
         android:id="@+id/rating_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
         android:text="TextView"
         android:textAlignment="viewEnd"
         android:textSize="11dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ratingBar"
-        app:layout_constraintTop_toBottomOf="@+id/gameName" />
+        app:layout_constraintTop_toBottomOf="@+id/gameName"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
