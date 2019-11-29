@@ -46,7 +46,7 @@ class ListViewHolder(view: ConstraintLayout, val intent: Intent, model: ListView
              * thing you're trying to delete is not in the database anymore
              * */
             try {
-                AskOption.AskDelete(select.ctx!!,DeleteList(model),listName.text.toString())!!.show()
+                AskOption.askDelete(select.ctx!!,DeleteList(model),listName.text.toString())!!.show()
                 //this will update the reciclerview
                 model.getAllLists()
             }catch (e: Exception){ }

@@ -1,6 +1,5 @@
 package pt.isel.pdm.li52d.g4.bgg
 
-import android.app.Activity
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
 import pt.isel.pdm.li52d.g4.bgg.model.Game
 import pt.isel.pdm.li52d.g4.bgg.view.AskOption
 import pt.isel.pdm.li52d.g4.bgg.view.DetailedGameInfoActivity
-import pt.isel.pdm.li52d.g4.bgg.view.GameListActivity
 import pt.isel.pdm.li52d.g4.bgg.view.IDelete
 import java.lang.Exception
 import java.math.BigDecimal
@@ -60,7 +58,7 @@ class GameViewHolder(private val view: ConstraintLayout, model: GameViewModel, i
         }
         deleteGame.setOnClickListener {
             try {
-                AskOption.AskDelete(model.ctx!!, DeleteGame(model,intent.getStringExtra(LIST)!!), artistsAndGames.game)!!.show()
+                AskOption.askDelete(model.ctx!!, DeleteGame(model,intent.getStringExtra(LIST)!!), artistsAndGames.game)!!.show()
             } catch (e: Exception){ }
         }
     }

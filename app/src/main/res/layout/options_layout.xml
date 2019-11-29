@@ -16,29 +16,30 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.947"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="393dp"
-        android:layout_height="664dp"
-        android:layout_marginTop="21dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mechanics_id">
+        app:layout_constraintTop_toBottomOf="@+id/options_title"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
+            android:id="@+id/options_zone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" />
     </ScrollView>
 
     <TextView
-        android:id="@+id/mechanics_id"
+        android:id="@+id/options_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="15dp"
         android:text="Mechanics"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"

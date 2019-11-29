@@ -11,68 +11,72 @@
         android:id="@+id/favlistname"
         android:layout_width="117dp"
         android:layout_height="27dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="5dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/mechanics"
+        app:layout_constraintEnd_toStartOf="@+id/publisher"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/publisher" />
 
     <EditText
         android:id="@+id/publisher"
         android:layout_width="117dp"
         android:layout_height="27dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginTop="15dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/mechanics"
-        app:layout_constraintEnd_toStartOf="@+id/designer"
-        app:layout_constraintStart_toEndOf="@+id/favlistname"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/designer"
         android:layout_width="117dp"
         android:layout_height="27dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="5dp"
         android:ems="10"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/categories"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/publisher"
+        app:layout_constraintTop_toTopOf="@+id/publisher" />
 
     <Button
         android:id="@+id/categories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginEnd="84dp"
-        android:layout_marginBottom="21dp"
+        android:layout_marginTop="5dp"
         android:text="Categories"
-        app:layout_constraintBottom_toTopOf="@+id/fav_list_recycler_view"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/mechanics" />
+        app:layout_constraintStart_toEndOf="@+id/space2"
+        app:layout_constraintTop_toBottomOf="@+id/publisher" />
 
     <Button
         android:id="@+id/mechanics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="21dp"
+        android:layout_marginTop="5dp"
         android:text="Mechanics"
-        app:layout_constraintBottom_toTopOf="@+id/fav_list_recycler_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.29"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/space2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/publisher" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fav_list_recycler_view"
-        android:layout_width="414dp"
-        android:layout_height="614dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mechanics">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <Space
+        android:id="@+id/space2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/publisher" />
 </androidx.constraintlayout.widget.ConstraintLayout>
