@@ -57,9 +57,26 @@ class BGGRepository {
             return BggApp.db.customListAndGamesDao().getGamesForCustomList(name[0])
         }
     }
+    private class getListTask : AsyncTask<String, Unit, CustomList>() {
+        override fun doInBackground(vararg name: String): CustomList {
+            return BggApp.db.customListAndGamesDao().getCustomList(name[0])
+        }
+    }
     private class getAllListTask : AsyncTask<Unit, Unit, List<CustomList>>() {
         override fun doInBackground(vararg dummy : Unit): List<CustomList> {
-            return BggApp.db.customListAndGamesDao().getCustomList()
+            return BggApp.db.customListAndGamesDao().getAllCustomList()
+        }
+    }
+    private class deleteGamesinListTask : AsyncTask<Game, Unit, Unit>(){
+        override fun doInBackground(vararg games: Game) {
+            games.forEach {
+                BggApp.db.customListAndGamesDao().delete(it)
+            }
+        }
+    }
+    private class deleteListTask : AsyncTask<CustomList, Unit, Unit>(){
+        override fun doInBackground(vararg lists: CustomList) {
+            BggApp.db.customListAndGamesDao().deleteList(lists[0])
         }
     }
 
@@ -82,6 +99,10 @@ class BGGRepository {
     fun insertGamesinFavorites(vararg games: Game) = insertGamesinFavoritesTask().execute(games)
     fun insertMechanics(vararg mechanics: Mechanics) = insertMechanicsinFavoritesTask().execute(mechanics)
     fun insertCategories(vararg categories: Categories) = insertCategoriesinFavoritesTask().execute(categories)
+
+    fun deleteGamesinList(vararg games: Game) = deleteGamesinListTask().execute(*games)
+
+    fun deleteList(list: CustomList) = deleteListTask().execute(list)
 
     fun search(
         name: String,
@@ -125,6 +146,12 @@ class BGGRepository {
             artists.add(Artist(gameName, it))
         }
         return ArtistsAndGames(game, artists)
+    }
+
+    fun getList(listName : String): CustomList{
+        val task = getListTask()
+        task.execute(listName)
+        return task.get()
     }
 
 }

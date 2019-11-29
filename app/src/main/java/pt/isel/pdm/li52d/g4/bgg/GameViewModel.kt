@@ -16,24 +16,11 @@ class GameViewModel : ViewModel(){
         if(this.name == "List $name") return
         this.name = "List $name"
         liveData.value = BggApp.CUSTOM_LIST_REPO.getGamesList(name).toTypedArray()
-//        class MyTask: AsyncTask<String, Unit, Array<ArtistsAndGames>>() {
-//
-//            override fun doInBackground(vararg str: String) : Array<ArtistsAndGames> {
-//                return
-//            }
-//
-//            override fun onPostExecute(result: Array<ArtistsAndGames>?) {
-//
-//            }
-//
-//        }
-//        val task = MyTask()
-//        task.execute(name)
     }
 
     fun search(name: String, url: String, limit: Int, skip: Int) {
         val pageModel = (skip/30) + 1
-        if(PAGEMODEL == pageModel) return
+        if(PAGEMODEL == pageModel && this.name == name) return
         this.name = name
         this.url = url
         Log.v(TAG, "**** FETCHING Game called by $name from BoardGameAtlas.com...")

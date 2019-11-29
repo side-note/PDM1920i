@@ -28,25 +28,24 @@ class ListsActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.games_list_layout)
-//        val button = findViewById<Button>(R.id.list)
-//        val listName = "List1"
-        val artistsAndGames = intent.getParcelableExtra<ArtistsAndGames>(FROM_DETAILED_ACTIVITY)
+
         val select: IListSelect = intent.getParcelableExtra(ILIST)!!
+        val artistsAndGames = intent.getParcelableExtra<ArtistsAndGames>(FROM_DETAILED_ACTIVITY)
         select.act = this
         select.ctx = this
         select.artistsAndGames = artistsAndGames
         intent.putExtra(ILIST, select)
 
         val listName = findViewById<EditText>(R.id.editText)
-
+        listName.hint = "Name of the List"
         model.observe(this){adapter.notifyDataSetChanged()}
-        val recyclerView =findViewById<RecyclerView>(R.id.recycler_view_lists)
+        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view_lists)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         findViewById<Button>(R.id.addList).setOnClickListener {
             BggApp.CUSTOM_LIST_REPO.insertList(listName.text.toString())
-            recyclerView.invalidate()
+            model.getAllLists()
         }
     }
 }

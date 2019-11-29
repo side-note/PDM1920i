@@ -1,5 +1,7 @@
 package pt.isel.pdm.li52d.g4.bgg.view
 
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -19,32 +21,26 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 
-class DetailedGameInfoActivity() : AppCompatActivity(), IListSelect{
-
-    override fun selectList(b: Button) {
-        val artistsAndGames = model.gameAndArtist
-        artistsAndGames.game.nameList = b.text.toString()
-        BggApp.CUSTOM_LIST_REPO.insertGame(artistsAndGames.game)
-        artistsAndGames.artistList.forEach {
-            BggApp.CUSTOM_LIST_REPO.insertArtist(artistsAndGames.game.name, it.artistName)
-        }
-        super.onBackPressed()
-    }
+class DetailedGameInfoActivity() : AppCompatActivity(){
 
     val model : DetailedGameInfoViewModel by lazy {
         val factory = BGGViewModelFactoryProvider(intent)
         ViewModelProviders.of(this, factory)[DetailedGameInfoViewModel::class.java]
     }
 
-    constructor(parcel: Parcel) : this() {
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.detailed_info)
-        findViewById<Button>(R.id.add).setOnClickListener{
+        findViewById<ImageView>(R.id.add).setOnClickListener{
             val intent = Intent(this, ListsActivity::class.java)
-            intent.putExtra(ILIST, this)
+            intent.putExtra(FROM_DETAILED_ACTIVITY, model.gameAndArtist)
+            intent.putExtra(ILIST, IntentFromDetailed(true))
+            startActivity(intent)
+        }
+        findViewById<ImageView>(R.id.deleteGame).setOnClickListener{
+            val intent = Intent(this, ListsActivity::class.java)
+            intent.putExtra(FROM_DETAILED_ACTIVITY, model.gameAndArtist)
+            intent.putExtra(ILIST, IntentFromDetailed(false))
             startActivity(intent)
         }
 
@@ -79,6 +75,9 @@ class DetailedGameInfoActivity() : AppCompatActivity(), IListSelect{
         getArtists(model.artists)
 
         primary_publisher.setOnClickListener{
+            PAGEACTIVITY = 1
+            PAGEMODEL = 0
+            SKIP = 0
             val myIntent = Intent(this, GameListActivity::class.java)
             myIntent.putExtra(PUBLISHER,primary_publisher.text!!)
             startActivity(myIntent)
@@ -105,6 +104,9 @@ class DetailedGameInfoActivity() : AppCompatActivity(), IListSelect{
             val artist = TextView(this)
             artist.text = it.artistName
             artist.setOnClickListener {
+                PAGEACTIVITY = 1
+                PAGEMODEL = 0
+                SKIP = 0
                 val myIntent = Intent(this, GameListActivity::class.java)
                 myIntent.putExtra(ARTIST,artist.text!!)
                 startActivity(myIntent)
@@ -113,21 +115,39 @@ class DetailedGameInfoActivity() : AppCompatActivity(), IListSelect{
             list.addView(artist)
         }
     }
+}
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
+class IntentFromDetailed(val insert: Boolean) : IListSelect{
+
+    override var ctx: Context? = null
+    override var act: Activity? = null
+    override var artistsAndGames: ArtistsAndGames? = null
+
+    override fun selectList(listName: String) {
+        artistsAndGames!!.game.nameList = listName
+        if(insert) {
+            BggApp.CUSTOM_LIST_REPO.insertGameinList(artistsAndGames!!.game)
+            artistsAndGames!!.artistList.forEach {
+                BggApp.CUSTOM_LIST_REPO.insertArtist(artistsAndGames!!.game.name, it.artistName)
+            }
+            act!!.onBackPressed()
+        }else{
+            BggApp.CUSTOM_LIST_REPO.deleteGamesinList(artistsAndGames!!.game)
+            act!!.startActivity(Intent(act, MainActivity::class.java))
+        }
     }
 
+    @SuppressLint("NewApi")
+    constructor(parcel: Parcel) : this(
+        parcel.readBoolean()
+    )
+    @SuppressLint("NewApi")
+    override fun writeToParcel(dest: Parcel, flags: Int){ dest.writeBoolean(insert)}
     override fun describeContents(): Int = 0
-
-
-    companion object CREATOR : Parcelable.Creator<DetailedGameInfoActivity> {
-        override fun createFromParcel(parcel: Parcel): DetailedGameInfoActivity {
-            return DetailedGameInfoActivity(parcel)
-        }
-
-        override fun newArray(size: Int): Array<DetailedGameInfoActivity?> {
-            return arrayOfNulls(size)
-        }
+    companion object CREATOR : Parcelable.Creator<IntentFromDetailed> {
+        override fun createFromParcel(parcel: Parcel): IntentFromDetailed = IntentFromDetailed(parcel)
+        override fun newArray(size: Int): Array<IntentFromDetailed?> = arrayOfNulls(size)
     }
+
 }
 

@@ -27,7 +27,7 @@ interface FavoritesDao {
     fun getCategoriesForFavorites(nameFavList: String): List<Categories>
 
     @Query("SELECT * FROM games WHERE nameFavListGame LIKE :nameFavList")
-    fun getGamesForFavorites(nameFavList: String): List<Categories>
+    fun getGamesForFavorites(nameFavList: String): List<Game>
 
 
 }

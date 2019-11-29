@@ -30,7 +30,7 @@ const val ILIST : String = "IListSelect"
 const val FROM_MAIN_ACTIVITY : String = "this intent is from MainActivity"
 const val FROM_DETAILED_ACTIVITY : String = "this intent is from DetailedGameInfoActivity"
 const val LIMIT : Int = 31
-var PAGEMODEL: Int = 1
+var PAGEMODEL: Int = 0
 var SKIP: Int = 0
 var PAGEACTIVITY: Int = 1
 
@@ -61,11 +61,11 @@ class MainActivity() : AppCompatActivity(), View.OnClickListener, SearchView.OnQ
         return true
     }
 
-//    val bgg : BGGWebApi by lazy {
-//        BGGWebApi(this)
-//    }
-
-    constructor(parcel: Parcel) : this()//(parcel.readValue(ClassLoader.getSystemClassLoader()) as Context)
+    override fun onBackPressed() {
+        intent = Intent(Intent.ACTION_MAIN)
+        intent.addCategory(Intent.CATEGORY_HOME)
+        startActivity(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +83,6 @@ class MainActivity() : AppCompatActivity(), View.OnClickListener, SearchView.OnQ
 
         findViewById<Button>(R.id.lists).setOnClickListener {
             val intent = Intent(this, ListsActivity::class.java)
-//            intent.putExtra(LISTS, "Lists")
             intent.putExtra(ILIST, IntentFromMain())
             startActivity(intent)
         }
