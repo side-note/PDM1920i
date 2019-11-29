@@ -38,18 +38,20 @@ class ListViewHolder(view: ConstraintLayout, val intent: Intent, model: ListView
     init {
         listName.setOnClickListener {
             intent.getParcelableExtra<IListSelect>(ILIST)!!.selectList(listName.text.toString())
-            view.invalidate()
         }
         trash.setOnClickListener {
+            /**
+             * When trying to delete something from the database it could throw an exception if the
+             * thing you're trying to delete is not in the database anymor
+             * */
             try {
                 BggApp.CUSTOM_LIST_REPO.getGamesList(listName.text.toString()).forEach {
                     BggApp.CUSTOM_LIST_REPO.deleteGamesinList(it.game)
                 }
                 BggApp.CUSTOM_LIST_REPO.deleteList(BggApp.CUSTOM_LIST_REPO.getList(listName.text.toString()))
+                //this will update the reciclerview
                 model.getAllLists()
-            }catch (e: Exception){
-
-            }
+            }catch (e: Exception){ }
         }
     }
 

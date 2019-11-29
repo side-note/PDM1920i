@@ -61,6 +61,10 @@ class MainActivity() : AppCompatActivity(), View.OnClickListener, SearchView.OnQ
         return true
     }
 
+    /**
+     * This method is for every time the back button is pressed
+     * on the main activity to go out of the app
+     * */
     override fun onBackPressed() {
         intent = Intent(Intent.ACTION_MAIN)
         intent.addCategory(Intent.CATEGORY_HOME)

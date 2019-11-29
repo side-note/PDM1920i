@@ -45,6 +45,7 @@ class ListsActivity : AppCompatActivity(){
 
         findViewById<Button>(R.id.addList).setOnClickListener {
             BggApp.CUSTOM_LIST_REPO.insertList(listName.text.toString())
+            //this will update the reciclerview
             model.getAllLists()
         }
     }

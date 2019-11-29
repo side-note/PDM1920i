@@ -27,6 +27,7 @@ class GameListActivity: AppCompatActivity() {
         val title : TextView = findViewById(R.id.title_view)
         val buttonNext = findViewById<Button>(R.id.button_next)
         val buttonPrevious = findViewById<Button>(R.id.button_previous)
+//        this code is a fail when trying to capitalize the first letter in every word of the name
 //        val words = model.name.split(" ")
 //        for (str in words){
 //        str. = str[0].toUpperCase()

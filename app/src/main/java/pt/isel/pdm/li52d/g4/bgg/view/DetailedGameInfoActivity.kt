@@ -117,6 +117,10 @@ class DetailedGameInfoActivity() : AppCompatActivity(){
     }
 }
 
+/**
+ * Now this class has an boolean in the constructor just to know
+ * if it is suppose to insert or delete from the database
+ * */
 class IntentFromDetailed(val insert: Boolean) : IListSelect{
 
     override var ctx: Context? = null
