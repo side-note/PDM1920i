@@ -1,10 +1,8 @@
 package pt.isel.pdm.li52d.g4.bgg
 
 import android.content.Intent
-import android.widget.TextView
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import pt.isel.pdm.li52d.g4.bgg.dto.GameDto
 
 
 class BGGViewModelFactoryProvider(val intent: Intent) : ViewModelProvider.Factory {
@@ -16,15 +14,21 @@ class BGGViewModelFactoryProvider(val intent: Intent) : ViewModelProvider.Factor
                 val intentName: String? = intent.getStringExtra(NAME)
                 val intentMPP: String? = intent.getStringExtra(MOST_POPULAR_GAMES)
                 val intentPublisher: String? = intent.getStringExtra(PUBLISHER)
-                val intentArtist: String? = intent.getStringExtra(ARTIST)
+                val intentDesigner: String? = intent.getStringExtra(DESIGNER)
                 val intentList: String? = intent.getStringExtra(LIST)
+                val intentMechanics: String? = intent.getStringExtra(MECHANICS)
+                val intentCategories: String? = intent.getStringExtra(CATEGORIES)
+                val intentOptions: String? = intent.getStringExtra(OPTIONS)
 
                 when {
-                    intentName != null -> model.search(intentName, BGG_GET_GAMES, LIMIT, SKIP)
-                    intentMPP != null -> model.search(intentMPP, BGG_MPP, LIMIT, SKIP)
-                    intentPublisher != null -> model.search(intentPublisher, BGG_PUBLISHER, LIMIT, SKIP)
-                    intentArtist != null -> model.search(intentArtist, BGG_ARTIST, LIMIT, SKIP)
+                    intentName != null -> model.gameSearch(intentName, BGG_GET_GAMES, LIMIT, SKIP)
+                    intentMPP != null -> model.gameSearch(intentMPP, BGG_MPP, LIMIT, SKIP)
+                    intentPublisher != null -> model.gameSearch(intentPublisher, BGG_PUBLISHER, LIMIT, SKIP)
+                    intentDesigner != null -> model.gameSearch(intentDesigner, BGG_DESIGNERS, LIMIT, SKIP)
                     intentList != null -> model.get(intentList)
+                    intentMechanics != null -> model.mechanicsSearch(intentMechanics, BGG_MECHANICS)
+                    intentCategories != null -> model.categoriesSearch(intentCategories, BGG_CATEGORIES)
+                    intentOptions != null -> model.gameSearch(intentOptions, BGG_OPTIONS,0,0)
                 }
 
                 model as T

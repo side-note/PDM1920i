@@ -1,6 +1,5 @@
 package pt.isel.pdm.li52d.g4.bgg.view
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -15,8 +14,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.detailed_info.*
 import pt.isel.pdm.li52d.g4.bgg.*
-import pt.isel.pdm.li52d.g4.bgg.model.Artist
-import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
+import pt.isel.pdm.li52d.g4.bgg.model.Designer
+import pt.isel.pdm.li52d.g4.bgg.model.DesignersAndGames
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -33,13 +32,13 @@ class DetailedGameInfoActivity() : AppCompatActivity(){
         setContentView(R.layout.detailed_info)
         findViewById<ImageView>(R.id.add).setOnClickListener{
             val intent = Intent(this, ListsActivity::class.java)
-            intent.putExtra(FROM_DETAILED_ACTIVITY, model.gameAndArtist)
+            intent.putExtra(FROM_DETAILED_ACTIVITY, model.gameAndDesigners)
             intent.putExtra(ILIST, IntentFromDetailed(true))
             startActivity(intent)
         }
 //        findViewById<ImageView>(R.id.deleteGame).setOnClickListener{
 //            val intent = Intent(this, ListsActivity::class.java)
-//            intent.putExtra(FROM_DETAILED_ACTIVITY, model.gameAndArtist)
+//            intent.putExtra(FROM_DETAILED_ACTIVITY, model.gameAndDesigners)
 //            intent.putExtra(ILIST, IntentFromDetailed(false))
 //            startActivity(intent)
 //        }
@@ -72,7 +71,7 @@ class DetailedGameInfoActivity() : AppCompatActivity(){
         primary_publisher.text = model.publisher
         rules_url.text = model.rulesurl
 
-        getArtists(model.artists)
+        getDesigners(model.designers)
 
         primary_publisher.setOnClickListener{
             PAGEACTIVITY = 1
@@ -99,20 +98,20 @@ class DetailedGameInfoActivity() : AppCompatActivity(){
 
     }
 
-    fun getArtists(artists : List<Artist>){
-        artists.forEach {
-            val artist = TextView(this)
-            artist.text = it.artistName
-            artist.setOnClickListener {
+    fun getDesigners(designers : List<Designer>){
+        designers.forEach {
+            val designer = TextView(this)
+            designer.text = it.designerName
+            designer.setOnClickListener {
                 PAGEACTIVITY = 1
                 PAGEMODEL = 0
                 SKIP = 0
                 val myIntent = Intent(this, GameListActivity::class.java)
-                myIntent.putExtra(ARTIST,artist.text!!)
+                myIntent.putExtra(DESIGNER,designer.text!!)
                 startActivity(myIntent)
             }
-            val list = findViewById<LinearLayout>(R.id.artists_list)
-            list.addView(artist)
+            val list = findViewById<LinearLayout>(R.id.designers_list)
+            list.addView(designer)
         }
     }
 }
@@ -125,18 +124,18 @@ class IntentFromDetailed(val insert: Boolean) : IListSelect{
 
     override var ctx: Context? = null
     override var act: Activity? = null
-    override var artistsAndGames: ArtistsAndGames? = null
+    override var designersAndGames: DesignersAndGames? = null
 
     override fun selectList(listName: String) {
-        artistsAndGames!!.game.nameList = listName
+        designersAndGames!!.game.nameList = listName
         if(insert) {
-            BggApp.CUSTOM_LIST_REPO.insertGameinList(artistsAndGames!!.game)
-            artistsAndGames!!.artistList.forEach {
-                BggApp.CUSTOM_LIST_REPO.insertArtist(listName, artistsAndGames!!.game.name, it.artistName)
+            BggApp.CUSTOM_LIST_REPO.insertGameinList(designersAndGames!!.game)
+            designersAndGames!!.designerList.forEach {
+                BggApp.CUSTOM_LIST_REPO.insertDesigner(listName, designersAndGames!!.game.name, it.designerName)
             }
             act!!.onBackPressed()
 //        }else{
-//            BggApp.CUSTOM_LIST_REPO.deleteGamesinList(artistsAndGames!!.game)
+//            BggApp.CUSTOM_LIST_REPO.deleteGamesinList(designersAndGames!!.game)
 //            act!!.startActivity(Intent(ctx, MainActivity::class.java))
         }
     }

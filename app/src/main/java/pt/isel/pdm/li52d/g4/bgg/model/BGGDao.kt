@@ -1,6 +1,5 @@
 package pt.isel.pdm.li52d.g4.bgg.model
 
-import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
@@ -13,10 +12,10 @@ interface BGGDao{
     fun insertList(list : CustomList)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertArtist(artist:Artist)
+    fun insertDesigner(designer : Designer)
 
     @Query("SELECT * FROM games WHERE nameList LIKE :customlistName")
-    fun getGamesForCustomList(customlistName : String): List<ArtistsAndGames>
+    fun getGamesForCustomList(customlistName : String): List<DesignersAndGames>
 
     @Query("SELECT * FROM lists")
     fun getAllCustomList(): List<CustomList>
@@ -30,6 +29,6 @@ interface BGGDao{
     @Delete
     fun deleteList(customList: CustomList)
     @Delete
-    fun deleteArtists(artist: Artist)
+    fun deleteDesigners(designer: Designer)
 
 }

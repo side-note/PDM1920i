@@ -1,9 +1,7 @@
 package pt.isel.pdm.li52d.g4.bgg.view
 
 import android.os.Bundle
-import android.os.SystemClock
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
@@ -61,7 +59,7 @@ class GameListActivity: AppCompatActivity() {
         buttonPrevious.setOnClickListener {
             if(PAGEACTIVITY > 1 && PAGEACTIVITY == PAGEMODEL) {
                 SKIP = (--PAGEACTIVITY-1) * 30
-                model.search(model.name, model.url, LIMIT, SKIP)
+                model.gameSearch(model.name, model.url, LIMIT, SKIP)
                 recyclerView.smoothScrollToPosition(0)
             }
         }
@@ -69,7 +67,7 @@ class GameListActivity: AppCompatActivity() {
         buttonNext.setOnClickListener {
             if(model.games.size > 30 && PAGEMODEL == PAGEACTIVITY) {
                 SKIP = (++PAGEACTIVITY-1) * 30
-                model.search(model.name, model.url, LIMIT, SKIP)
+                model.gameSearch(model.name, model.url, LIMIT, SKIP)
                 recyclerView.smoothScrollToPosition(0)
             }
         }

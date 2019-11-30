@@ -1,19 +1,14 @@
 package pt.isel.pdm.li52d.g4.bgg.view
 
-import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.games_list_layout.*
 import pt.isel.pdm.li52d.g4.bgg.*
-import pt.isel.pdm.li52d.g4.bgg.dto.SearchDto
-import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
+import pt.isel.pdm.li52d.g4.bgg.model.DesignersAndGames
 
 class ListsActivity : AppCompatActivity(){
 
@@ -30,10 +25,10 @@ class ListsActivity : AppCompatActivity(){
         setContentView(R.layout.games_list_layout)
 
         val select: IListSelect = intent.getParcelableExtra(ILIST)!!
-        val artistsAndGames = intent.getParcelableExtra<ArtistsAndGames>(FROM_DETAILED_ACTIVITY)
+        val designersAndGames = intent.getParcelableExtra<DesignersAndGames>(FROM_DETAILED_ACTIVITY)
         select.act = this
         select.ctx = this
-        select.artistsAndGames = artistsAndGames
+        select.designersAndGames = designersAndGames
         intent.putExtra(ILIST, select)
 
         val listName = findViewById<EditText>(R.id.editText)

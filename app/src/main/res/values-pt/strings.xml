@@ -10,7 +10,7 @@
     <string name="max_player">"Max Jogadores: "</string>
     <string name="min_age">"Idade Min: "</string>
     <string name="rules">"Regras: "</string>
-    <string name="artists">Criadores</string>
+    <string name="designers">Criadores</string>
     <string name="credits_button">Créditos</string>
     <string name="img_error_url">Não foi possível abrir site oficial!</string>
 </resources>

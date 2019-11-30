@@ -5,8 +5,7 @@ import android.util.Log
 import com.android.volley.VolleyError
 import pt.isel.pdm.li52d.g4.bgg.BggApp
 import pt.isel.pdm.li52d.g4.bgg.TAG
-import pt.isel.pdm.li52d.g4.bgg.dto.GameDto
-import pt.isel.pdm.li52d.g4.bgg.dto.SearchDto
+import pt.isel.pdm.li52d.g4.bgg.dto.*
 
 class BGGRepository {
     private class insertListTask : AsyncTask<String, Unit, Unit>() {
@@ -21,9 +20,9 @@ class BGGRepository {
         }
     }
 
-    private class insertArtistTask : AsyncTask<String, Unit, Unit>() {
+    private class insertDesignerTask : AsyncTask<String, Unit, Unit>() {
         override fun doInBackground(vararg params: String) {
-            BggApp.db.customListAndGamesDao().insertArtist(Artist(params[0], params[1], params[2]))
+            BggApp.db.customListAndGamesDao().insertDesigner(Designer(params[0], params[1], params[2]))
         }
     }
 
@@ -52,8 +51,8 @@ class BGGRepository {
     }
 
 
-    private class getGamesListTask : AsyncTask<String, Unit, List<ArtistsAndGames>>() {
-        override fun doInBackground(vararg name: String): List<ArtistsAndGames> {
+    private class getGamesListTask : AsyncTask<String, Unit, List<DesignersAndGames>>() {
+        override fun doInBackground(vararg name: String): List<DesignersAndGames> {
             return BggApp.db.customListAndGamesDao().getGamesForCustomList(name[0])
         }
     }
@@ -80,10 +79,10 @@ class BGGRepository {
         }
     }
 
-    private class deleteArtistsTask : AsyncTask<Artist, Unit, Unit>(){
-        override fun doInBackground(vararg artists: Artist) {
-            artists.forEach {
-                BggApp.db.customListAndGamesDao().deleteArtists(it)
+    private class deleteDesignersTask : AsyncTask<Designer, Unit, Unit>(){
+        override fun doInBackground(vararg designers: Designer) {
+            designers.forEach {
+                BggApp.db.customListAndGamesDao().deleteDesigners(it)
             }
         }
     }
@@ -95,7 +94,7 @@ class BGGRepository {
         return task.get()
     }
 
-    fun getGamesAndArtistsList(name: String): List<ArtistsAndGames> {
+    fun getGamesAndDesignersList(name: String): List<DesignersAndGames> {
         val task = getGamesListTask()
         task.execute(name)
         return task.get()
@@ -103,7 +102,7 @@ class BGGRepository {
 
     fun insertList(nameList: String) = insertListTask().execute(nameList)
     fun insertGameinList(game: Game) = insertGameinListTask().execute(game)
-    fun insertArtist(listName: String, gameName: String, artistName: String) = insertArtistTask().execute(listName, gameName, artistName)
+    fun insertDesigner(listName: String, gameName: String, artistName: String) = insertDesignerTask().execute(listName, gameName, artistName)
     fun insertFavorite(nameFavList: String, publisher: String, designer: String) = insertFavoritesTask().execute(nameFavList,publisher,designer)
     fun insertGamesinFavorites(vararg games: Game) = insertGamesinFavoritesTask().execute(games)
     fun insertMechanics(vararg mechanics: Mechanics) = insertMechanicsinFavoritesTask().execute(mechanics)
@@ -113,18 +112,18 @@ class BGGRepository {
 
     fun deleteList(list: CustomList) = deleteListTask().execute(list)
 
-    fun deleteArtist(vararg artist: Artist) = deleteArtistsTask().execute(*artist)
+    fun deleteDesigner(vararg designer: Designer) = deleteDesignersTask().execute(*designer)
 
-    fun search(
+    fun gameSearch(
         name: String,
         limit: Int,
         skip: Int,
-        onSuccess: (SearchDto) -> Unit,
+        onSuccess: (GameSearchDto) -> Unit,
         onError: (VolleyError) -> Unit,
         url: String
     ) {
         Log.v(TAG, "**** FETCHING Game called by $name from BoardGameAtlas.com...")
-        BggApp.bgg.search(
+        BggApp.bgg.gameSearch(
             name,
             limit,
             skip,
@@ -134,7 +133,36 @@ class BGGRepository {
         )
     }
 
-    fun fromDto(dto: GameDto): ArtistsAndGames {
+    fun mechanicsSearch(
+        name: String,
+        onSuccess: (MechanicsSearchDto) -> Unit,
+        onError: (VolleyError) -> Unit,
+        url: String
+    ) {
+        Log.v(TAG, "**** FETCHING Game called by $name from BoardGameAtlas.com...")
+        BggApp.bgg.mechanicsSearch(
+            name,
+            onSuccess,
+            onError,
+            url
+        )
+    }
+    fun categoriesSearch(
+        name: String,
+        onSuccess: (CategoriesSearchDto) -> Unit,
+        onError: (VolleyError) -> Unit,
+        url: String
+    ) {
+        Log.v(TAG, "**** FETCHING Game called by $name from BoardGameAtlas.com...")
+        BggApp.bgg.categoriesSearch(
+            name,
+            onSuccess,
+            onError,
+            url
+        )
+    }
+
+    fun fromGameDto(dto: GameDto): DesignersAndGames {
         val gameName = dto.name!!
         val game = Game(
             dto.id!!,
@@ -152,11 +180,19 @@ class BGGRepository {
             dto.url,
             dto.images?.small
         )
-        val artists: ArrayList<Artist> = arrayListOf()
-        dto.artists?.forEach {
-            artists.add(Artist("",gameName, it))
+        val designers: ArrayList<Designer> = arrayListOf()
+        dto.designers?.forEach {
+            designers.add(Designer("",gameName, it))
         }
-        return ArtistsAndGames(game, artists)
+        return DesignersAndGames(game, designers)
+    }
+
+    fun fromMechanicsDto(dto: MechanicsDto): Mechanics{
+        return Mechanics("", dto.id, dto.name)
+    }
+
+    fun fromCategoriesDto(dto: CategoriesDto): Categories{
+        return Categories("", dto.id, dto.name)
     }
 
     fun getList(listName : String): CustomList{

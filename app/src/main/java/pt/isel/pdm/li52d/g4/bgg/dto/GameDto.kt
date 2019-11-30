@@ -8,7 +8,7 @@ data class GameDto(
     val id: String?,
     val name: String?,
     val images: ImageDto?,
-    val artists: Array<String>?,
+    val designers: Array<String>?,
     @field:SerializedName("year_published") val yearPublished: Int,
     @field:SerializedName("min_players") val minPlayer: Int,
     @field:SerializedName("max_players") val maxPlayer: Int,
@@ -39,7 +39,7 @@ data class GameDto(
         parcel.writeString(id)
         parcel.writeString(name)
         parcel.writeParcelable(images,flags)
-        parcel.writeStringArray(artists)
+        parcel.writeStringArray(designers)
         parcel.writeInt(yearPublished)
         parcel.writeInt(minPlayer)
         parcel.writeInt(maxPlayer)
@@ -69,10 +69,10 @@ data class GameDto(
         if (description != other.description) return false
         if (images != other.images) return false
         if (primaryPublisher != other.primaryPublisher) return false
-        if (artists != null) {
-            if (other.artists == null) return false
-            if (!artists.contentEquals(other.artists)) return false
-        } else if (other.artists != null) return false
+        if (designers != null) {
+            if (other.designers == null) return false
+            if (!designers.contentEquals(other.designers)) return false
+        } else if (other.designers != null) return false
         if (avgUserRating != other.avgUserRating) return false
         if (url != other.url) return false
         if (rulesUrl != other.rulesUrl) return false
@@ -89,7 +89,7 @@ data class GameDto(
         result = 31 * result + (description?.hashCode() ?: 0)
         result = 31 * result + (images?.hashCode() ?: 0)
         result = 31 * result + (primaryPublisher?.hashCode() ?: 0)
-        result = 31 * result + (artists?.contentHashCode() ?: 0)
+        result = 31 * result + (designers?.contentHashCode() ?: 0)
         result = 31 * result + avgUserRating.hashCode()
         result = 31 * result + (url?.hashCode() ?: 0)
         result = 31 * result + (rulesUrl?.hashCode() ?: 0)

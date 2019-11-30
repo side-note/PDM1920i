@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
+import pt.isel.pdm.li52d.g4.bgg.model.DesignersAndGames
 import pt.isel.pdm.li52d.g4.bgg.model.Game
 import pt.isel.pdm.li52d.g4.bgg.view.AskOption
 import pt.isel.pdm.li52d.g4.bgg.view.DetailedGameInfoActivity
@@ -41,7 +41,7 @@ class GamesAdapter(val model: GameViewModel, val intent: Intent) :
 }
 
 class GameViewHolder(private val view: ConstraintLayout, model: GameViewModel, intent: Intent) : RecyclerView.ViewHolder(view) {
-    private lateinit var artistsAndGames: ArtistsAndGames
+    private lateinit var designersAndGames: DesignersAndGames
     private val txtGameName: TextView = view.findViewById(R.id.gameName)
     private val gameIcon: ImageView = view.findViewById(R.id.game_icon)
     private val ratingNumber: TextView = view.findViewById(R.id.rating_list)
@@ -53,23 +53,23 @@ class GameViewHolder(private val view: ConstraintLayout, model: GameViewModel, i
             deleteGame.visibility = ImageView.INVISIBLE
         view.setOnClickListener {
             val myIntent = Intent(view.context, DetailedGameInfoActivity::class.java)
-            myIntent.putExtra(GAME_NAME, artistsAndGames)
+            myIntent.putExtra(GAME_NAME, designersAndGames)
             view.context.startActivity(myIntent)
         }
         deleteGame.setOnClickListener {
             try {
-                AskOption.askDelete(model.ctx!!, DeleteGame(model,intent.getStringExtra(LIST)!!), artistsAndGames.game)!!.show()
+                AskOption.askDelete(model.ctx!!, DeleteGame(model,intent.getStringExtra(LIST)!!), designersAndGames.game)!!.show()
             } catch (e: Exception){ }
         }
     }
 
-    fun bindTo(artistsAndGames: ArtistsAndGames) {
-        this.artistsAndGames = artistsAndGames
-        ratingNumber.text = BigDecimal(artistsAndGames.game.rating.toString()).setScale(1, RoundingMode.HALF_UP).toDouble().toString()
-        publisher.text = artistsAndGames.game.publisher
-        txtGameName.text = artistsAndGames.game.name
+    fun bindTo(designersAndGames: DesignersAndGames) {
+        this.designersAndGames = designersAndGames
+        ratingNumber.text = BigDecimal(designersAndGames.game.rating.toString()).setScale(1, RoundingMode.HALF_UP).toDouble().toString()
+        publisher.text = designersAndGames.game.publisher
+        txtGameName.text = designersAndGames.game.name
         Glide.with(view)
-            .load(artistsAndGames.game.smallImage)
+            .load(designersAndGames.game.smallImage)
             .into(gameIcon)
     }
 }

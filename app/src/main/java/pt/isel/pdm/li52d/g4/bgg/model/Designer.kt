@@ -4,11 +4,11 @@ import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
 
-@Entity(tableName = "artist", primaryKeys = ["listName","gameName", "artistName"])
-data class Artist(
+@Entity(tableName = "designer", primaryKeys = ["listName","gameName", "designerName"])
+data class Designer(
     val listName: String,
     val gameName: String,
-    val artistName: String
+    val designerName: String
 ): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,
@@ -19,19 +19,19 @@ data class Artist(
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(listName)
         parcel.writeString(gameName)
-        parcel.writeString(artistName)
+        parcel.writeString(designerName)
     }
 
     override fun describeContents(): Int {
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Artist> {
-        override fun createFromParcel(parcel: Parcel): Artist {
-            return Artist(parcel)
+    companion object CREATOR : Parcelable.Creator<Designer> {
+        override fun createFromParcel(parcel: Parcel): Designer {
+            return Designer(parcel)
         }
 
-        override fun newArray(size: Int): Array<Artist?> {
+        override fun newArray(size: Int): Array<Designer?> {
             return arrayOfNulls(size)
         }
     }

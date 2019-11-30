@@ -4,9 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
 import pt.isel.pdm.li52d.g4.bgg.model.CustomList
-import pt.isel.pdm.li52d.g4.bgg.model.CustomListsAndGames
 
 class ListViewModel() : ViewModel( ){
     private var liveData : MutableLiveData<Array<CustomList>> = MutableLiveData(emptyArray())

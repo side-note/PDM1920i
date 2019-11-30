@@ -12,22 +12,23 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.SearchView
-import pt.isel.pdm.li52d.g4.bgg.model.ArtistsAndGames
+import pt.isel.pdm.li52d.g4.bgg.model.DesignersAndGames
 import pt.isel.pdm.li52d.g4.bgg.view.CreditsActivity
 import pt.isel.pdm.li52d.g4.bgg.view.GameListActivity
-import pt.isel.pdm.li52d.g4.bgg.view.ListActivity
 import pt.isel.pdm.li52d.g4.bgg.view.ListsActivity
 
 const val NAME : String = "Name"
 const val MOST_POPULAR_GAMES : String = "Most Popular Game"
 const val PUBLISHER : String = "Publisher"
-const val ARTIST :String = "Artist"
+const val DESIGNER :String = "Designer"
 const val TAG : String = "BGG"
 const val CREDITS : String = "Credits"
+const val CATEGORIES : String = "Categories"
+const val MECHANICS : String = "Mechanics"
+const val OPTIONS : String = "Options"
 const val LISTS : String = "Lists"
 const val LIST : String = "List"
 const val ILIST : String = "IListSelect"
-const val FROM_MAIN_ACTIVITY : String = "this intent is from MainActivity"
 const val FROM_DETAILED_ACTIVITY : String = "this intent is from DetailedGameInfoActivity"
 const val LIMIT : Int = 31
 var PAGEMODEL: Int = 0
@@ -97,7 +98,7 @@ class IntentFromMain() : IListSelect{
 
     override var ctx: Context? = null
     override var act: Activity? = null
-    override var artistsAndGames: ArtistsAndGames? = null
+    override var designersAndGames: DesignersAndGames? = null
 
     override fun selectList(listName: String) {
         val intent = Intent(ctx!!, GameListActivity::class.java)

@@ -1,7 +1,7 @@
 package pt.isel.pdm.li52d.g4.bgg
 
 import com.google.gson.Gson
-import pt.isel.pdm.li52d.g4.bgg.dto.SearchDto
+import pt.isel.pdm.li52d.g4.bgg.dto.GameSearchDto
 import org.junit.Test
 
 import java.io.BufferedReader
@@ -16,9 +16,9 @@ import java.net.URL
 class ExampleUnitTest {
     @Test
     fun test() {
-        val url = "https://www.boardgameatlas.com/api/search?name=Catan&client_id=SB1VGnDv7M"
+        val url = "https://www.boardgameatlas.com/api/gameSearch?name=Catan&client_id=SB1VGnDv7M"
         val gson = Gson()
-        val value = gson.fromJson(BufferedReader(InputStreamReader(URL(url).openStream())),SearchDto::class.java)
+        val value = gson.fromJson(BufferedReader(InputStreamReader(URL(url).openStream())),GameSearchDto::class.java)
         value.games.forEach(::println)
     }
 }
