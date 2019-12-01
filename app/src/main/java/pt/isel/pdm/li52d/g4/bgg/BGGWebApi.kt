@@ -13,13 +13,18 @@ import pt.isel.pdm.li52d.g4.bgg.dto.CategoriesSearchDto
 import pt.isel.pdm.li52d.g4.bgg.dto.GameSearchDto
 import pt.isel.pdm.li52d.g4.bgg.dto.MechanicsSearchDto
 
-const val BGG_GET_GAMES = "https://www.boardgameatlas.com/api/gameSearch?name=%S&limit=%d&skip=%d&pretty=true&client_id=SB1VGnDv7M"
-const val BGG_MPP = "https://www.boardgameatlas.com/api/gameSearch/?order_by=%S&limit=%d&skip=%d&ascending=false&client_id=SB1VGnDv7M"
-const val BGG_PUBLISHER = "https://www.boardgameatlas.com/api/gameSearch/?publisher=%s&limit=%d&skip=%d&client_id=SB1VGnDv7M"
-const val BGG_DESIGNERS ="https://www.boardgameatlas.com/api/gameSearch/?designer=%s&limit=%d&skip=%d&client_id=SB1VGnDv7M"
+const val BGG_GET_GAMES = "https://www.boardgameatlas.com/api/search?name=%S&limit=%d&skip=%d&pretty=true&client_id=SB1VGnDv7M"
+const val BGG_MPP = "https://www.boardgameatlas.com/api/search/?order_by=%s&limit=%d&skip=%d&ascending=false&client_id=SB1VGnDv7M"
+const val BGG_PUBLISHER = "https://www.boardgameatlas.com/api/search/?publisher=%s&limit=%d&skip=%d&client_id=SB1VGnDv7M"
+const val BGG_DESIGNERS ="https://www.boardgameatlas.com/api/search/?designer=%s&limit=%d&skip=%d&client_id=SB1VGnDv7M"
 const val BGG_MECHANICS = "https://www.boardgameatlas.com/api/game/mechanics?pretty=true&client_id=SB1VGnDv7M"
 const val BGG_CATEGORIES = "https://www.boardgameatlas.com/api/game/categories?pretty=true&client_id=SB1VGnDv7M"
-const val BGG_OPTIONS = "https://www.boardgameatlas.com/api/gameSearch/?publisher=%s&mechanics=%s&categories=%s&pretty=true&client_id=SB1VGnDv7M"
+const val PUBLISHER_SEARCH = "publisher=%s&"
+const val DESIGNER_SEARCH = "designer=%s&"
+const val MECHANICS_SEARCH = "mechanics=%s&"
+const val CATEGORIES_SEARCH = "categories=%s&"
+const val END_URL = "pretty=true&client_id=SB1VGnDv7M"
+var BGG_OPTIONS = "https://www.boardgameatlas.com/api/search/?"
 
 class BGGWebApi(ctx: Context) {
     val queue = Volley.newRequestQueue(ctx)
@@ -34,7 +39,7 @@ class BGGWebApi(ctx: Context) {
         url: String)
     {
         val url = String.format(url, name, limit, skip)
-
+        val smt : String
         class MyTask: AsyncTask<String, Int, GameSearchDto>() {
             override fun doInBackground(vararg resp: String): GameSearchDto {
                 return gson.fromJson(resp[0], GameSearchDto::class.java)
@@ -96,6 +101,47 @@ class BGGWebApi(ctx: Context) {
                 return gson.fromJson(resp[0], CategoriesSearchDto::class.java)
             }
             override fun onPostExecute(result: CategoriesSearchDto) {
+                onSuccess(result)
+            }
+        }
+        val task =  MyTask()
+
+        val stringRequest = StringRequest(
+            Request.Method.GET,
+            url,
+            Response.Listener<String> { response ->
+                task.execute(response)
+            },
+            Response.ErrorListener { err -> onError(err)})
+        queue.add(stringRequest)
+    }
+
+    fun favoriteSearch (
+        publisher: String,
+        designer: String,
+        mechanics: String,
+        categories: String,
+        onSuccess: (GameSearchDto) -> Unit,
+        onError: (VolleyError) -> Unit)
+    {
+        var url = BGG_OPTIONS
+        if(publisher != ""){
+            url += String.format(PUBLISHER_SEARCH, publisher)
+        }
+        if(designer != "")
+            url += String.format(DESIGNER_SEARCH, designer)
+        if(mechanics != "")
+            url += String.format(MECHANICS_SEARCH, mechanics)
+        if(categories != "")
+            url += String.format(CATEGORIES_SEARCH, categories)
+        url += END_URL
+
+
+        class MyTask: AsyncTask<String, Int, GameSearchDto>() {
+            override fun doInBackground(vararg resp: String): GameSearchDto {
+                return gson.fromJson(resp[0], GameSearchDto::class.java)
+            }
+            override fun onPostExecute(result: GameSearchDto) {
                 onSuccess(result)
             }
         }

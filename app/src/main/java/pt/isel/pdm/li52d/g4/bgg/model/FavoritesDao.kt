@@ -20,6 +20,9 @@ interface FavoritesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavorites(favorites: Favorites)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertDesigner(designer : Designer)
+
     @Query("SELECT * FROM mechanics WHERE nameFavListM LIKE :nameFavList")
     fun getMechanicsForFavorites(nameFavList: String): List<Mechanics>
 
@@ -27,7 +30,9 @@ interface FavoritesDao {
     fun getCategoriesForFavorites(nameFavList: String): List<Categories>
 
     @Query("SELECT * FROM games WHERE nameFavListGame LIKE :nameFavList")
-    fun getGamesForFavorites(nameFavList: String): List<Game>
+    fun getGamesForFavorites(nameFavList: String): List<DesignersAndGames>
 
+    @Query("SELECT * FROM favorites")
+    fun getAllFavs(): List<Favorites>
 
 }

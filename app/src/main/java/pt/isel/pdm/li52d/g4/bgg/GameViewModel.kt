@@ -2,6 +2,7 @@ package pt.isel.pdm.li52d.g4.bgg
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.*
 import pt.isel.pdm.li52d.g4.bgg.model.Categories
 import pt.isel.pdm.li52d.g4.bgg.model.DesignersAndGames
@@ -11,9 +12,6 @@ class GameViewModel : ViewModel(){
 
     private var gameLiveData : MutableLiveData<Array<DesignersAndGames>> = MutableLiveData(emptyArray())
 
-    private var mechanicsLiveData : MutableLiveData<Array<Mechanics>> = MutableLiveData(emptyArray())
-
-    private var categoriesLiveData : MutableLiveData<Array<Categories>> = MutableLiveData(emptyArray())
     val games : Array<DesignersAndGames> get() = gameLiveData.value!!
     var name = ""
     var url = ""
@@ -47,62 +45,11 @@ class GameViewModel : ViewModel(){
             },
             {
                 this.name = ""
-                throw it
-                //Toast.makeText(, it.message, Toast.LENGTH_LONG).show()
+                Toast.makeText(ctx, it.message, Toast.LENGTH_LONG).show()
             },
             url
         )
 
-    }
-
-    fun mechanicsSearch(name: String, url: String) {
-        if(this.name == name) return
-        this.name = name
-        this.url = url
-        Log.v(TAG, "**** FETCHING Game called by $name from BoardGameAtlas.com...")
-        BggApp.CUSTOM_LIST_REPO.mechanicsSearch(
-            name,
-            {mechanicsSearchDtoResult ->
-                Log.v(TAG, "**** FETCHING Game called by $name COMPLETED !!!!")
-                val auxes: ArrayList<Mechanics> = arrayListOf()
-                mechanicsSearchDtoResult.mechanics.forEach {
-                    auxes.add(BggApp.CUSTOM_LIST_REPO.fromMechanicsDto(it))
-                }
-
-                this.mechanicsLiveData.value = auxes.toTypedArray()
-            },
-            {
-                this.name = ""
-                throw it
-                //Toast.makeText(, it.message, Toast.LENGTH_LONG).show()
-            },
-            url
-        )
-    }
-
-    fun categoriesSearch(name: String, url: String) {
-        if(this.name == name) return
-        this.name = name
-        this.url = url
-        Log.v(TAG, "**** FETCHING Game called by $name from BoardGameAtlas.com...")
-        BggApp.CUSTOM_LIST_REPO.categoriesSearch(
-            name,
-            {categoriesSearchDtoResult ->
-                Log.v(TAG, "**** FETCHING Game called by $name COMPLETED !!!!")
-                val auxes: ArrayList<Categories> = arrayListOf()
-                categoriesSearchDtoResult.categories.forEach {
-                    auxes.add(BggApp.CUSTOM_LIST_REPO.fromCategoriesDto(it))
-                }
-
-                this.categoriesLiveData.value = auxes.toTypedArray()
-            },
-            {
-                this.name = ""
-                throw it
-                //Toast.makeText(, it.message, Toast.LENGTH_LONG).show()
-            },
-            url
-        )
     }
 
     fun observe(owner: LifecycleOwner, observer: (Array<DesignersAndGames>) -> Unit) {

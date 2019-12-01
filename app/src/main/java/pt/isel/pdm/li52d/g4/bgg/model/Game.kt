@@ -8,7 +8,7 @@ import androidx.room.Entity
 data class Game(
     val id: String,
     var nameList: String,
-    val nameFavListGame: String,
+    var nameFavListGame: String,
     val name: String,
     val desc: String?,
     val rating: Double,

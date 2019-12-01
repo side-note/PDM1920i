@@ -6,5 +6,6 @@ import androidx.room.Entity
 data class Categories(
     val nameFavListC: String,
     val id: String,
-    val nameCategories: String
+    val nameCategories: String,
+    var checked: String
 )

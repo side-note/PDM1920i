@@ -22,9 +22,6 @@ const val GAME_NAME = "GAME_NAME"
 class GamesAdapter(val model: GameViewModel, val intent: Intent) :
     RecyclerView.Adapter<GameViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
-        // 1. Obter o TextView i.e. artist_view
-        // 2. Inflate parent com o artist_view
-        // 3. Instanciar ViewHolder -> passando-lhe o TextView
         val gamesView = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_game_layout, parent, false) as ConstraintLayout
         return GameViewHolder(gamesView, model, intent)

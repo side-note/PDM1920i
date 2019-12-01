@@ -20,7 +20,7 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 
-class DetailedGameInfoActivity() : AppCompatActivity(){
+class DetailedGameInfoActivity : AppCompatActivity(){
 
     val model : DetailedGameInfoViewModel by lazy {
         val factory = BGGViewModelFactoryProvider(intent)
@@ -131,7 +131,7 @@ class IntentFromDetailed(val insert: Boolean) : IListSelect{
         if(insert) {
             BggApp.CUSTOM_LIST_REPO.insertGameinList(designersAndGames!!.game)
             designersAndGames!!.designerList.forEach {
-                BggApp.CUSTOM_LIST_REPO.insertDesigner(listName, designersAndGames!!.game.name, it.designerName)
+                BggApp.CUSTOM_LIST_REPO.insertDesignerInList(listName, designersAndGames!!.game.name, it.designerName)
             }
             act!!.onBackPressed()
 //        }else{

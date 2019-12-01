@@ -13,7 +13,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.SearchView
 import pt.isel.pdm.li52d.g4.bgg.model.DesignersAndGames
+import pt.isel.pdm.li52d.g4.bgg.model.Favorites
 import pt.isel.pdm.li52d.g4.bgg.view.CreditsActivity
+import pt.isel.pdm.li52d.g4.bgg.view.FavoritesActivity
 import pt.isel.pdm.li52d.g4.bgg.view.GameListActivity
 import pt.isel.pdm.li52d.g4.bgg.view.ListsActivity
 
@@ -26,9 +28,14 @@ const val CREDITS : String = "Credits"
 const val CATEGORIES : String = "Categories"
 const val MECHANICS : String = "Mechanics"
 const val OPTIONS : String = "Options"
-const val LISTS : String = "Lists"
 const val LIST : String = "List"
 const val ILIST : String = "IListSelect"
+const val MECHANICSURL = "Mechanics Url"
+const val MECHANICSNAMES = "Mechanics Name"
+const val CATEGORIESURL = "Categories Url"
+const val CATEGORIESNAMES = "Categories Name"
+const val PUBLISHERFAV = "Publisher Favorite"
+const val DESIGNERFAV = "Designer Favorite"
 const val FROM_DETAILED_ACTIVITY : String = "this intent is from DetailedGameInfoActivity"
 const val LIMIT : Int = 31
 var PAGEMODEL: Int = 0
@@ -89,6 +96,10 @@ class MainActivity() : AppCompatActivity(), View.OnClickListener, SearchView.OnQ
         findViewById<Button>(R.id.lists).setOnClickListener {
             val intent = Intent(this, ListsActivity::class.java)
             intent.putExtra(ILIST, IntentFromMain())
+            startActivity(intent)
+        }
+        findViewById<Button>(R.id.fav_button).setOnClickListener{
+            val intent = Intent(this, FavoritesActivity::class.java)
             startActivity(intent)
         }
     }

@@ -5,7 +5,8 @@
     android:id="@+id/constraintlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true">
 
     <EditText
         android:id="@+id/favlistname"
@@ -42,19 +43,19 @@
         android:id="@+id/categories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="4dp"
         android:text="Categories"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/space2"
+        app:layout_constraintStart_toEndOf="@+id/mechanics"
         app:layout_constraintTop_toBottomOf="@+id/publisher" />
 
     <Button
-        android:id="@+id/options"
+        android:id="@+id/mechanics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
         android:text="Mechanics"
-        app:layout_constraintEnd_toStartOf="@+id/space2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/publisher" />
 
@@ -67,16 +68,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/options">
+        app:layout_constraintTop_toBottomOf="@+id/mechanics">
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <Space
-        android:id="@+id/space2"
+    <Button
+        android:id="@+id/add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="7dp"
+        android:text="Add"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/publisher" />
+        app:layout_constraintStart_toEndOf="@+id/categories"
+        app:layout_constraintTop_toBottomOf="@+id/designer" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

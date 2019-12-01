@@ -6,5 +6,6 @@ import androidx.room.Entity
 data class Mechanics(
     val nameFavListM: String,
     val id: String,
-    val nameMechanics: String
+    val nameMechanics: String,
+    var checked: String
 )

@@ -20,7 +20,7 @@ class BGGRepository {
         }
     }
 
-    private class insertDesignerTask : AsyncTask<String, Unit, Unit>() {
+    private class insertDesignerInListTask : AsyncTask<String, Unit, Unit>() {
         override fun doInBackground(vararg params: String) {
             BggApp.db.customListAndGamesDao().insertDesigner(Designer(params[0], params[1], params[2]))
         }
@@ -29,6 +29,12 @@ class BGGRepository {
     private class insertFavoritesTask : AsyncTask<String, Unit, Unit>() {
         override fun doInBackground(vararg params: String) {
             BggApp.db.FavoritesDao().insertFavorites(Favorites(params[0], params[1], params[2]))
+        }
+    }
+
+    private class insertDesignerInFavoritesTask(): AsyncTask<String, Unit, Unit>(){
+        override fun doInBackground(vararg params: String){
+            BggApp.db.FavoritesDao().insertDesigner(Designer(params[0],params[1],params[2]))
         }
     }
 
@@ -66,6 +72,31 @@ class BGGRepository {
             return BggApp.db.customListAndGamesDao().getAllCustomList()
         }
     }
+
+    private class getGamesFavListTask : AsyncTask<String, Unit, List<DesignersAndGames>>() {
+        override fun doInBackground(vararg name: String): List<DesignersAndGames> {
+            return BggApp.db.FavoritesDao().getGamesForFavorites(name[0])
+        }
+    }
+
+    private class getMechanicsTask : AsyncTask<String, Unit, List<Mechanics>>() {
+        override fun doInBackground(vararg namefav: String): List<Mechanics> {
+            return BggApp.db.FavoritesDao().getMechanicsForFavorites(namefav[0])
+        }
+    }
+
+    private class getCategoriesTask : AsyncTask<String, Unit, List<Categories>>() {
+        override fun doInBackground(vararg namefav: String): List<Categories> {
+            return BggApp.db.FavoritesDao().getCategoriesForFavorites(namefav[0])
+        }
+    }
+
+    private class getAllFavListTask : AsyncTask<Unit, Unit, List<Favorites>>() {
+        override fun doInBackground(vararg dummy : Unit): List<Favorites> {
+            return BggApp.db.FavoritesDao().getAllFavs()
+        }
+    }
+
     private class deleteGamesinListTask : AsyncTask<Game, Unit, Unit>(){
         override fun doInBackground(vararg games: Game) {
             games.forEach {
@@ -94,19 +125,33 @@ class BGGRepository {
         return task.get()
     }
 
+    fun getAllFavs(): List<Favorites>{
+        val task = getAllFavListTask()
+        task.execute()
+        return task.get()
+    }
+
     fun getGamesAndDesignersList(name: String): List<DesignersAndGames> {
         val task = getGamesListTask()
         task.execute(name)
         return task.get()
     }
 
+    fun getGamesAndDesignersFavList(name: String): List<DesignersAndGames> {
+        val task = getGamesFavListTask()
+        task.execute(name)
+        return task.get()
+    }
+
     fun insertList(nameList: String) = insertListTask().execute(nameList)
     fun insertGameinList(game: Game) = insertGameinListTask().execute(game)
-    fun insertDesigner(listName: String, gameName: String, artistName: String) = insertDesignerTask().execute(listName, gameName, artistName)
+    fun insertDesignerInList(listName: String, gameName: String, designerName: String) = insertDesignerInListTask().execute(listName, gameName, designerName)
     fun insertFavorite(nameFavList: String, publisher: String, designer: String) = insertFavoritesTask().execute(nameFavList,publisher,designer)
     fun insertGamesinFavorites(vararg games: Game) = insertGamesinFavoritesTask().execute(games)
     fun insertMechanics(vararg mechanics: Mechanics) = insertMechanicsinFavoritesTask().execute(mechanics)
     fun insertCategories(vararg categories: Categories) = insertCategoriesinFavoritesTask().execute(categories)
+    fun insertDesignerInFavorites(favListName: String, gameName: String, designerName: String) = insertDesignerInFavoritesTask().execute(favListName, gameName, designerName)
+
 
     fun deleteGamesinList(vararg games: Game) = deleteGamesinListTask().execute(*games)
 
@@ -162,6 +207,25 @@ class BGGRepository {
         )
     }
 
+    fun favoriteSearch(
+        publisher: String,
+        designer: String,
+        mechanics: String,
+        categories: String,
+        onSuccess: (GameSearchDto) -> Unit,
+        onError: (VolleyError) -> Unit
+    ) {
+        Log.v(TAG, "**** FETCHING Game called by festure from BoardGameAtlas.com...")
+        BggApp.bgg.favoriteSearch(
+            publisher,
+            designer,
+            mechanics,
+            categories,
+            onSuccess,
+            onError
+        )
+    }
+
     fun fromGameDto(dto: GameDto): DesignersAndGames {
         val gameName = dto.name!!
         val game = Game(
@@ -188,11 +252,11 @@ class BGGRepository {
     }
 
     fun fromMechanicsDto(dto: MechanicsDto): Mechanics{
-        return Mechanics("", dto.id, dto.name)
+        return Mechanics("", dto.id, dto.name, dto.checked)
     }
 
     fun fromCategoriesDto(dto: CategoriesDto): Categories{
-        return Categories("", dto.id, dto.name)
+        return Categories("", dto.id, dto.name,dto.checked)
     }
 
     fun getList(listName : String): CustomList{
@@ -200,6 +264,19 @@ class BGGRepository {
         task.execute(listName)
         return task.get()
     }
+
+    fun getMechanics(id: String): List<Mechanics> {
+        val task = getMechanicsTask()
+        task.execute(id)
+        return task.get()
+    }
+
+    fun getCategories(id: String): List<Categories> {
+        val task = getCategoriesTask()
+        task.execute(id)
+        return task.get()
+    }
+
 
 }
 
