@@ -33,7 +33,7 @@ class DetailedGameInfoActivity : AppCompatActivity(){
         findViewById<ImageView>(R.id.add).setOnClickListener{
             val intent = Intent(this, ListsActivity::class.java)
             intent.putExtra(FROM_DETAILED_ACTIVITY, model.gameAndDesigners)
-            intent.putExtra(ILIST, IntentFromDetailed(true))
+            intent.putExtra(ILIST, IntentFromDetailed())
             startActivity(intent)
         }
 //        findViewById<ImageView>(R.id.deleteGame).setOnClickListener{
@@ -120,7 +120,7 @@ class DetailedGameInfoActivity : AppCompatActivity(){
  * Now this class has an boolean in the constructor just to know
  * if it is suppose to insert or delete from the database
  * */
-class IntentFromDetailed(val insert: Boolean) : IListSelect{
+class IntentFromDetailed() : IListSelect{
 
     override var ctx: Context? = null
     override var act: Activity? = null
@@ -128,24 +128,21 @@ class IntentFromDetailed(val insert: Boolean) : IListSelect{
 
     override fun selectList(listName: String) {
         designersAndGames!!.game.nameList = listName
-        if(insert) {
-            BggApp.CUSTOM_LIST_REPO.insertGameinList(designersAndGames!!.game)
-            designersAndGames!!.designerList.forEach {
-                BggApp.CUSTOM_LIST_REPO.insertDesignerInList(listName, designersAndGames!!.game.name, it.designerName)
-            }
-            act!!.onBackPressed()
-//        }else{
-//            BggApp.CUSTOM_LIST_REPO.deleteGamesinList(designersAndGames!!.game)
-//            act!!.startActivity(Intent(ctx, MainActivity::class.java))
+        BggApp.CUSTOM_LIST_REPO.insertGameinList(designersAndGames!!.game)
+        designersAndGames!!.designerList.forEach {
+            BggApp.CUSTOM_LIST_REPO.insertDesignerInList(
+                listName,
+                designersAndGames!!.game.name,
+                it.designerName
+            )
         }
+        act!!.onBackPressed()
     }
 
 
-    constructor(parcel: Parcel) : this(
-        parcel.readValue(Boolean::class.java.classLoader) as Boolean
-    )
+    constructor(parcel: Parcel) : this()
 
-    override fun writeToParcel(dest: Parcel, flags: Int){ dest.writeValue(insert)}
+    override fun writeToParcel(dest: Parcel, flags: Int){ }
     override fun describeContents(): Int = 0
     companion object CREATOR : Parcelable.Creator<IntentFromDetailed> {
         override fun createFromParcel(parcel: Parcel): IntentFromDetailed = IntentFromDetailed(parcel)

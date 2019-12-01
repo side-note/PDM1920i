@@ -48,6 +48,7 @@ class FavoritesActivity : AppCompatActivity(){
         intentC.putExtra(CATEGORIESURL, "")
         intentC.putExtra(CATEGORIESNAMES, "")
         model.observe(this){adapter.notifyDataSetChanged()}
+        model.observeGames(this){adapter.notifyDataSetChanged()}
         val recyclerView = findViewById<RecyclerView>(R.id.fav_list_recycler_view)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)

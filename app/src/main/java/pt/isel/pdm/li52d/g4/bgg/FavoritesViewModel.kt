@@ -25,14 +25,6 @@ class FavoritesViewModel: ViewModel() {
     var mechanicsNames = ""
     var categoriesNames =""
 
-//
-//    fun get(name: String){
-//        this.name = "Fav $name"
-//        favoritesLiveData.value = BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersFavList(this.name).toTypedArray()
-//    }
-//
-
-
     fun favoriteSearch(
         favListName: String,
         publisher: String,
@@ -62,10 +54,6 @@ class FavoritesViewModel: ViewModel() {
                     val game = BggApp.CUSTOM_LIST_REPO.fromGameDto(it)
                     game.game.nameFavListGame = favListName
                     auxes.add(game)
-                    BggApp.CUSTOM_LIST_REPO.insertGamesinFavorites(game.game)
-                    game.designerList.forEach{ designer ->
-                        BggApp.CUSTOM_LIST_REPO.insertDesignerInFavorites(favListName, game.game.name, designer.designerName)
-                    }
                     val mechName = mechanicsNames.split(",")
                     val mech = mechanics.split(",")
                     for(i in mech.indices)
@@ -76,6 +64,12 @@ class FavoritesViewModel: ViewModel() {
                         BggApp.CUSTOM_LIST_REPO.insertCategories(Categories(favListName ,cat[i],catName[i],"true"))
                 }
                 this.favoritesLiveData.value = auxes.toTypedArray()
+                auxes.forEach{
+                    BggApp.CUSTOM_LIST_REPO.insertGamesinFavorites(it.game)
+                    it.designerList.forEach{ designer ->
+                        BggApp.CUSTOM_LIST_REPO.insertDesignerInFavorites(favListName, it.game.name, designer.designerName)
+                    }
+                }
             },
             {
                 this.name = ""
@@ -87,6 +81,10 @@ class FavoritesViewModel: ViewModel() {
 
     fun getAllFavoritesList(){
         favoritesListsLiveData.value = BggApp.CUSTOM_LIST_REPO.getAllFavs().toTypedArray()
+    }
+
+    fun observeGames(owner: LifecycleOwner, observer: (Array<DesignersAndGames>) -> Unit) {
+        favoritesLiveData.observe(owner, Observer { observer(it) })
     }
 
     fun observe(owner: LifecycleOwner, observer: (Array<Favorites>) -> Unit) {
