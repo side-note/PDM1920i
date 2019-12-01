@@ -26,26 +26,30 @@ class FavoritesActivity : AppCompatActivity(){
         setContentView(R.layout.favorites_list_layout)
 
         val favoriteList = findViewById<EditText>(R.id.favlistname)
+        favoriteList.hint = "List Name"
         val publisher = findViewById<EditText>(R.id.publisher)
+        publisher.hint = "Publisher"
         val designer = findViewById<EditText>(R.id.designer)
+        designer.hint = "Designer"
         val mechanicsButton = findViewById<Button>(R.id.mechanics)
         val categoriesButton = findViewById<Button>(R.id.categories)
         val addButton = findViewById<Button>(R.id.add_button)
+        model.ctx = this
         val intentM = Intent(this, MechanicsActivity::class.java)
         val intentC = Intent(this, CategoriesActivity::class.java)
         intentM.putExtra(MECHANICSURL, "")
         intentM.putExtra(MECHANICSNAMES, "")
         intentC.putExtra(CATEGORIESURL, "")
         intentC.putExtra(CATEGORIESNAMES, "")
-
+        model.observe(this){adapter.notifyDataSetChanged()}
         val recyclerView = findViewById<RecyclerView>(R.id.fav_list_recycler_view)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-        model.observe(this){adapter.notifyDataSetChanged()}
+
 
         addButton.setOnClickListener{
             model.favoriteSearch(
-                favoriteList.text.toString(),
+                "Fav " + favoriteList.text.toString(),
                 publisher.text.toString(),
                 designer.text.toString(),
                 intentM.getStringExtra(MECHANICSURL)!!,

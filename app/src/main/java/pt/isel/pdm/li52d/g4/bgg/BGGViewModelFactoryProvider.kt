@@ -3,7 +3,6 @@ package pt.isel.pdm.li52d.g4.bgg
 import android.content.Intent
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import pt.isel.pdm.li52d.g4.bgg.model.Categories
 
 
 class BGGViewModelFactoryProvider(val intent: Intent) : ViewModelProvider.Factory {
@@ -17,13 +16,15 @@ class BGGViewModelFactoryProvider(val intent: Intent) : ViewModelProvider.Factor
                 val intentPublisher: String? = intent.getStringExtra(PUBLISHER)
                 val intentDesigner: String? = intent.getStringExtra(DESIGNER)
                 val intentList: String? = intent.getStringExtra(LIST)
+                val intentFavorite: String? = intent.getStringExtra(FAVORITE)
 
                 when {
                     intentName != null -> model.gameSearch(intentName, BGG_GET_GAMES, LIMIT, SKIP)
                     intentMPP != null -> model.gameSearch(intentMPP, BGG_MPP, LIMIT, SKIP)
                     intentPublisher != null -> model.gameSearch(intentPublisher, BGG_PUBLISHER, LIMIT, SKIP)
                     intentDesigner != null -> model.gameSearch(intentDesigner, BGG_DESIGNERS, LIMIT, SKIP)
-                    intentList != null -> model.get(intentList)
+                    intentList != null -> model.getList(intentList)
+                    intentFavorite != null -> model.getFav(intentFavorite)
                 }
 
                 model as T

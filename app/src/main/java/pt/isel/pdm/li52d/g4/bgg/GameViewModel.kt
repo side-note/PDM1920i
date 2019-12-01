@@ -17,10 +17,17 @@ class GameViewModel : ViewModel(){
     var url = ""
     var ctx: Context? = null
 
-    fun get(name: String){
+
+
+    fun getList(name: String){
 //        if(this.name == "List $name") return
         this.name = "List $name"
         gameLiveData.value = BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersList(name).toTypedArray()
+    }
+
+    fun getFav(name: String){
+        this.name = "Fav $name"
+       gameLiveData.value = BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersFavList(this.name).toTypedArray()
     }
 
     fun gameSearch(name: String, url: String, limit: Int, skip: Int) {

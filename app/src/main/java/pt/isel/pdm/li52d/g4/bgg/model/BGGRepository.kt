@@ -97,6 +97,12 @@ class BGGRepository {
         }
     }
 
+    private class getFavListTask : AsyncTask<String, Unit, Favorites>() {
+        override fun doInBackground(vararg name: String): Favorites {
+            return BggApp.db.FavoritesDao().getFavList(name[0])
+        }
+    }
+
     private class deleteGamesinListTask : AsyncTask<Game, Unit, Unit>(){
         override fun doInBackground(vararg games: Game) {
             games.forEach {
@@ -118,6 +124,28 @@ class BGGRepository {
         }
     }
 
+    private class deleteFavGamesinListTask : AsyncTask<Game, Unit, Unit>(){
+        override fun doInBackground(vararg games: Game) {
+            games.forEach {
+                BggApp.db.FavoritesDao().deleteFavGame(it)
+            }
+        }
+    }
+    private class deleteFavListTask : AsyncTask<Favorites, Unit, Unit>() {
+        override fun doInBackground(vararg favorites: Favorites) {
+            BggApp.db.FavoritesDao().deleteFavList(favorites[0])
+        }
+    }
+
+    private class deleteFavDesignersTask : AsyncTask<Designer, Unit, Unit>(){
+        override fun doInBackground(vararg designers: Designer) {
+            designers.forEach {
+                BggApp.db.FavoritesDao().deleteFavDesigners(it)
+            }
+        }
+    }
+
+
 
     fun getAllList(): List<CustomList>{
         val task = getAllListTask()
@@ -129,6 +157,13 @@ class BGGRepository {
         val task = getAllFavListTask()
         task.execute()
         return task.get()
+    }
+
+    fun getFavList(favListName: String) : Favorites{
+        val task = getFavListTask()
+        task.execute(favListName)
+        return task.get()
+
     }
 
     fun getGamesAndDesignersList(name: String): List<DesignersAndGames> {
@@ -158,6 +193,12 @@ class BGGRepository {
     fun deleteList(list: CustomList) = deleteListTask().execute(list)
 
     fun deleteDesigner(vararg designer: Designer) = deleteDesignersTask().execute(*designer)
+
+    fun deleteGamesinFav(vararg games: Game) = deleteFavGamesinListTask().execute(*games)
+
+    fun deleteFavList(favorite: Favorites) = deleteFavListTask().execute(favorite)
+
+    fun deleteFavDesigner(vararg designer: Designer) = deleteFavDesignersTask().execute(*designer)
 
     fun gameSearch(
         name: String,

@@ -49,11 +49,5 @@ class MechanicsViewHolder(view: ConstraintLayout, val intent: Intent) : Recycler
                 intent.putExtra(MECHANICSNAMES, intent.getStringExtra(MECHANICSNAMES)!!.replace(mechanics.nameMechanics + ",", "" ))
             }
         }
-
-//        switchOption.setOnClickListener{
-//            if(switchOption.isChecked)
-//                mechanics.checked = "true"
-//            else mechanics.checked = "false"
-//        }
     }
 }

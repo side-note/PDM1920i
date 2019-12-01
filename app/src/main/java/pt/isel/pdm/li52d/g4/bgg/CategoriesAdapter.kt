@@ -47,11 +47,5 @@ class CategoriesViewHolder(view: ConstraintLayout, val intent: Intent) : Recycle
                 intent.putExtra(CATEGORIESNAMES, intent.getStringExtra(CATEGORIESNAMES)!!.replace(categories.nameCategories + ",", "" ))
             }
         }
-
-//        switchOption.setOnClickListener{
-//            if(switchOption.isChecked)
-//                mechanics.checked = "true"
-//            else mechanics.checked = "false"
-//        }
     }
 }

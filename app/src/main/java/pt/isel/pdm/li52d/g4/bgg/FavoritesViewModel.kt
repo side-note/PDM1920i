@@ -1,10 +1,12 @@
 package pt.isel.pdm.li52d.g4.bgg
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import pt.isel.pdm.li52d.g4.bgg.model.Categories
 import pt.isel.pdm.li52d.g4.bgg.model.DesignersAndGames
 import pt.isel.pdm.li52d.g4.bgg.model.Favorites
 import pt.isel.pdm.li52d.g4.bgg.model.Mechanics
@@ -13,6 +15,7 @@ class FavoritesViewModel: ViewModel() {
     var favoritesLiveData : MutableLiveData<Array<DesignersAndGames>> = MutableLiveData(emptyArray())
     val favoritesListsLiveData : MutableLiveData<Array<Favorites>> = MutableLiveData(emptyArray())
     val favorites : Array<Favorites> get() = favoritesListsLiveData.value!!
+    var ctx : Context? = null
     var name = ""
     var url = ""
     var publisher = ""
@@ -22,12 +25,12 @@ class FavoritesViewModel: ViewModel() {
     var mechanicsNames = ""
     var categoriesNames =""
 
-
-    fun get(name: String){
-        this.name = "Fav $name"
-        favoritesLiveData.value = BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersList(name).toTypedArray()
-    }
-
+//
+//    fun get(name: String){
+//        this.name = "Fav $name"
+//        favoritesLiveData.value = BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersFavList(this.name).toTypedArray()
+//    }
+//
 
 
     fun favoriteSearch(favListName: String, publisher: String, designer: String, mechanics: String, categories: String, mechanicsNames: String, categoriesNames : String) {
@@ -59,10 +62,10 @@ class FavoritesViewModel: ViewModel() {
                     val mech = mechanics.split(",")
                    for(i in mech.indices)
                         BggApp.CUSTOM_LIST_REPO.insertMechanics(Mechanics(favListName ,mech[i],mechName[i],"true"))
-                    val catName = mechanicsNames.split(",")
-                    val cat = mechanics.split(",")
+                    val catName = categoriesNames.split(",")
+                    val cat = categories.split(",")
                     for(i in cat.indices)
-                        BggApp.CUSTOM_LIST_REPO.insertMechanics(Mechanics(favListName ,cat[i],catName[i],"true"))
+                        BggApp.CUSTOM_LIST_REPO.insertCategories(Categories(favListName ,cat[i],catName[i],"true"))
 
                 }
                 this.favoritesLiveData.value = auxes.toTypedArray()

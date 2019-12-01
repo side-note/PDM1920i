@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import pt.isel.pdm.li52d.g4.bgg.model.CustomList
 
-class ListViewModel() : ViewModel( ){
+class ListViewModel : ViewModel( ){
     private var liveData : MutableLiveData<Array<CustomList>> = MutableLiveData(emptyArray())
     val lists : Array<CustomList> get() = liveData.value!!
 

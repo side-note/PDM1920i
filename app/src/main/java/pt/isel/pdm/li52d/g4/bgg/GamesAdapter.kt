@@ -74,7 +74,7 @@ class GameViewHolder(private val view: ConstraintLayout, model: GameViewModel, i
 class DeleteGame(val model: GameViewModel, val s: String) : IDelete{
     override fun delete(a: Any) {
         BggApp.CUSTOM_LIST_REPO.deleteGamesinList(a as Game)
-        model.get(s)
+        model.getList(s)
     }
 
 }

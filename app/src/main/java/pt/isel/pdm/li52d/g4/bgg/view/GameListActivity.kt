@@ -26,32 +26,24 @@ class GameListActivity: AppCompatActivity() {
         val title : TextView = findViewById(R.id.title_view)
         val buttonNext = findViewById<Button>(R.id.button_next)
         val buttonPrevious = findViewById<Button>(R.id.button_previous)
-//        val deleteGame = findViewById<ImageView>(R.id.delete_game)
-//        this code is a fail when trying to capitalize the first letter in every word of the name
-//        val words = model.name.split(" ")
-//        for (str in words){
-//        str. = str[0].toUpperCase()
-//        }
         title.text = model.name.removePrefix("List ")
         model.ctx = this
         model.observe(this){
             adapter.notifyDataSetChanged()
-            if(!model.name.contains("List ")) {
+            buttonNext.visibility = Button.GONE
+            buttonPrevious.visibility = Button.GONE
+
+            if(!model.name.contains("List ") && !model.name.contains("Fav ")) {
                 if (model.games.size < LIMIT)
                     buttonNext.visibility = Button.INVISIBLE
                 else buttonNext.visibility = Button.VISIBLE
                 if (PAGEACTIVITY == 1)
                     buttonPrevious.visibility = Button.INVISIBLE
                 else buttonPrevious.visibility = Button.VISIBLE
-//                deleteGame.visibility = ImageView.INVISIBLE
             }
-            else{
+            else if(model.name.contains("List "))
                 intent.putExtra("trashCan", false)
-                buttonNext.visibility = Button.GONE
-                buttonPrevious.visibility = Button.GONE
-            }
         }
-//        intent.putExtra("ctx", )
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerGames)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -71,12 +63,6 @@ class GameListActivity: AppCompatActivity() {
                 recyclerView.smoothScrollToPosition(0)
             }
         }
-
-//        deleteGame.setOnClickListener {
-//
-//            BggApp.CUSTOM_LIST_REPO.deleteGamesinList()
-//
-//        }
     }
 
 }

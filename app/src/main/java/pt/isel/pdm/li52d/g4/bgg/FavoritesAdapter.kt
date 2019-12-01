@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import pt.isel.pdm.li52d.g4.bgg.model.Favorites
 import pt.isel.pdm.li52d.g4.bgg.view.AskOption
+import pt.isel.pdm.li52d.g4.bgg.view.GameListActivity
 import pt.isel.pdm.li52d.g4.bgg.view.IDelete
 
 class FavoritesAdapter(val model: FavoritesViewModel, val intent: Intent) :
@@ -38,35 +39,37 @@ class FavoritesListViewHolder(view: ConstraintLayout, val intent: Intent, model:
     init {
 
         favListName.setOnClickListener {
-            BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersFavList(favListName.toString())
+            val myIntent = Intent(model.ctx!!, GameListActivity::class.java )
+            myIntent.putExtra(FAVORITE, favListName.text.toString())
+            model.ctx!!.startActivity(myIntent)
         }
         trash.setOnClickListener {
             /**
              * When trying to delete something from the database it could throw an exception if the
              * thing you're trying to delete is not in the database anymore
              * */
-//            try {
-//                AskOption.askDelete(select.ctx!!,DeleteFavorites(model),favListName.text.toString())!!.show()
-//                //this will update the reciclerview
-//                model.getAllFavoritesList()
-//            }catch (e: Exception){ }
+            try {
+                AskOption.askDelete(model.ctx!!,DeleteFavorites(model),favListName.text.toString())!!.show()
+                //this will update the reciclerview
+                model.getAllFavoritesList()
+            }catch (e: Exception){ }
         }
     }
 
     fun bindTo(favList: Favorites) {
         this.favList = favList
-        favListName.text = favList.nameFavList
+        favListName.text = favList.nameFavList.removePrefix("Fav ")
     }
 }
 class DeleteFavorites(val model: FavoritesViewModel) : IDelete {
     override fun delete(a: Any) {
-        BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersList(a as String).forEach {
-            BggApp.CUSTOM_LIST_REPO.deleteGamesinList(it.game)
+        BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersFavList(a as String).forEach {
+            BggApp.CUSTOM_LIST_REPO.deleteGamesinFav(it.game)
             it.designerList.forEach {
-                BggApp.CUSTOM_LIST_REPO.deleteDesigner(it)
+                BggApp.CUSTOM_LIST_REPO.deleteFavDesigner(it)
             }
         }
-        BggApp.CUSTOM_LIST_REPO.deleteList(BggApp.CUSTOM_LIST_REPO.getList(a))
+        BggApp.CUSTOM_LIST_REPO.deleteFavList(BggApp.CUSTOM_LIST_REPO.getFavList(a))
         model.getAllFavoritesList()
     }
 

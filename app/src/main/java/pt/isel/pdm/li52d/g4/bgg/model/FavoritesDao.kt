@@ -1,9 +1,6 @@
 package pt.isel.pdm.li52d.g4.bgg.model
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface FavoritesDao {
@@ -32,7 +29,18 @@ interface FavoritesDao {
     @Query("SELECT * FROM games WHERE nameFavListGame LIKE :nameFavList")
     fun getGamesForFavorites(nameFavList: String): List<DesignersAndGames>
 
+    @Query("SELECT * FROM favorites WHERE nameFavList LIKE :nameFavList")
+    fun getFavList(nameFavList: String): Favorites
+
     @Query("SELECT * FROM favorites")
     fun getAllFavs(): List<Favorites>
+
+    @Delete
+    fun deleteFavGame(game: Game)
+
+    @Delete
+    fun deleteFavList(favorites: Favorites)
+    @Delete
+    fun deleteFavDesigners(designer: Designer)
 
 }
