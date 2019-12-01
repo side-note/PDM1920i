@@ -62,8 +62,8 @@ class DeleteList(val model: ListViewModel) : IDelete{
     override fun delete(a: Any) {
         BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersList(a as String).forEach {
             BggApp.CUSTOM_LIST_REPO.deleteGamesinList(it.game)
-            it.designerList.forEach {
-                BggApp.CUSTOM_LIST_REPO.deleteDesigner(it)
+            it.designerList.forEach {designer ->
+                BggApp.CUSTOM_LIST_REPO.deleteDesigner(designer)
             }
         }
         BggApp.CUSTOM_LIST_REPO.deleteList(BggApp.CUSTOM_LIST_REPO.getList(a))

@@ -1,5 +1,6 @@
 package pt.isel.pdm.li52d.g4.bgg.view
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -12,6 +13,7 @@ import pt.isel.pdm.li52d.g4.bgg.*
 
 class FavoritesActivity : AppCompatActivity(){
 
+
     val adapter : FavoritesAdapter by lazy {
         FavoritesAdapter(model, intent)
     }
@@ -20,6 +22,10 @@ class FavoritesActivity : AppCompatActivity(){
         ViewModelProviders.of(this, factory)[FavoritesViewModel::class.java]
     }
 
+    private var mechanicsUrl: String = ""
+    private var mechanicsNames: String = ""
+    private var categoriesUrl: String = ""
+    private var categoriesNames: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,23 +58,46 @@ class FavoritesActivity : AppCompatActivity(){
                 "Fav " + favoriteList.text.toString(),
                 publisher.text.toString(),
                 designer.text.toString(),
-                intentM.getStringExtra(MECHANICSURL)!!,
-                intentC.getStringExtra(CATEGORIESURL)!!,
-                intentM.getStringExtra(MECHANICSNAMES)!!,
-                intentC.getStringExtra(CATEGORIESNAMES)!!
+                mechanicsUrl,
+                categoriesUrl,
+                mechanicsNames,
+                categoriesNames
             )
             BggApp.CUSTOM_LIST_REPO.insertFavorite(favoriteList.text.toString(), publisher.text.toString(), designer.text.toString())
             model.getAllFavoritesList()
+            mechanicsUrl = ""
+            mechanicsNames = ""
+            categoriesUrl = ""
+            categoriesNames = ""
+
         }
 
         mechanicsButton.setOnClickListener{
             intentM.putExtra(MECHANICS, "mechanics")
-            startActivity(intentM)
+            startActivityForResult(intentM, MECHANICSCODE)
         }
 
         categoriesButton.setOnClickListener {
             intentC.putExtra(CATEGORIES, "categories")
-            startActivity(intentC)
+            startActivityForResult(intentC, CATEGORIESCODE)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode) {
+            MECHANICSCODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    mechanicsUrl = data!!.getStringExtra(MECHANICSURL)!!
+                    mechanicsNames = data.getStringExtra(MECHANICSNAMES)!!
+                }
+            }
+            CATEGORIESCODE -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    categoriesUrl = data!!.getStringExtra(CATEGORIESURL)!!
+                    categoriesNames = data.getStringExtra(CATEGORIESNAMES)!!
+                }
+            }
         }
     }
 

@@ -1,5 +1,7 @@
 package pt.isel.pdm.li52d.g4.bgg.view
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.LinearLayout
@@ -8,10 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import pt.isel.pdm.li52d.g4.bgg.BGGViewModelFactoryProvider
-import pt.isel.pdm.li52d.g4.bgg.CategoriesAdapter
-import pt.isel.pdm.li52d.g4.bgg.CategoriesViewModel
-import pt.isel.pdm.li52d.g4.bgg.R
+import kotlinx.android.synthetic.main.favorites_list_layout.*
+import pt.isel.pdm.li52d.g4.bgg.*
 
 class CategoriesActivity : AppCompatActivity() {
 
@@ -34,6 +34,14 @@ class CategoriesActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-
+        findViewById<Button>(R.id.options_ok_button).setOnClickListener {
+            val categoriesUrl = intent.getStringExtra(CATEGORIESURL)!!.dropLast(1)
+            val categoriesNames = intent.getStringExtra(CATEGORIESNAMES)!!.dropLast(1)
+            val intentResult = Intent()
+            intentResult.putExtra(CATEGORIESURL, categoriesUrl)
+            intentResult.putExtra(CATEGORIESNAMES, categoriesNames)
+            setResult(Activity.RESULT_OK, intentResult)
+            super.onBackPressed()
+        }
     }
 }

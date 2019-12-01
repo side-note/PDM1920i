@@ -35,12 +35,20 @@ interface FavoritesDao {
     @Query("SELECT * FROM favorites")
     fun getAllFavs(): List<Favorites>
 
-    @Delete
-    fun deleteFavGame(game: Game)
+    @Query("DELETE FROM games WHERE nameFavListGame LIKE :nameFavList")
+    fun deleteFavGame(nameFavList: String)
 
-    @Delete
-    fun deleteFavList(favorites: Favorites)
-    @Delete
-    fun deleteFavDesigners(designer: Designer)
+    @Query("DELETE FROM favorites WHERE nameFavList LIKE :nameFavList")
+    fun deleteFavList(nameFavList: String)
+
+    @Query("DELETE FROM designer WHERE gameName LIKE :gameName")
+    fun deleteFavDesigners(gameName: String)
+
+    @Query("DELETE FROM mechanics WHERE nameFavListM LIKE :nameFavList")
+    fun deleteMechanics(nameFavList: String)
+
+    @Query("DELETE FROM categories WHERE nameFavListC LIKE :nameFavList")
+    fun deleteCategories(nameFavList: String)
+
 
 }

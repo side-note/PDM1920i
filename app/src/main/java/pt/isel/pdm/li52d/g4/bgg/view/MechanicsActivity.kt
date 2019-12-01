@@ -1,5 +1,7 @@
 package pt.isel.pdm.li52d.g4.bgg.view
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -31,7 +33,12 @@ class MechanicsActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
 
         findViewById<Button>(R.id.options_ok_button).setOnClickListener {
-            intent.putExtra(MECHANICSURL, intent.getStringExtra(MECHANICSURL)!!.dropLast(1))
+            val mechanicsUrl = intent.getStringExtra(MECHANICSURL)!!.dropLast(1)
+            val mechanicsNames = intent.getStringExtra(MECHANICSNAMES)!!.dropLast(1)
+            val intentResult = Intent()
+            intentResult.putExtra(MECHANICSURL, mechanicsUrl)
+            intentResult.putExtra(MECHANICSNAMES, mechanicsNames)
+            setResult(Activity.RESULT_OK, intentResult)
             super.onBackPressed()
         }
 

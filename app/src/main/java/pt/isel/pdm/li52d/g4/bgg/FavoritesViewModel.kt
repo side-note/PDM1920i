@@ -33,7 +33,15 @@ class FavoritesViewModel: ViewModel() {
 //
 
 
-    fun favoriteSearch(favListName: String, publisher: String, designer: String, mechanics: String, categories: String, mechanicsNames: String, categoriesNames : String) {
+    fun favoriteSearch(
+        favListName: String,
+        publisher: String,
+        designer: String,
+        mechanics: String,
+        categories: String,
+        mechanicsNames: String,
+        categoriesNames : String
+    ) {
         this.name = favListName
         this.publisher = publisher
         this.designer = designer
@@ -55,18 +63,17 @@ class FavoritesViewModel: ViewModel() {
                     game.game.nameFavListGame = favListName
                     auxes.add(game)
                     BggApp.CUSTOM_LIST_REPO.insertGamesinFavorites(game.game)
-                    game.designerList.forEach{
-                        BggApp.CUSTOM_LIST_REPO.insertDesignerInFavorites(favListName, game.game.name, it.designerName)
+                    game.designerList.forEach{ designer ->
+                        BggApp.CUSTOM_LIST_REPO.insertDesignerInFavorites(favListName, game.game.name, designer.designerName)
                     }
                     val mechName = mechanicsNames.split(",")
                     val mech = mechanics.split(",")
-                   for(i in mech.indices)
+                    for(i in mech.indices)
                         BggApp.CUSTOM_LIST_REPO.insertMechanics(Mechanics(favListName ,mech[i],mechName[i],"true"))
                     val catName = categoriesNames.split(",")
                     val cat = categories.split(",")
                     for(i in cat.indices)
                         BggApp.CUSTOM_LIST_REPO.insertCategories(Categories(favListName ,cat[i],catName[i],"true"))
-
                 }
                 this.favoritesLiveData.value = auxes.toTypedArray()
             },

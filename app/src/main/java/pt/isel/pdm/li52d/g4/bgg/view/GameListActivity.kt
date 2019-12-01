@@ -26,7 +26,7 @@ class GameListActivity: AppCompatActivity() {
         val title : TextView = findViewById(R.id.title_view)
         val buttonNext = findViewById<Button>(R.id.button_next)
         val buttonPrevious = findViewById<Button>(R.id.button_previous)
-        title.text = model.name.removePrefix("List ")
+        title.text = model.name.removePrefix("List ").removePrefix("Fav ")
         model.ctx = this
         model.observe(this){
             adapter.notifyDataSetChanged()

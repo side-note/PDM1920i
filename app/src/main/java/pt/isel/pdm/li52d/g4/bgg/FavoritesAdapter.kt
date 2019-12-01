@@ -49,7 +49,7 @@ class FavoritesListViewHolder(view: ConstraintLayout, val intent: Intent, model:
              * thing you're trying to delete is not in the database anymore
              * */
             try {
-                AskOption.askDelete(model.ctx!!,DeleteFavorites(model),favListName.text.toString())!!.show()
+                AskOption.askDelete(model.ctx!!, DeleteFavorites(model), "Fav " + favListName.text.toString())!!.show()
                 //this will update the reciclerview
                 model.getAllFavoritesList()
             }catch (e: Exception){ }
@@ -64,12 +64,16 @@ class FavoritesListViewHolder(view: ConstraintLayout, val intent: Intent, model:
 class DeleteFavorites(val model: FavoritesViewModel) : IDelete {
     override fun delete(a: Any) {
         BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersFavList(a as String).forEach {
-            BggApp.CUSTOM_LIST_REPO.deleteGamesinFav(it.game)
-            it.designerList.forEach {
-                BggApp.CUSTOM_LIST_REPO.deleteFavDesigner(it)
-            }
+
+            BggApp.CUSTOM_LIST_REPO.deleteFavDesigner(it.game.name)
         }
-        BggApp.CUSTOM_LIST_REPO.deleteFavList(BggApp.CUSTOM_LIST_REPO.getFavList(a))
+        BggApp.CUSTOM_LIST_REPO.deleteGamesinFav(a)
+
+        BggApp.CUSTOM_LIST_REPO.deleteMechanics(a)
+
+        BggApp.CUSTOM_LIST_REPO.deleteCategories(a)
+
+        BggApp.CUSTOM_LIST_REPO.deleteFavList(a.removePrefix("Fav "))
         model.getAllFavoritesList()
     }
 

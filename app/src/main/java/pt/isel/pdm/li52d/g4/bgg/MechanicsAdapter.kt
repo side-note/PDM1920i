@@ -29,16 +29,13 @@ class MechanicsAdapter(val model: MechanicsViewModel, val intent: Intent) :
 class MechanicsViewHolder(view: ConstraintLayout, val intent: Intent) : RecyclerView.ViewHolder(view) {
     private lateinit var mechanics: Mechanics
     private val mechanicsName: TextView = view.findViewById(R.id.option_name)
-//    private val switchOption: Switch = view.findViewById(R.id.switch1)
     private val switchOption: LabeledSwitch = view.findViewById(R.id.switch_option)
-
-    fun bindTo(mechanics: Mechanics) {
-        this.mechanics = mechanics
-        mechanicsName.text = mechanics.nameMechanics
+//    private var firstTime = true
 
 
-        switchOption.setOnToggledListener { switchOption, isOn ->
-            if(switchOption.isOn){
+    init {
+        switchOption.setOnToggledListener { labeledSwitch, isOn ->
+            if(isOn){
                 mechanics.checked = "true"
                 intent.putExtra(MECHANICSURL, intent.getStringExtra(MECHANICSURL)!! + mechanics.id + "," )
                 intent.putExtra(MECHANICSNAMES, intent.getStringExtra(MECHANICSNAMES)!! + mechanics.nameMechanics+",")
@@ -49,5 +46,11 @@ class MechanicsViewHolder(view: ConstraintLayout, val intent: Intent) : Recycler
                 intent.putExtra(MECHANICSNAMES, intent.getStringExtra(MECHANICSNAMES)!!.replace(mechanics.nameMechanics + ",", "" ))
             }
         }
+    }
+
+    fun bindTo(mechanics: Mechanics) {
+        this.mechanics = mechanics
+        mechanicsName.text = mechanics.nameMechanics
+        switchOption.isOn = mechanics.checked == "true"
     }
 }

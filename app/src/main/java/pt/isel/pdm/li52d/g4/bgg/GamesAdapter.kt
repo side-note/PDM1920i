@@ -28,7 +28,7 @@ class GamesAdapter(val model: GameViewModel, val intent: Intent) :
     }
 
     override fun getItemCount(): Int {
-        return if(model.games.size > 30 && !model.name.contains("List ")) model.games.size - 1 else model.games.size
+        return if(model.games.size > 30 && !model.name.contains("List ") && !model.name.contains("Fav ")) model.games.size - 1 else model.games.size
     }
 
     override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
@@ -71,7 +71,7 @@ class GameViewHolder(private val view: ConstraintLayout, model: GameViewModel, i
     }
 }
 
-class DeleteGame(val model: GameViewModel, val s: String) : IDelete{
+class DeleteGame(val model: GameViewModel, private val s: String) : IDelete{
     override fun delete(a: Any) {
         BggApp.CUSTOM_LIST_REPO.deleteGamesinList(a as Game)
         model.getList(s)

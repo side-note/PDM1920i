@@ -125,9 +125,8 @@ class BGGWebApi(ctx: Context) {
         onError: (VolleyError) -> Unit)
     {
         var url = BGG_OPTIONS
-        if(publisher != ""){
+        if(publisher != "")
             url += String.format(PUBLISHER_SEARCH, publisher)
-        }
         if(designer != "")
             url += String.format(DESIGNER_SEARCH, designer)
         if(mechanics != "")
