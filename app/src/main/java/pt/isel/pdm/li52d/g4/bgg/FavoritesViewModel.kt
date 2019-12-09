@@ -6,10 +6,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
-import pt.isel.pdm.li52d.g4.bgg.model.Categories
-import pt.isel.pdm.li52d.g4.bgg.model.DesignersAndGames
-import pt.isel.pdm.li52d.g4.bgg.model.Favorites
-import pt.isel.pdm.li52d.g4.bgg.model.Mechanics
+import pt.isel.pdm.li52d.g4.bgg.model.*
 
 class FavoritesViewModel: ViewModel() {
     var favoritesLiveData : MutableLiveData<Array<DesignersAndGames>> = MutableLiveData(emptyArray())
@@ -58,16 +55,21 @@ class FavoritesViewModel: ViewModel() {
                     val mech = mechanics.split(",")
                     for(i in mech.indices)
                         BggApp.CUSTOM_LIST_REPO.insertMechanics(Mechanics(favListName ,mech[i],mechName[i],"true"))
+//                        BggApp.db.FavoritesDao().insertMechanics(Mechanics(favListName ,mech[i],mechName[i],"true"))
                     val catName = categoriesNames.split(",")
                     val cat = categories.split(",")
                     for(i in cat.indices)
                         BggApp.CUSTOM_LIST_REPO.insertCategories(Categories(favListName ,cat[i],catName[i],"true"))
+//                        BggApp.db.FavoritesDao().insertCategories(Categories(favListName ,cat[i],catName[i],"true"))
+
                 }
                 this.favoritesLiveData.value = auxes.toTypedArray()
                 auxes.forEach{
                     BggApp.CUSTOM_LIST_REPO.insertGamesinFavorites(it.game)
+//                    BggApp.db.FavoritesDao().insertGame(it.game)
                     it.designerList.forEach{ designer ->
                         BggApp.CUSTOM_LIST_REPO.insertDesignerInFavorites(favListName, it.game.name, designer.designerName)
+//                        BggApp.db.FavoritesDao().insertDesigner(Designer(favListName, it.game.name, designer.designerName))
                     }
                 }
             },

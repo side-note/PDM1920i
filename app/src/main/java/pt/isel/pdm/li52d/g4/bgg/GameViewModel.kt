@@ -8,26 +8,30 @@ import pt.isel.pdm.li52d.g4.bgg.model.Categories
 import pt.isel.pdm.li52d.g4.bgg.model.DesignersAndGames
 import pt.isel.pdm.li52d.g4.bgg.model.Mechanics
 
-class GameViewModel : ViewModel(){
+class GameViewModel() : ViewModel(){
 
-    private var gameLiveData : MutableLiveData<Array<DesignersAndGames>> = MutableLiveData(emptyArray())
+    private var gameLiveData:MediatorLiveData<Array<DesignersAndGames>> = MediatorLiveData()
+    private var liveData : LiveData<Array<DesignersAndGames>>? = null
 
-    val games : Array<DesignersAndGames> get() = gameLiveData.value!!
+    val games : Array<DesignersAndGames> get() = gameLiveData.value?: emptyArray()
     var name = ""
     var url = ""
     var ctx: Context? = null
 
-
-
     fun getList(name: String){
-//        if(this.name == "List $name") return
         this.name = "List $name"
-        gameLiveData.value = BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersList(name).toTypedArray()
+        liveData = BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersList(name)
+        gameLiveData.addSource(liveData!!){
+            gameLiveData.value = it
+        }
     }
 
     fun getFav(name: String){
         this.name = "Fav $name"
-       gameLiveData.value = BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersFavList(this.name).toTypedArray()
+        liveData = BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersFavList(this.name)
+        gameLiveData.addSource(liveData!!){
+            gameLiveData.value = it
+        }
     }
 
     fun gameSearch(name: String, url: String, limit: Int, skip: Int) {
@@ -47,7 +51,7 @@ class GameViewModel : ViewModel(){
                     auxes.add(BggApp.CUSTOM_LIST_REPO.fromGameDto(it))
                 }
 
-                this.gameLiveData.value = auxes.toTypedArray()
+                gameLiveData.value = auxes.toTypedArray()
                 PAGEMODEL = pageModel
             },
             {

@@ -1,18 +1,19 @@
 package pt.isel.pdm.li52d.g4.bgg.model
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 
 @Dao
 interface FavoritesDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMechanics(mechanics: Array<out Mechanics>)
+    fun insertMechanics(mechanics: Mechanics)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertCategories(categories: Array<out Categories>)
+    fun insertCategories(categories: Categories)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertGame(game: Array<out Game>)
+    fun insertGame(game: Game)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertFavorites(favorites: Favorites)
@@ -27,7 +28,7 @@ interface FavoritesDao {
     fun getCategoriesForFavorites(nameFavList: String): List<Categories>
 
     @Query("SELECT * FROM games WHERE nameFavListGame LIKE :nameFavList")
-    fun getGamesForFavorites(nameFavList: String): List<DesignersAndGames>
+    fun getGamesForFavorites(nameFavList: String): LiveData<Array<DesignersAndGames>>
 
     @Query("SELECT * FROM favorites WHERE nameFavList LIKE :nameFavList")
     fun getFavList(nameFavList: String): Favorites

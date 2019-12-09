@@ -60,7 +60,7 @@ class ListViewHolder(view: ConstraintLayout, val intent: Intent, model: ListView
 }
 class DeleteList(val model: ListViewModel) : IDelete{
     override fun delete(a: Any) {
-        BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersList(a as String).forEach {
+        BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersList(a as String).value?.forEach {
             BggApp.CUSTOM_LIST_REPO.deleteGamesinList(it.game)
             it.designerList.forEach {designer ->
                 BggApp.CUSTOM_LIST_REPO.deleteDesigner(designer)

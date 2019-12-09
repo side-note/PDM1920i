@@ -63,8 +63,7 @@ class FavoritesListViewHolder(view: ConstraintLayout, val intent: Intent, model:
 }
 class DeleteFavorites(val model: FavoritesViewModel) : IDelete {
     override fun delete(a: Any) {
-        BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersFavList(a as String).forEach {
-
+        BggApp.CUSTOM_LIST_REPO.getGamesAndDesignersFavList(a as String).value?.forEach {
             BggApp.CUSTOM_LIST_REPO.deleteFavDesigner(it.game.name)
         }
         BggApp.CUSTOM_LIST_REPO.deleteGamesinFav(a)

@@ -2,6 +2,7 @@ package pt.isel.pdm.li52d.g4.bgg.model
 
 import android.os.AsyncTask
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.android.volley.VolleyError
 import pt.isel.pdm.li52d.g4.bgg.BggApp
 import pt.isel.pdm.li52d.g4.bgg.TAG
@@ -38,30 +39,30 @@ class BGGRepository {
         }
     }
 
-    private class insertGamesinFavoritesTask : AsyncTask<Array<out Game>, Unit, Unit>() {
-        override fun doInBackground(vararg game: Array<out Game>) {
+    private class insertGamesinFavoritesTask : AsyncTask<Game, Unit, Unit>() {
+        override fun doInBackground(vararg game: Game) {
             game.forEach { BggApp.db.FavoritesDao().insertGame(it) }
         }
     }
 
-    private class insertMechanicsinFavoritesTask : AsyncTask<Array<out Mechanics>, Unit, Unit>() {
-        override fun doInBackground(vararg mechanics: Array<out Mechanics>) {
+    private class insertMechanicsinFavoritesTask : AsyncTask<Mechanics, Unit, Unit>() {
+        override fun doInBackground(vararg mechanics: Mechanics) {
             mechanics.forEach { BggApp.db.FavoritesDao().insertMechanics(it) }
         }
     }
 
-    private class insertCategoriesinFavoritesTask : AsyncTask<Array<out Categories>, Unit, Unit>() {
-        override fun doInBackground(vararg categories: Array<out Categories>) {
+    private class insertCategoriesinFavoritesTask : AsyncTask<Categories, Unit, Unit>() {
+        override fun doInBackground(vararg categories: Categories) {
             categories.forEach { BggApp.db.FavoritesDao().insertCategories(it) }
         }
     }
 
 
-    private class getGamesListTask : AsyncTask<String, Unit, List<DesignersAndGames>>() {
-        override fun doInBackground(vararg name: String): List<DesignersAndGames> {
-            return BggApp.db.customListAndGamesDao().getGamesForCustomList(name[0])
-        }
-    }
+//    private class getGamesListTask : AsyncTask<String, Unit, List<DesignersAndGames>>() {
+//        override fun doInBackground(vararg name: String): List<DesignersAndGames> {
+//            return BggApp.db.customListAndGamesDao().getGamesForCustomList(name[0])
+//        }
+//    }
     private class getListTask : AsyncTask<String, Unit, CustomList>() {
         override fun doInBackground(vararg name: String): CustomList {
             return BggApp.db.customListAndGamesDao().getCustomList(name[0])
@@ -73,11 +74,11 @@ class BGGRepository {
         }
     }
 
-    private class getGamesFavListTask : AsyncTask<String, Unit, List<DesignersAndGames>>() {
-        override fun doInBackground(vararg name: String): List<DesignersAndGames> {
-            return BggApp.db.FavoritesDao().getGamesForFavorites(name[0])
-        }
-    }
+//    private class getGamesFavListTask : AsyncTask<String, Unit, List<DesignersAndGames>>() {
+//        override fun doInBackground(vararg name: String): List<DesignersAndGames> {
+//            return BggApp.db.FavoritesDao().getGamesForFavorites(name[0])
+//        }
+//    }
 
     private class getMechanicsTask : AsyncTask<String, Unit, List<Mechanics>>() {
         override fun doInBackground(vararg namefav: String): List<Mechanics> {
@@ -180,25 +181,27 @@ class BGGRepository {
 
     }
 
-    fun getGamesAndDesignersList(name: String): List<DesignersAndGames> {
-        val task = getGamesListTask()
-        task.execute(name)
-        return task.get()
+    fun getGamesAndDesignersList(name: String): LiveData<Array<DesignersAndGames>> {
+//        val task = getGamesListTask()
+//        task.execute(name)
+//        return task.get()
+        return BggApp.db.customListAndGamesDao().getGamesForCustomList(name)
     }
 
-    fun getGamesAndDesignersFavList(name: String): List<DesignersAndGames> {
-        val task = getGamesFavListTask()
-        task.execute(name)
-        return task.get()
+    fun getGamesAndDesignersFavList(name: String): LiveData<Array<DesignersAndGames>> {
+//        val task = getGamesFavListTask()
+//        task.execute(name)
+//        return task.get()
+        return BggApp.db.FavoritesDao().getGamesForFavorites(name)
     }
 
     fun insertList(nameList: String) = insertListTask().execute(nameList)
     fun insertGameinList(game: Game) = insertGameinListTask().execute(game)
     fun insertDesignerInList(listName: String, gameName: String, designerName: String) = insertDesignerInListTask().execute(listName, gameName, designerName)
     fun insertFavorite(nameFavList: String, publisher: String, designer: String) = insertFavoritesTask().execute(nameFavList,publisher,designer)
-    fun insertGamesinFavorites(vararg games: Game) = insertGamesinFavoritesTask().execute(games)
-    fun insertMechanics(vararg mechanics: Mechanics) = insertMechanicsinFavoritesTask().execute(mechanics)
-    fun insertCategories(vararg categories: Categories) = insertCategoriesinFavoritesTask().execute(categories)
+    fun insertGamesinFavorites( games: Game) = insertGamesinFavoritesTask().execute(games)
+    fun insertMechanics(mechanics: Mechanics) = insertMechanicsinFavoritesTask().execute(mechanics)
+    fun insertCategories(categories: Categories) = insertCategoriesinFavoritesTask().execute(categories)
     fun insertDesignerInFavorites(favListName: String, gameName: String, designerName: String) = insertDesignerInFavoritesTask().execute(favListName, gameName, designerName)
 
 
