@@ -13,4 +13,10 @@
     <string name="designers">Criadores</string>
     <string name="credits_button">Créditos</string>
     <string name="img_error_url">Não foi possível abrir site oficial!</string>
+    <string name="mechanics">Mecânicas</string>
+    <string name="categories">Categorias</string>
+    <string name="add">Adicionar</string>
+    <string name="delete">Apagar</string>
+    <string name="delete_question">Tem a certeza de que quer apagar?</string>
+    <string name="cancel">Cancelar</string>
 </resources>

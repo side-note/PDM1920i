@@ -15,4 +15,10 @@
     <string name="img_error_url">Could not open official site!</string>
     <string name="arrow_next" translatable="false"><![CDATA[->]]></string>
     <string name="arrow_previous" translatable="false"><![CDATA[<-]]></string>
+    <string name="categories">Categories</string>
+    <string name="mechanics">Mechanics</string>
+    <string name="add">Add</string>
+    <string name="delete">Delete</string>
+    <string name="delete_question">Are you sure you want to Delete?</string>
+    <string name="cancel">Cancel</string>
 </resources>

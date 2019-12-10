@@ -55,7 +55,7 @@ class GameViewHolder(private val view: ConstraintLayout, model: GameViewModel, i
         }
         deleteGame.setOnClickListener {
             try {
-                AskOption.askDelete(model.ctx!!, DeleteGame(model,intent.getStringExtra(LIST)!!), designersAndGames.game)!!.show()
+                AskOption.askDelete(model.ctx!!, DeleteGame(model,intent.getStringExtra(LIST)!!), designersAndGames.game).show()
             } catch (e: Exception){ }
         }
     }

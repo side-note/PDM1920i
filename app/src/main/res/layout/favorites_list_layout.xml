@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Categories"
+        android:text="@string/categories"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/publisher" />
@@ -55,7 +55,7 @@
         android:id="@+id/mechanics"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Mechanics"
+        android:text="@string/mechanics"
         app:layout_constraintEnd_toStartOf="@+id/categories"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/categories" />
@@ -80,7 +80,7 @@
         android:id="@+id/add_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add"
+        android:text="@string/add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/categories"
         app:layout_constraintTop_toTopOf="@+id/categories" />

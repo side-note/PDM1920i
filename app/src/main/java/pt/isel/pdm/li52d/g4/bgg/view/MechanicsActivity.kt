@@ -26,7 +26,7 @@ class MechanicsActivity : AppCompatActivity() {
         setContentView(R.layout.options_layout)
 
         val title = findViewById<TextView>(R.id.options_name)
-        title.text = "Mechanics"
+        title.text = resources.getText(R.string.mechanics)
         model.observe(this){adapter.notifyDataSetChanged()}
         val recyclerView = findViewById<RecyclerView>(R.id.options_zone)
         recyclerView.adapter = adapter
