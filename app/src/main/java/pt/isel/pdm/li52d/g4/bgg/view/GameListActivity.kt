@@ -1,5 +1,6 @@
 package pt.isel.pdm.li52d.g4.bgg.view
 
+import android.app.Dialog
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -8,6 +9,9 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import pt.isel.pdm.li52d.g4.bgg.*
+import android.view.WindowManager
+
+
 
 class GameListActivity: AppCompatActivity() {
 
@@ -63,6 +67,14 @@ class GameListActivity: AppCompatActivity() {
                 recyclerView.smoothScrollToPosition(0)
             }
         }
+    }
+
+    fun doKeepDialog(dialog: Dialog) {
+        val lp = WindowManager.LayoutParams()
+        lp.copyFrom(dialog.window?.attributes)
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT
+        dialog.window?.attributes = lp
     }
 
 }
