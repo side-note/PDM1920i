@@ -39,8 +39,6 @@ class BggApp : Application(){
         WorkManager.getInstance(applicationContext).enqueue(request)
     }
     private fun createNotificationChannel() {
-        // 1. Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
         val name = getString(R.string.channel_name)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val descriptionText = getString(R.string.channel_description)
@@ -49,12 +47,11 @@ class BggApp : Application(){
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
             }
-            // 2. Register the channel with the system
             val notificationManager: NotificationManager =
                 getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
-
+    }
 
 }
 
