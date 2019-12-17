@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import pt.isel.pdm.li52d.g4.bgg.model.Favorites
@@ -12,7 +13,7 @@ import pt.isel.pdm.li52d.g4.bgg.view.AskOption
 import pt.isel.pdm.li52d.g4.bgg.view.GameListActivity
 import pt.isel.pdm.li52d.g4.bgg.view.IDelete
 
-class FavoritesAdapter(val model: FavoritesViewModel, val intent: Intent) :
+class FavoritesAdapter(val model: FavoritesViewModel, val intent: Intent, val base: AppCompatActivity) :
     RecyclerView.Adapter<FavoritesListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesListViewHolder {
         // 1. Obter o TextView i.e. artist_view
@@ -20,7 +21,7 @@ class FavoritesAdapter(val model: FavoritesViewModel, val intent: Intent) :
         // 3. Instanciar ViewHolder -> passando-lhe o TextView
         val favoritesView = LayoutInflater.from(parent.context)
             .inflate(R.layout.custom_lists_layout, parent, false) as ConstraintLayout
-        return FavoritesListViewHolder(favoritesView, intent, model)
+        return FavoritesListViewHolder(favoritesView, intent, model, base)
     }
 
     override fun getItemCount(): Int = model.favorites.size
@@ -31,7 +32,7 @@ class FavoritesAdapter(val model: FavoritesViewModel, val intent: Intent) :
 }
 
 
-class FavoritesListViewHolder(view: ConstraintLayout, val intent: Intent, model: FavoritesViewModel) : RecyclerView.ViewHolder(view){
+class FavoritesListViewHolder(view: ConstraintLayout, val intent: Intent, model: FavoritesViewModel, base: AppCompatActivity) : RecyclerView.ViewHolder(view){
     private lateinit var favList: Favorites
     private val favListName: TextView = view.findViewById(R.id.list)
     private val trash: ImageView = view.findViewById(R.id.deleteButton)
@@ -49,7 +50,7 @@ class FavoritesListViewHolder(view: ConstraintLayout, val intent: Intent, model:
              * thing you're trying to delete is not in the database anymore
              * */
             try {
-                AskOption.askDelete(model.ctx!!, DeleteFavorites(model), "Fav " + favListName.text.toString())!!.show()
+                AskOption(model.ctx!!, DeleteFavorites(model), "Fav " + favListName.text.toString()).show(base.supportFragmentManager, "Delete Favorite List")
                 //this will update the reciclerview
                 model.getAllFavoritesList()
             }catch (e: Exception){ }

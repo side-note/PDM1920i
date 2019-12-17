@@ -1,6 +1,7 @@
 package pt.isel.pdm.li52d.g4.bgg.view
 
 import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -21,7 +22,7 @@ class GameListActivity: AppCompatActivity() {
     }
 
     val adapter : GamesAdapter by lazy {
-        GamesAdapter(model, intent)
+        GamesAdapter(model, intent, this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?){

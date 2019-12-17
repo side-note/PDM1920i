@@ -19,4 +19,8 @@
     <string name="delete">Apagar</string>
     <string name="delete_question">Tem a certeza de que quer apagar?</string>
     <string name="cancel">Cancelar</string>
+    <string name="preferences_title">Preferêcias</string>
+    <string name="min_15">15 minutos</string>
+    <string name="min_30">30 minutos</string>
+    <string name="hour_1">1 hour</string>
 </resources>

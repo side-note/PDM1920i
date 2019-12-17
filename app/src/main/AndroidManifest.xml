@@ -19,6 +19,7 @@
         <activity android:name="pt.isel.pdm.li52d.g4.bgg.view.FavoritesActivity"></activity>
         <activity android:name="pt.isel.pdm.li52d.g4.bgg.view.MechanicsActivity"></activity>
         <activity android:name="pt.isel.pdm.li52d.g4.bgg.view.CategoriesActivity"></activity>
+        <activity android:name="pt.isel.pdm.li52d.g4.bgg.view.PreferencesActivity"></activity>
         <activity android:name="pt.isel.pdm.li52d.g4.bgg.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

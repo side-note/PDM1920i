@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import pt.isel.pdm.li52d.g4.bgg.model.CustomList
 import pt.isel.pdm.li52d.g4.bgg.view.AskOption
 import pt.isel.pdm.li52d.g4.bgg.view.IDelete
 
-class ListsAdapter(val model: ListViewModel, val intent: Intent) :
+class ListsAdapter(val model: ListViewModel, val intent: Intent, val base: AppCompatActivity) :
     RecyclerView.Adapter<ListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         // 1. Obter o TextView i.e. artist_view
@@ -19,7 +20,7 @@ class ListsAdapter(val model: ListViewModel, val intent: Intent) :
         // 3. Instanciar ViewHolder -> passando-lhe o TextView
         val listsView = LayoutInflater.from(parent.context)
             .inflate(R.layout.custom_lists_layout, parent, false) as ConstraintLayout
-        return ListViewHolder(listsView, intent, model)
+        return ListViewHolder(listsView, intent, model, base)
     }
 
     override fun getItemCount(): Int = model.lists.size
@@ -30,7 +31,7 @@ class ListsAdapter(val model: ListViewModel, val intent: Intent) :
 }
 
 
-class ListViewHolder(view: ConstraintLayout, val intent: Intent, model: ListViewModel) : RecyclerView.ViewHolder(view){
+class ListViewHolder(view: ConstraintLayout, val intent: Intent, model: ListViewModel, val base: AppCompatActivity) : RecyclerView.ViewHolder(view){
     private lateinit var customList: CustomList
     private val listName: TextView = view.findViewById(R.id.list)
     private val trash: ImageView = view.findViewById(R.id.deleteButton)
@@ -46,7 +47,7 @@ class ListViewHolder(view: ConstraintLayout, val intent: Intent, model: ListView
              * thing you're trying to delete is not in the database anymore
              * */
             try {
-                AskOption.askDelete(select.ctx!!,DeleteList(model),listName.text.toString())!!.show()
+                AskOption(select.ctx!!,DeleteList(model),listName.text.toString()).show(base.supportFragmentManager, "Delete List")
                 //this will update the reciclerview
                 model.getAllLists()
             }catch (e: Exception){ }

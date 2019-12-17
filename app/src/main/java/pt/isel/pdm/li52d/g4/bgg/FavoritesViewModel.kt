@@ -55,22 +55,22 @@ class FavoritesViewModel: ViewModel() {
                     val mech = mechanics.split(",")
                     for(i in mech.indices)
                         BggApp.CUSTOM_LIST_REPO.insertMechanics(Mechanics(favListName ,mech[i],mechName[i],"true"))
-//                        BggApp.db.FavoritesDao().insertMechanics(Mechanics(favListName ,mech[i],mechName[i],"true"))
                     val catName = categoriesNames.split(",")
                     val cat = categories.split(",")
                     for(i in cat.indices)
                         BggApp.CUSTOM_LIST_REPO.insertCategories(Categories(favListName ,cat[i],catName[i],"true"))
-//                        BggApp.db.FavoritesDao().insertCategories(Categories(favListName ,cat[i],catName[i],"true"))
 
                 }
                 this.favoritesLiveData.value = auxes.toTypedArray()
+                var count = 0
                 auxes.forEach{
-                    BggApp.CUSTOM_LIST_REPO.insertGamesinFavorites(it.game)
-//                    BggApp.db.FavoritesDao().insertGame(it.game)
-                    it.designerList.forEach{ designer ->
-                        BggApp.CUSTOM_LIST_REPO.insertDesignerInFavorites(favListName, it.game.name, designer.designerName)
-//                        BggApp.db.FavoritesDao().insertDesigner(Designer(favListName, it.game.name, designer.designerName))
+                    if (count < 5){
+                        BggApp.CUSTOM_LIST_REPO.insertGamesinFavorites(it.game)
+                        it.designerList.forEach{ designer ->
+                            BggApp.CUSTOM_LIST_REPO.insertDesignerInFavorites(favListName, it.game.name, designer.designerName)
+                        }
                     }
+                    count++
                 }
             },
             {

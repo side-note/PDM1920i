@@ -13,7 +13,7 @@ import pt.isel.pdm.li52d.g4.bgg.model.DesignersAndGames
 class ListsActivity : AppCompatActivity(){
 
     val adapter : ListsAdapter by lazy {
-        ListsAdapter(model, intent)
+        ListsAdapter(model, intent, this)
     }
     val model : ListViewModel by lazy {
         val factory = BGGViewModelFactoryProvider(intent)

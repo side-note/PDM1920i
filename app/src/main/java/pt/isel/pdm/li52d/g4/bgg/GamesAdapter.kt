@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -12,6 +13,7 @@ import pt.isel.pdm.li52d.g4.bgg.model.DesignersAndGames
 import pt.isel.pdm.li52d.g4.bgg.model.Game
 import pt.isel.pdm.li52d.g4.bgg.view.AskOption
 import pt.isel.pdm.li52d.g4.bgg.view.DetailedGameInfoActivity
+import pt.isel.pdm.li52d.g4.bgg.view.GameListActivity
 import pt.isel.pdm.li52d.g4.bgg.view.IDelete
 import java.lang.Exception
 import java.math.BigDecimal
@@ -19,12 +21,12 @@ import java.math.RoundingMode
 
 const val GAME_NAME = "GAME_NAME"
 
-class GamesAdapter(val model: GameViewModel, val intent: Intent) :
+class GamesAdapter(val model: GameViewModel, val intent: Intent, val base : AppCompatActivity) :
     RecyclerView.Adapter<GameViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GameViewHolder {
         val gamesView = LayoutInflater.from(parent.context)
             .inflate(R.layout.list_game_layout, parent, false) as ConstraintLayout
-        return GameViewHolder(gamesView, model, intent)
+        return GameViewHolder(gamesView, model, intent, base)
     }
 
     override fun getItemCount(): Int {
@@ -37,7 +39,7 @@ class GamesAdapter(val model: GameViewModel, val intent: Intent) :
     }
 }
 
-class GameViewHolder(private val view: ConstraintLayout, model: GameViewModel, intent: Intent) : RecyclerView.ViewHolder(view) {
+class GameViewHolder(private val view: ConstraintLayout, model: GameViewModel, intent: Intent, base: AppCompatActivity) : RecyclerView.ViewHolder(view) {
     private lateinit var designersAndGames: DesignersAndGames
     private val txtGameName: TextView = view.findViewById(R.id.gameName)
     private val gameIcon: ImageView = view.findViewById(R.id.game_icon)
@@ -55,7 +57,7 @@ class GameViewHolder(private val view: ConstraintLayout, model: GameViewModel, i
         }
         deleteGame.setOnClickListener {
             try {
-                AskOption.askDelete(model.ctx!!, DeleteGame(model,intent.getStringExtra(LIST)!!), designersAndGames.game).show()
+                AskOption(model.ctx!!, DeleteGame(model,intent.getStringExtra(LIST)!!), designersAndGames.game).show(base.supportFragmentManager, "Delete Games")
             } catch (e: Exception){ }
         }
     }

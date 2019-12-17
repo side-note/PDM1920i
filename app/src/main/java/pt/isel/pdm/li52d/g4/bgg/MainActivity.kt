@@ -11,13 +11,11 @@ import android.os.Parcelable
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.SearchView
 import pt.isel.pdm.li52d.g4.bgg.model.DesignersAndGames
 import pt.isel.pdm.li52d.g4.bgg.model.Favorites
-import pt.isel.pdm.li52d.g4.bgg.view.CreditsActivity
-import pt.isel.pdm.li52d.g4.bgg.view.FavoritesActivity
-import pt.isel.pdm.li52d.g4.bgg.view.GameListActivity
-import pt.isel.pdm.li52d.g4.bgg.view.ListsActivity
+import pt.isel.pdm.li52d.g4.bgg.view.*
 
 const val NAME : String = "Name"
 const val MOST_POPULAR_GAMES : String = "Most Popular Game"
@@ -37,13 +35,14 @@ const val MECHANICSURL = "Mechanics Url"
 const val MECHANICSNAMES = "Mechanics Name"
 const val CATEGORIESURL = "Categories Url"
 const val CATEGORIESNAMES = "Categories Name"
-const val PUBLISHERFAV = "Publisher Favorite"
-const val DESIGNERFAV = "Designer Favorite"
+//const val PUBLISHERFAV = "Publisher Favorite"
+//const val DESIGNERFAV = "Designer Favorite"
 const val FROM_DETAILED_ACTIVITY : String = "this intent is from DetailedGameInfoActivity"
 const val LIMIT : Int = 31
 var PAGEMODEL: Int = 0
 var SKIP: Int = 0
 var PAGEACTIVITY: Int = 1
+var TIME: Long = 15
 
 
 class MainActivity() : AppCompatActivity(), View.OnClickListener, SearchView.OnQueryTextListener {
@@ -103,6 +102,10 @@ class MainActivity() : AppCompatActivity(), View.OnClickListener, SearchView.OnQ
         }
         findViewById<Button>(R.id.fav_button).setOnClickListener{
             val intent = Intent(this, FavoritesActivity::class.java)
+            startActivity(intent)
+        }
+        findViewById<ImageView>(R.id.settings_button).setOnClickListener{
+            val intent = Intent(this, PreferencesActivity::class.java)
             startActivity(intent)
         }
     }

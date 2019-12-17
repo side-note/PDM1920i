@@ -26,7 +26,7 @@ const val CATEGORIES_SEARCH = "categories=%s&"
 const val END_URL = "pretty=true&client_id=SB1VGnDv7M"
 var BGG_OPTIONS = "https://www.boardgameatlas.com/api/search/?"
 
-class BGGWebApi(ctx: Context) {
+class BGGWebApi(val ctx: Context) {
     val queue = Volley.newRequestQueue(ctx)
     val gson = Gson()
 

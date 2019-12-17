@@ -21,6 +21,10 @@
     <string name="delete">Delete</string>
     <string name="delete_question">Are you sure you want to Delete?</string>
     <string name="cancel">Cancel</string>
+    <string name="preferences_title">Preferences</string>
+    <string name="min_15">15 minutes</string>
+    <string name="min_30">30 minutes</string>
+    <string name="hour_1">1 hour</string>
     <string name="channel_description" translatable="false">\"Channel to notificate updates to Favorites\"</string>
     <string name="channel_name" translatable="false">FavoritesChannel</string>
 </resources>

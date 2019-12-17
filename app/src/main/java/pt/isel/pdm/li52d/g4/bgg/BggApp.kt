@@ -6,7 +6,9 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.room.Room
+import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import pt.isel.pdm.li52d.g4.bgg.model.BGGDb
 import pt.isel.pdm.li52d.g4.bgg.model.BGGRepository
@@ -28,16 +30,23 @@ class BggApp : Application(){
                  .databaseBuilder(applicationContext, BGGDb::class.java, "bgg-db" )
                  .build()
         createNotificationChannel()
-        scheduleBackgroundWork()
+//        scheduleBackgroundWork()
     }
 
-    private fun scheduleBackgroundWork() {
-        // val request = PeriodicWorkRequestBuilder<WorkerTopChart>(15, TimeUnit.MINUTES).build()
-        val request = OneTimeWorkRequestBuilder<WorkerFavorites>()
-            .setInitialDelay(10, TimeUnit.SECONDS)
-            .build()
-        WorkManager.getInstance(applicationContext).enqueue(request)
-    }
+//    private fun scheduleBackgroundWork() {
+//         val request = PeriodicWorkRequestBuilder<WorkerFavorites>(15, TimeUnit.MINUTES)
+//             .setInputData(
+//                 Data.Builder()
+//                     .putString()
+//                     .build()
+//             )
+//             .build()
+//
+////        val request = OneTimeWorkRequestBuilder<WorkerFavorites>()
+////            .setInitialDelay(10, TimeUnit.SECONDS)
+////            .build()
+////        WorkManager.getInstance(applicationContext).enqueue(request)
+//    }
     private fun createNotificationChannel() {
         val name = getString(R.string.channel_name)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

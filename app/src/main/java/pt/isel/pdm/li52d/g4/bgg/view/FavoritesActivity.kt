@@ -15,7 +15,7 @@ class FavoritesActivity : AppCompatActivity(){
 
 
     val adapter : FavoritesAdapter by lazy {
-        FavoritesAdapter(model, intent)
+        FavoritesAdapter(model, intent, this)
     }
     val model : FavoritesViewModel by lazy{
         val factory = BGGViewModelFactoryProvider(intent)
@@ -64,7 +64,14 @@ class FavoritesActivity : AppCompatActivity(){
                 mechanicsNames,
                 categoriesNames
             )
-            BggApp.CUSTOM_LIST_REPO.insertFavorite(favoriteList.text.toString(), publisher.text.toString(), designer.text.toString())
+            BggApp.CUSTOM_LIST_REPO.insertFavorite(
+                favoriteList.text.toString(),
+                publisher.text.toString(),
+                designer.text.toString(),
+                mechanicsUrl,
+                categoriesUrl,
+                mechanicsNames,
+                categoriesNames)
             model.getAllFavoritesList()
             mechanicsUrl = ""
             mechanicsNames = ""

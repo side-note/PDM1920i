@@ -8,7 +8,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import pt.isel.pdm.li52d.g4.bgg.dto.GameDto
+import pt.isel.pdm.li52d.g4.bgg.dto.GameSearchDto
+import pt.isel.pdm.li52d.g4.bgg.model.*
 import pt.isel.pdm.li52d.g4.bgg.view.GameListActivity
 import java.util.concurrent.CompletableFuture
 
@@ -18,21 +19,40 @@ class WorkerFavorites(context: Context, workerParams: WorkerParameters) : Worker
     workerParams
 ) {
     override fun doWork(): Result {
-        val cf = CompletableFuture<GameDto>()
-        Log.v(TAG, "Get TopChart in background...")
-//TODO:
-//        BggApp.bgg.favoriteSearch()
+        val cf = CompletableFuture<GameSearchDto>()
+        Log.v(TAG, "Get Favorites in background...")
+        BggApp.bgg.favoriteSearch(
+            inputData.getString(PUBLISHER_NAME)!!,
+            inputData.getString(DESIGNER_NAME)!!,
+            inputData.getString(MECHANICS_URL)!!,
+            inputData.getString(CATEGORIES_URL)!!,
+            {cf.complete(it)},
+            {cf.completeExceptionally(it)}
+        )
         return try {
-            val dto: GameDto = cf.get()
-            Log.v(TAG, "Get TopChart COMPLETED")
-//            val arr = dtoToModel(dto)
-//            GeniuzApp.db.topchartDao().insertAll(*arr)
+            val listName = "Fav " + inputData.getString(FAV_LIST_NAME)!!
+            val oldGames = BggApp.db.FavoritesDao().getGamesForFavorites(listName)
+            val dto: GameSearchDto = cf.get()
+            Log.v(TAG, "Get Favorites COMPLETED")
+            dto.games.forEach {
+                val designersAndGames = BggApp.CUSTOM_LIST_REPO.fromGameDto(it)
+                designersAndGames.game.nameFavListGame = listName
+                BggApp.db.FavoritesDao().insertGame(designersAndGames.game)
+            }
+            val newGames = BggApp.db.FavoritesDao().getGamesForFavorites(listName)
             /**
              * Check if there is any modification on Top Chart and
-             * notify the Channel in that case TO DO !!!!
+             * notify the Channel in that case
              */
-
-            notifyFavoritesChannel()
+            val size = oldGames.value?.size
+            if( size != dto.games.size)
+                notifyFavoritesChannel()
+            else {
+                newGames.value?.forEach {
+                    if(!oldGames.value?.contains(it)!!)
+                        notifyFavoritesChannel()
+                }
+            }
             Result.success()
         } catch (e: Exception) {
             Log.v(TAG, "Get Favorites List FAILED")
@@ -45,6 +65,7 @@ class WorkerFavorites(context: Context, workerParams: WorkerParameters) : Worker
         val intent = Intent(applicationContext, GameListActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
+        intent.putExtra(FAVORITE, inputData.getString(FAV_LIST_NAME))
         val pendingIntent: PendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, 0)
 
         val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)

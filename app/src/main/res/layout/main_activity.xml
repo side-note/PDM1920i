@@ -22,12 +22,12 @@
         android:id="@+id/imageView3"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/lists"
         app:layout_constraintEnd_toEndOf="@+id/search_bar"
         app:layout_constraintStart_toStartOf="@+id/search_bar"
-        app:layout_constraintTop_toBottomOf="@+id/search_bar"
+        app:layout_constraintTop_toBottomOf="@+id/settings_button"
         app:srcCompat="@mipmap/icon" />
 
     <SearchView
@@ -78,5 +78,15 @@
         app:layout_constraintBottom_toTopOf="@+id/mpp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/settings_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar"
+        app:srcCompat="@drawable/settings_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

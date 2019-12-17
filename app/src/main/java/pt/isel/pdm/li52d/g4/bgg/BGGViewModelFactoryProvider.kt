@@ -44,15 +44,10 @@ class BGGViewModelFactoryProvider(val intent: Intent) : ViewModelProvider.Factor
             FavoritesViewModel::class.java -> {
                 val model = FavoritesViewModel()
                 model.getAllFavoritesList()
-//                val intentPublisher: String? = intent.getStringExtra(PUBLISHERFAV)
-//                val intentDesigner: String? = intent.getStringExtra(DESIGNERFAV)
-//                val intentMechanicsUrl: String? = intent.getStringExtra(MECHANICSURL)
-//                val intentCategoriesUrl: String? = intent.getStringExtra(CATEGORIESURL)
-//                val intentOptions: String? = intent.getStringExtra(OPTIONS)
-//                if(intentOptions != null) {model.favoriteSearch(intentPublisher!!, intentDesigner!!, intentMechanicsUrl!!, intentCategoriesUrl!!)}
                 model as T
             }
-            DetailedGameInfoViewModel::class.java -> DetailedGameInfoViewModel(intent.getParcelableExtra(GAME_NAME)!!) as T
+            DetailedGameInfoViewModel::class.java ->
+                DetailedGameInfoViewModel(intent.getParcelableExtra(GAME_NAME)!!) as T
             ListViewModel::class.java -> {
                 val model = ListViewModel()
                 model.getAllLists()
