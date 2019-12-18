@@ -30,23 +30,8 @@ class BggApp : Application(){
                  .databaseBuilder(applicationContext, BGGDb::class.java, "bgg-db" )
                  .build()
         createNotificationChannel()
-//        scheduleBackgroundWork()
     }
 
-//    private fun scheduleBackgroundWork() {
-//         val request = PeriodicWorkRequestBuilder<WorkerFavorites>(15, TimeUnit.MINUTES)
-//             .setInputData(
-//                 Data.Builder()
-//                     .putString()
-//                     .build()
-//             )
-//             .build()
-//
-////        val request = OneTimeWorkRequestBuilder<WorkerFavorites>()
-////            .setInitialDelay(10, TimeUnit.SECONDS)
-////            .build()
-////        WorkManager.getInstance(applicationContext).enqueue(request)
-//    }
     private fun createNotificationChannel() {
         val name = getString(R.string.channel_name)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

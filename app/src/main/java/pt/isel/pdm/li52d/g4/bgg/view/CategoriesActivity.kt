@@ -41,7 +41,7 @@ class CategoriesActivity : AppCompatActivity() {
             intentResult.putExtra(CATEGORIESURL, categoriesUrl)
             intentResult.putExtra(CATEGORIESNAMES, categoriesNames)
             setResult(Activity.RESULT_OK, intentResult)
-            super.onBackPressed()
+            finish()
         }
     }
 }

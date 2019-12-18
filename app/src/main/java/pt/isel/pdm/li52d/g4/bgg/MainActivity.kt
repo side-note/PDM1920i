@@ -11,10 +11,10 @@ import android.os.Parcelable
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.SearchView
+import androidx.constraintlayout.widget.ConstraintLayout
+import com.google.android.material.button.MaterialButton
 import pt.isel.pdm.li52d.g4.bgg.model.DesignersAndGames
-import pt.isel.pdm.li52d.g4.bgg.model.Favorites
 import pt.isel.pdm.li52d.g4.bgg.view.*
 
 const val NAME : String = "Name"
@@ -27,7 +27,6 @@ const val CATEGORIES : String = "Categories"
 const val CATEGORIESCODE : Int = 2
 const val MECHANICS : String = "Mechanics"
 const val MECHANICSCODE : Int = 1
-const val OPTIONS : String = "Options"
 const val LIST : String = "List"
 const val ILIST : String = "IListSelect"
 const val FAVORITE : String = "Favorite"
@@ -35,8 +34,6 @@ const val MECHANICSURL = "Mechanics Url"
 const val MECHANICSNAMES = "Mechanics Name"
 const val CATEGORIESURL = "Categories Url"
 const val CATEGORIESNAMES = "Categories Name"
-//const val PUBLISHERFAV = "Publisher Favorite"
-//const val DESIGNERFAV = "Designer Favorite"
 const val FROM_DETAILED_ACTIVITY : String = "this intent is from DetailedGameInfoActivity"
 const val LIMIT : Int = 31
 var PAGEMODEL: Int = 0
@@ -87,7 +84,7 @@ class MainActivity() : AppCompatActivity(), View.OnClickListener, SearchView.OnQ
 
         findViewById<SearchView>(R.id.search_bar).setOnQueryTextListener(this)
 
-        findViewById<Button>(R.id.mpp).setOnClickListener(this)
+        findViewById<MaterialButton>(R.id.mpp).setOnClickListener(this)
 
         findViewById<Button>(R.id.credits).setOnClickListener {
             val myIntent = Intent(this, CreditsActivity::class.java)
@@ -95,16 +92,16 @@ class MainActivity() : AppCompatActivity(), View.OnClickListener, SearchView.OnQ
             startActivity(myIntent)
         }
 
-        findViewById<Button>(R.id.lists).setOnClickListener {
+        findViewById<ConstraintLayout>(R.id.lists).setOnClickListener {
             val intent = Intent(this, ListsActivity::class.java)
             intent.putExtra(ILIST, IntentFromMain())
             startActivity(intent)
         }
-        findViewById<Button>(R.id.fav_button).setOnClickListener{
+        findViewById<ConstraintLayout>(R.id.fav_button).setOnClickListener{
             val intent = Intent(this, FavoritesActivity::class.java)
             startActivity(intent)
         }
-        findViewById<ImageView>(R.id.settings_button).setOnClickListener{
+        findViewById<ConstraintLayout>(R.id.settings_button).setOnClickListener{
             val intent = Intent(this, PreferencesActivity::class.java)
             startActivity(intent)
         }

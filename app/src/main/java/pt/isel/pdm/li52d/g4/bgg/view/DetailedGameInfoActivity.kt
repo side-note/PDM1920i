@@ -136,7 +136,7 @@ class IntentFromDetailed() : IListSelect{
                 it.designerName
             )
         }
-        act!!.onBackPressed()
+        act!!.finish()
     }
 
 

@@ -31,7 +31,16 @@ class GameListActivity: AppCompatActivity() {
         val title : TextView = findViewById(R.id.title_view)
         val buttonNext = findViewById<Button>(R.id.button_next)
         val buttonPrevious = findViewById<Button>(R.id.button_previous)
-        title.text = model.name.removePrefix("List ").removePrefix("Fav ")
+        val words = model.name.removePrefix("List ").removePrefix("Fav ").split(" ")
+        var phrase = ""
+        for (i in words.indices){
+            words[i].replace(words[i][0], words[i][0].toUpperCase())
+            phrase += words[i] + " "
+        }
+        phrase = phrase.dropLast(1)
+        if(phrase == "Popularity")
+            phrase = resources.getString(R.string.most_popular_games)
+        title.text = phrase
         model.ctx = this
         model.observe(this){
             adapter.notifyDataSetChanged()

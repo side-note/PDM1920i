@@ -2,6 +2,7 @@ package pt.isel.pdm.li52d.g4.bgg.model
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import java.util.*
 
 @Dao
 interface FavoritesDao {
@@ -30,6 +31,9 @@ interface FavoritesDao {
     @Query("SELECT * FROM games WHERE nameFavListGame LIKE :nameFavList")
     fun getGamesForFavorites(nameFavList: String): LiveData<Array<DesignersAndGames>>
 
+    @Query("SELECT * FROM games WHERE nameFavListGame LIKE :nameFavList")
+    fun getGamesForFavoritesSync(nameFavList: String): List<DesignersAndGames>
+
     @Query("SELECT * FROM favorites WHERE nameFavList LIKE :nameFavList")
     fun getFavList(nameFavList: String): Favorites
 
@@ -42,8 +46,8 @@ interface FavoritesDao {
     @Query("DELETE FROM favorites WHERE nameFavList LIKE :nameFavList")
     fun deleteFavList(nameFavList: String)
 
-    @Query("DELETE FROM designer WHERE gameName LIKE :gameName")
-    fun deleteFavDesigners(gameName: String)
+    @Query("DELETE FROM designer WHERE gameName LIKE :gameName AND listName LIKE :listName")
+    fun deleteFavDesigners(gameName: String, listName: String)
 
     @Query("DELETE FROM mechanics WHERE nameFavListM LIKE :nameFavList")
     fun deleteMechanics(nameFavList: String)
@@ -51,5 +55,6 @@ interface FavoritesDao {
     @Query("DELETE FROM categories WHERE nameFavListC LIKE :nameFavList")
     fun deleteCategories(nameFavList: String)
 
-
+    @Query("UPDATE favorites SET id = :id WHERE nameFavList = :favListName")
+    fun updateWorkerId(favListName: String, id: String)
 }

@@ -15,9 +15,8 @@ import java.util.concurrent.CompletableFuture
 
 const val NOTIFICATION_ID = 100012
 
-class WorkerFavorites(context: Context, workerParams: WorkerParameters) : Worker(context,
-    workerParams
-) {
+class WorkerFavorites(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
+
     override fun doWork(): Result {
         val cf = CompletableFuture<GameSearchDto>()
         Log.v(TAG, "Get Favorites in background...")
@@ -31,26 +30,30 @@ class WorkerFavorites(context: Context, workerParams: WorkerParameters) : Worker
         )
         return try {
             val listName = "Fav " + inputData.getString(FAV_LIST_NAME)!!
-            val oldGames = BggApp.db.FavoritesDao().getGamesForFavorites(listName)
+            val oldGames = BggApp.db.FavoritesDao().getGamesForFavoritesSync(listName)
             val dto: GameSearchDto = cf.get()
             Log.v(TAG, "Get Favorites COMPLETED")
+            val newGames: ArrayList<DesignersAndGames> = ArrayList()
             dto.games.forEach {
                 val designersAndGames = BggApp.CUSTOM_LIST_REPO.fromGameDto(it)
                 designersAndGames.game.nameFavListGame = listName
-                BggApp.db.FavoritesDao().insertGame(designersAndGames.game)
+                newGames.add(designersAndGames)
             }
-            val newGames = BggApp.db.FavoritesDao().getGamesForFavorites(listName)
             /**
              * Check if there is any modification on Top Chart and
              * notify the Channel in that case
              */
-            val size = oldGames.value?.size
-            if( size != dto.games.size)
+            if( oldGames.size != newGames.size) {
+                updateFavourite(newGames, listName, oldGames)
                 notifyFavoritesChannel()
+            }
             else {
-                newGames.value?.forEach {
-                    if(!oldGames.value?.contains(it)!!)
+                for (i in oldGames.indices){
+                    if(oldGames[i].game.id != newGames[i].game.id){
+                        updateFavourite(newGames, listName, oldGames)
                         notifyFavoritesChannel()
+                        break
+                    }
                 }
             }
             Result.success()
@@ -61,17 +64,37 @@ class WorkerFavorites(context: Context, workerParams: WorkerParameters) : Worker
         }
     }
 
+    private fun updateFavourite(new: List<DesignersAndGames>, favorites: String, old: List<DesignersAndGames>?) {
+        if(old != null && old.isNotEmpty()) {
+            old.forEach{
+                BggApp.db.FavoritesDao().deleteFavDesigners(it.game.name, favorites)
+            }
+            BggApp.db.FavoritesDao().deleteFavGame(favorites)
+        }
+        new.forEach{
+            BggApp.db.FavoritesDao().insertGame(it.game)
+            it.designerList.forEach { des ->
+                BggApp.db.FavoritesDao().insertDesigner(des)
+            }
+        }
+    }
+
     private fun notifyFavoritesChannel() {
         val intent = Intent(applicationContext, GameListActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         intent.putExtra(FAVORITE, inputData.getString(FAV_LIST_NAME))
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, 0)
-
+        val pendingIntent: PendingIntent
+                = PendingIntent.getActivity(
+            applicationContext,
+            0,
+            intent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
         val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentTitle("Favorites")
-            .setContentText("Update on Favorites List")
+            .setContentTitle(applicationContext.resources.getString(R.string.favorites))
+            .setContentText(applicationContext.resources.getString(R.string.update) + inputData.getString(FAV_LIST_NAME))
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)

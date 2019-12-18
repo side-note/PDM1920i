@@ -39,7 +39,7 @@ class MechanicsActivity : AppCompatActivity() {
             intentResult.putExtra(MECHANICSURL, mechanicsUrl)
             intentResult.putExtra(MECHANICSNAMES, mechanicsNames)
             setResult(Activity.RESULT_OK, intentResult)
-            super.onBackPressed()
+            finish()
         }
 
 

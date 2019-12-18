@@ -9,7 +9,9 @@ import androidx.work.WorkManager
 import com.android.volley.VolleyError
 import pt.isel.pdm.li52d.g4.bgg.*
 import pt.isel.pdm.li52d.g4.bgg.dto.*
+import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 const val FAV_LIST_NAME: String = "Favorite List Name"
 const val PUBLISHER_NAME: String = "Publisher Name"
@@ -42,7 +44,7 @@ class BGGRepository {
 
     private class insertFavoritesTask : AsyncTask<String, Unit, Array<String>>() {
         override fun doInBackground(vararg params: String): Array<String> {
-            BggApp.db.FavoritesDao().insertFavorites(Favorites(params[0], params[1], params[2]))
+            BggApp.db.FavoritesDao().insertFavorites(Favorites(params[0], params[1], params[2],null))
             return arrayOf(
                 params[0],
                 params[1],
@@ -79,13 +81,19 @@ class BGGRepository {
                         .putString(CATEGORIES_NAME, params[6])
                         .build()
                 )
-//                .setInitialDelay(TIME, TimeUnit.MINUTES)
+                .setInitialDelay(1, TimeUnit.MINUTES)
                 .build()
+            updateWorkerId().execute("Fav ${params[0]}", request.id.toString())
             WorkManager.getInstance(BggApp.bgg.ctx).enqueue(request)
         }
     }
+    private class updateWorkerId : AsyncTask<String, Unit, Unit>(){
+        override fun doInBackground(vararg params: String) {
+            BggApp.db.FavoritesDao().updateWorkerId(params[0], params[1])
+        }
+    }
 
-    private class insertDesignerInFavoritesTask() : AsyncTask<String, Unit, Unit>() {
+    private class insertDesignerInFavoritesTask : AsyncTask<String, Unit, Unit>() {
         override fun doInBackground(vararg params: String) {
             BggApp.db.FavoritesDao().insertDesigner(Designer(params[0], params[1], params[2]))
         }
@@ -175,13 +183,16 @@ class BGGRepository {
 
     private class deleteFavListTask : AsyncTask<String, Unit, Unit>() {
         override fun doInBackground(vararg favListName: String) {
+            val id = BggApp.db.FavoritesDao().getFavList(favListName[0]).id
             BggApp.db.FavoritesDao().deleteFavList(favListName[0])
+            if(id != null)
+                WorkManager.getInstance(BggApp.bgg.ctx).cancelWorkById(UUID.fromString(id))
         }
     }
 
     private class deleteFavDesignersTask : AsyncTask<String, Unit, Unit>() {
-        override fun doInBackground(vararg favListName: String) {
-            BggApp.db.FavoritesDao().deleteFavDesigners(favListName[0])
+        override fun doInBackground(vararg names: String) {
+            BggApp.db.FavoritesDao().deleteFavDesigners(names[0], names[1])
         }
     }
 
@@ -273,7 +284,7 @@ class BGGRepository {
 
     fun deleteFavList(favListName: String) = deleteFavListTask().execute(favListName)
 
-    fun deleteFavDesigner(favListName: String) = deleteFavDesignersTask().execute(favListName)
+    fun deleteFavDesigner(gameName: String, favListName: String) = deleteFavDesignersTask().execute(gameName, favListName)
 
     fun deleteMechanics(favListName: String) = deleteMechanicsTask().execute(favListName)
 
